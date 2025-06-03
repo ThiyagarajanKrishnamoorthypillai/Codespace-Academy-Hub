@@ -19,7 +19,7 @@ const Login = () => {
     setCookie('name', name, { path: '/', sameSite: 'Strict' });
     localStorage.setItem('token', credentialResponse.credential);
 
-    const res = await fetch('http://localhost:4000/api/v1/user/google-login', {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/user/google-login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, name })
