@@ -53,7 +53,7 @@ const PostQuestion = () => {
   }
 
   try {
-    const response = await fetch(`https://codespace-backend-piac.onrender.com/uploads/${image}/question/`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/question/`, {
       method: 'POST',
       headers: {
         'x-auth-token': token,
