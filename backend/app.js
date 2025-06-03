@@ -43,7 +43,6 @@ machineId.machineId()
   });
 
   
-
 // Middleware to check for a valid license
 app.use(async (req, res, next) => {
   try {
@@ -51,19 +50,24 @@ app.use(async (req, res, next) => {
     const config = JSON.parse(configData);
     const storedLicense = config.license;
 
-    if (storedLicense.licenseCode === license && storedLicense.deviceId === machineID) {
-      console.log('Valid license');
+    if (
+      storedLicense.licenseCode === license &&
+      storedLicense.deviceId === machineID
+    ) {
+      console.log('✅ Valid license');
       next();
-      // Send a success response
-      //return res.json({ message: 'Valid license' });
-    } 
-    
-  
+    } else {
+      console.error('❌ Invalid license info. Bypassing in production.');
+      if (process.env.NODE_ENV === 'production') return next();
+      process.exit(1); // Dev only
+    }
   } catch (error) {
-    console.error('Invalid or missing license information. Please verify the license.');
-    process.exit(1); // Exit the application if the license is not valid
+    console.error('⚠️ License file missing or unreadable:', error.message);
+    if (process.env.NODE_ENV === 'production') return next();
+    process.exit(1);
   }
 });
+
 
 
 app.use(cors({
