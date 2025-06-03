@@ -16,7 +16,7 @@ const SelectCourse = () => {
     const email = cookies.email;
 
     try {
-      const response = await fetch('http://localhost:4000/api/v1/user/update-course', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/user/update-course`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, course: selectedCourse })

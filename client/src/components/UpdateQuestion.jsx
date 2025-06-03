@@ -26,7 +26,7 @@ const UpdateQuestion = () => {
 
 
   useEffect(() => {
-  fetch(`http://localhost:4000/api/v1/question/${id}`)
+  fetch(`${import.meta.env.VITE_API_URL}/question/${id}`)
     .then(res => res.json())
     .then(data => {
       setEditedQuestion({
@@ -59,7 +59,7 @@ const UpdateQuestion = () => {
   }
 
   try {
-    const response = await fetch(`http://localhost:4000/api/v1/question/${id}`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/question/${id}`, {
       method: 'PUT',
       body: formData
     });
@@ -171,7 +171,7 @@ const handleRemoveImage = (imgToRemove) => {
     {editedQuestion.existingImages.map((img, index) => (
       <div key={index} className="col-4 position-relative mb-3">
         <img
-          src={`http://localhost:4000/uploads/${img}`}
+          src={`${import.meta.env.VITE_API_URL}/uploads/${img}`}
           alt="existing"
           className="img-fluid border rounded"
         />

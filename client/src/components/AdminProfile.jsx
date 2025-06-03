@@ -32,7 +32,7 @@ const EditProfile = (id) => {
   useEffect(() => {
     const fetchBinData = async () => {
       try {
-        const response = await fetch('http://localhost:4000/api/v1/admin/');
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/admin/`);
         const data = await response.json();
         // Assuming 'email' is the key in cookies
         const adminemail = decodeURIComponent(document.cookie.replace(/(?:(?:^|.*;\s*)adminemail\s*=\s*([^;]*).*$)|^.*$/, '$1'));

@@ -38,7 +38,7 @@ const EditUserProfile = () => {
   useEffect(() => {
     const fetchDonationDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/api/v1/user/${id}`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/user/${id}`);
         if (response.ok) {
           const data = await response.json();
           setEditedDonation({
@@ -79,7 +79,7 @@ const EditUserProfile = () => {
         return;
       }
 
-      const response = await fetch(`http://localhost:4000/api/v1/user/${id}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/user/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

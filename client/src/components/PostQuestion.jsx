@@ -53,7 +53,7 @@ const PostQuestion = () => {
   }
 
   try {
-    const response = await fetch('http://localhost:4000/api/v1/question/', {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/question/`, {
       method: 'POST',
       headers: {
         'x-auth-token': token,

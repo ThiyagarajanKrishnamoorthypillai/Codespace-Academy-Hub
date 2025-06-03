@@ -32,7 +32,7 @@ const StartSession = () => {
   };
 
   useEffect(() => {
-    axios.get('http://localhost:4000/api/v1/user/')
+    axios.get(`${import.meta.env.VITE_API_URL}/user/`)
       .then(res => setUserList(res.data))
       .catch(err => console.error(err));
   }, []);
@@ -45,7 +45,7 @@ const StartSession = () => {
 
     const durationHours = courseDurations[course] || 30;
 
-    axios.post('http://localhost:4000/api/v1/session/start', {
+    axios.post(`${import.meta.env.VITE_API_URL}/session/start`, {
       course,
       batch,
       user: selectedUser,

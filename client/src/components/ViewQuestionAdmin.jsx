@@ -31,7 +31,7 @@ const ViewQuestionAdmin = () => {
   const Removefunction = (id) => {
     if (window.confirm('Do you want to remove?')) {
       const token = localStorage.getItem('token');
-      fetch("http://localhost:4000/api/v1/question/" + id, {
+      fetch(`${import.meta.env.VITE_API_URL}/api/v1/question/` + id, {
         method: "DELETE",
         headers: {
           'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ const ViewQuestionAdmin = () => {
   useEffect(() => {
     const fetchQuestionData = async () => {
       try {
-        const response = await fetch('http://localhost:4000/api/v1/question/');
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/question/`);
         const data = await response.json();
         const adminemail = decodeURIComponent(document.cookie.replace(/(?:(?:^|.*;\s*)adminemail\s*=\s*([^;]*).*$)|^.*$/, '$1'));
         const filteredQuestion = data.filter((question) => question.adminemail === adminemail);
@@ -139,7 +139,7 @@ const ViewQuestionAdmin = () => {
                     {question.image.map((img, idx) => (
                       <div className="col-6 col-md-3 mb-3" key={idx}>
                         <img
-                          src={`http://localhost:4000/uploads/${img}`}
+                          src={`${import.meta.env.VITE_API_URL}/uploads/${img}`}
                           alt={`Image ${idx}`}
                           className="img-fluid border rounded shadow-sm"
                           style={{
@@ -148,7 +148,7 @@ const ViewQuestionAdmin = () => {
                             objectFit: 'cover',
                             cursor: 'pointer',
                           }}
-                          onClick={() => setSelectedImage(`http://localhost:4000/uploads/${img}`)}
+                          onClick={() => setSelectedImage(`${import.meta.env.VITE_API_URL}/uploads/${img}`)}
                         />
                       </div>
                     ))}

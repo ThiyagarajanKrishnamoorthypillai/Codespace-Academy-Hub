@@ -21,7 +21,7 @@ const ViewAnswerUser = () => {
   useEffect(() => {
     const fetchAnswers = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/api/v1/answer/');
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/answer/`);
         const filtered = response.data.filter(ans => ans.useremail === cookies.email);
         setAnswers(filtered);
       } catch (err) {
@@ -70,11 +70,11 @@ const ViewAnswerUser = () => {
                             {ans.questionImages && ans.questionImages.map((img, i) => (
                               <div className="col-4 col-sm-3 mb-2" key={i}>
                                 <img
-                                  src={`http://localhost:4000/uploads/${img}`}
+                                  src={`${import.meta.env.VITE_API_URL}/uploads/${img}`}
                                   alt={`Question ${i}`}
                                   className="img-fluid border rounded"
                                   style={{ width: '100%', height: '120px', objectFit: 'cover', cursor: 'pointer' }}
-                                  onClick={() => setSelectedImage(`http://localhost:4000/uploads/${img}`)}
+                                  onClick={() => setSelectedImage(`${import.meta.env.VITE_API_URL}/uploads/${img}`)}
                                 />
                               </div>
                             ))}
@@ -88,11 +88,11 @@ const ViewAnswerUser = () => {
                         {ans.image.map((img, i) => (
                           <div className="col-4 col-sm-3 mb-2" key={i}>
                             <img
-                              src={`http://localhost:4000/uploads/${img}`}
+                              src={`${import.meta.env.VITE_API_URL}/uploads/${img}`}
                               alt={`Answer ${i}`}
                               className="img-fluid border rounded"
                               style={{ width: '100%', height: '120px', objectFit: 'cover', cursor: 'pointer' }}
-                              onClick={() => setSelectedImage(`http://localhost:4000/uploads/${img}`)}
+                              onClick={() => setSelectedImage(`${import.meta.env.VITE_API_URL}/uploads/${img}`)}
                             />
                           </div>
                         ))}

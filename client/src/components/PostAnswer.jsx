@@ -62,7 +62,7 @@ const PostAnswer = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:4000/api/v1/answer/', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/answer/`, {
         method: 'POST',
         headers: { 'x-auth-token': token },
         body: data
@@ -134,7 +134,7 @@ const PostAnswer = () => {
                   <div className="row mt-4">
                     {images.map((img, idx) => (
                       <div className="col-6 col-md-3 mb-3" key={idx}>
-                        <img src={`http://localhost:4000/uploads/${img}`} alt="Question Img" className="img-fluid rounded" />
+                        <img src={`${import.meta.env.VITE_API_URL}/uploads/${img}`} alt="Question Img" className="img-fluid rounded" />
                       </div>
                     ))}
                   </div>

@@ -17,7 +17,7 @@ const ViewFeedbackAdmin = () => {
   useEffect(() => {
     const fetchFeedback = async () => {
       try {
-        const res = await axios.get('http://localhost:4000/api/v1/feedback/');
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/feedback/`);
         if (res.status === 200) setFeedbackData(res.data);
       } catch (err) {
         console.error("Error fetching feedback:", err.message);
@@ -34,7 +34,7 @@ const ViewFeedbackAdmin = () => {
     if (!window.confirm("Are you sure to delete this feedback?")) return;
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:4000/api/v1/feedback/${id}`, {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/feedback/${id}`, {
         headers: { 'x-auth-token': token }
       });
       setFeedbackData(prev => prev.filter(item => item._id !== id));
@@ -76,7 +76,7 @@ const ViewFeedbackAdmin = () => {
       {(Array.isArray(fb.image) ? fb.image : [fb.image]).map((img, i) => (
         <img
           key={i}
-          src={`http://localhost:4000/uploads/${img}`}
+          src={`${import.meta.env.VITE_API_URL}/uploads/${img}`}
           alt="feedback"
           style={{
             width: '60px',

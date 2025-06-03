@@ -13,7 +13,7 @@ const UserDashboard = () => {
   useEffect(() => {
     if (!userEmail) return;
 
-    axios.get('http://localhost:4000/api/v1/session')
+    axios.get(`${import.meta.env.VITE_API_URL}/session`)
       .then(res => {
         const sessions = res.data;
         const matched = sessions.find(s => s.user.includes(userEmail));

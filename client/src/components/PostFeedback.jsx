@@ -48,7 +48,7 @@ const imageArray = Array.isArray(image) ? image : [image];
     //console.log(userEmail);  // Output: donar@gmail.com
     
     try {
-      const response = await fetch('http://localhost:4000/api/v1/feedback/', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/feedback/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

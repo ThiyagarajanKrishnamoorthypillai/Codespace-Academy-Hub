@@ -10,7 +10,7 @@ const PostMarkAdmin = () => {
 const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('http://localhost:4000/api/v1/answer/')
+    axios.get(`${import.meta.env.VITE_API_URL}/answer/`)
       .then(res => setAnswers(res.data))
       .catch(err => console.error(err));
   }, []);
@@ -30,7 +30,7 @@ formData.append('adminemail', adminEmailFromCookie);
 
 
     try {
-      await axios.post('http://localhost:4000/api/v1/mark/post', formData, {
+      await axios.post(`${import.meta.env.VITE_API_URL}/mark/post`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         },

@@ -41,7 +41,7 @@ const UpdateFeedbackAdmin = () => {
     e.preventDefault();
     try {
      const token = localStorage.getItem('token');
-await axios.put(`http://localhost:4000/api/v1/feedback/${formData._id}`, formData, {
+await axios.put(`${import.meta.env.VITE_API_URL}/feedback/${formData._id}`, formData, {
   headers: {
     'x-auth-token': token, // ✅ Secure header
   },

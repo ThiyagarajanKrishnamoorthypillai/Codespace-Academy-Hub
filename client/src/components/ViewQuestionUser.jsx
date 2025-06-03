@@ -35,7 +35,7 @@ const ViewQuestionUser = () => {
   useEffect(() => {
     const fetchQuestionData = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/api/v1/question/course/${course}`);
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/question/course/${course}`);
         if (response.status === 200) {
           setQuestionData(response.data);
         }
@@ -93,11 +93,11 @@ const ViewQuestionUser = () => {
                           {question.image.map((img, idx) => (
                             <div className="col-6 col-md-3 mb-3" key={idx}>
                               <img
-                                src={`http://localhost:4000/uploads/${img}`}
+                                src={`${import.meta.env.VITE_API_URL}/uploads/${img}`}
                                 alt={`Question ${idx}`}
                                 className="img-fluid rounded shadow-sm"
                                 style={{ cursor: 'pointer', width: '100%', height: 'auto', objectFit: 'cover' }}
-                                onClick={() => setSelectedImage(`http://localhost:4000/uploads/${img}`)}
+                                onClick={() => setSelectedImage(`${import.meta.env.VITE_API_URL}/uploads/${img}`)}
                               />
                             </div>
                           ))}

@@ -13,7 +13,7 @@ const ViewMarksAdmin = () => {
       return;
     }
 
-    axios.get('http://localhost:4000/api/v1/mark/', {
+    axios.get(`${import.meta.env.VITE_API_URL}/mark/`, {
       withCredentials: true
     })
       .then(res => {
@@ -50,7 +50,7 @@ const ViewMarksAdmin = () => {
                 <p><strong>Image Mark:</strong></p>
                 {mark.imageMark && (
                   <img
-                    src={`http://localhost:4000/${mark.imageMark.replace('public\\', '')}`}
+                    src={`${import.meta.env.VITE_API_URL}/${mark.imageMark.replace('public\\', '')}`}
                     alt="Mark"
                     style={{ width: '100%', maxHeight: '250px', objectFit: 'cover' }}
                     className="img-fluid rounded border"

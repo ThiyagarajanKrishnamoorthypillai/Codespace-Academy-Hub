@@ -31,7 +31,7 @@ const ViewFeedbackUser = () => {
   useEffect(() => {
     const fetchFeedbackData = async () => {
       try {
-        const response = await fetch('http://localhost:4000/api/v1/feedback/');
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/feedback/`);
         const data = await response.json();
 
         // Assuming 'userEmail' is the key in cookies
@@ -137,7 +137,7 @@ const ViewFeedbackUser = () => {
               if (!feedback.explanation) return;
 
               try {
-                const res = await fetch(`http://localhost:4000/api/v1/feedback/update-status/${feedback._id}`, {
+                const res = await fetch(`${import.meta.env.VITE_API_URL}/feedback/update-status/${feedback._id}`, {
                   method: "PUT",
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify({ status: feedback.status }),

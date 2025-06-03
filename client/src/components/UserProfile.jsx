@@ -30,7 +30,7 @@ const UserProfile = () => {
       const email = Cookies.get('email');
       if (!email) return;
 
-      const res = await axios.get(`http://localhost:4000/api/v1/user/profile/${email}`);
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/user/profile/${email}`);
       setUser(res.data.user);
       setEditableUser({
         name: res.data.user.name || '',
@@ -52,7 +52,7 @@ const UserProfile = () => {
   const handleSave = async () => {
     try {
       const email = Cookies.get('email');
-      const res = await axios.put(`http://localhost:4000/api/v1/user/update-by-email/${email}`, editableUser);
+      const res = await axios.put(`${import.meta.env.VITE_API_URL}/user/update-by-email/${email}`, editableUser);
       setUser(res.data.user);
       setIsEditing(false);
       alert("Profile updated successfully.");

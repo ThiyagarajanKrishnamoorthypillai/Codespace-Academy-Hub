@@ -30,7 +30,7 @@ const ResetPassword = () => {
       useEffect(() => {
         const fetchExistingEmails = async () => {
           try {
-            const response = await axios.get('http://localhost:4000/api/v1/user/');
+            const response = await axios.get(`${import.meta.env.VITE_API_URL}/user/`);
             const emails = response.data.map(user => user.email);
             setExistingEmails(emails);
           } catch (error) {
@@ -87,7 +87,7 @@ const ResetPassword = () => {
         }
         
     try {
-      const response = await fetch('http://localhost:4000/api/v1/user/reset_password', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/user/reset_password`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

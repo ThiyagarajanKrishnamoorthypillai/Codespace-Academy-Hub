@@ -26,7 +26,7 @@ const ViewAnswerAdmin = () => {
   useEffect(() => {
     const fetchAnswers = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/api/v1/answer/');
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/answer/`);
         if (response.status === 200) {
           setAnswers(response.data);
         }
@@ -99,7 +99,7 @@ const handleDownloadZipWithPDFImages = async (answer) => {
 if (Array.isArray(answer.image) && answer.image.length > 0) {
   for (let i = 0; i < answer.image.length; i++) {
     const imgFile = answer.image[i];
-    const imgUrl = `http://localhost:4000/uploads/${imgFile}`;
+    const imgUrl = `${import.meta.env.VITE_API_URL}/uploads/${imgFile}`;
     try {
       const blob = await fetchImageBlob(imgUrl);
       if (!blob) continue;
@@ -119,7 +119,7 @@ if (Array.isArray(answer.image) && answer.image.length > 0) {
   // Question Images
   for (let i = 0; i < (answer.questionImages || []).length; i++) {
     const imgFile = answer.questionImages[i];
-    const imgUrl = `http://localhost:4000/uploads/${imgFile}`;
+    const imgUrl = `${import.meta.env.VITE_API_URL}/uploads/${imgFile}`;
     try {
       const blob = await fetchImageBlob(imgUrl);
       const base64 = await blobToBase64(blob);
@@ -143,7 +143,7 @@ if (Array.isArray(answer.image) && answer.image.length > 0) {
 };
 
 useEffect(() => {
-  fetch('http://localhost:4000/uploads/1748612110292-401063483-paper-surrounded-finance-element.jpg')
+  fetch('${import.meta.env.VITE_API_URL}/uploads/1748612110292-401063483-paper-surrounded-finance-element.jpg')
     .then(res => res.blob())
     .then(blob => console.log("Image fetched OK", blob))
     .catch(err => console.error("Image fetch failed", err));
@@ -207,10 +207,10 @@ useEffect(() => {
                           {ans.image.map((img, i) => (
                             <div className="col-4 mb-2" key={i}>
                               <img
-                                src={`http://localhost:4000/uploads/${img}`}
+                                src={`${import.meta.env.VITE_API_URL}/uploads/${img}`}
                                 className="img-fluid border rounded"
                                 style={{ height: '120px', objectFit: 'cover', cursor: 'pointer' }}
-                                onClick={() => setSelectedImage(`http://localhost:4000/uploads/${img}`)}
+                                onClick={() => setSelectedImage(`${import.meta.env.VITE_API_URL}/uploads/${img}`)}
                               />
                             </div>
                           ))}
@@ -226,10 +226,10 @@ useEffect(() => {
                           {ans.questionImages && ans.questionImages.map((img, i) => (
                             <div className="col-4 mb-2" key={i}>
                               <img
-                                src={`http://localhost:4000/uploads/${img}`}
+                                src={`${import.meta.env.VITE_API_URL}/uploads/${img}`}
                                 className="img-fluid border rounded"
                                 style={{ height: '120px', objectFit: 'cover', cursor: 'pointer' }}
-                                onClick={() => setSelectedImage(`http://localhost:4000/uploads/${img}`)}
+                                onClick={() => setSelectedImage(`${import.meta.env.VITE_API_URL}/uploads/${img}`)}
                               />
                             </div>
                           ))}
