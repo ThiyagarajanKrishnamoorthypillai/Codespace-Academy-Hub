@@ -63,7 +63,7 @@ const PostQuestion = () => {
 
     if (response.ok) {
       alert("Question papers uploaded successfully!");
-      window.location.href = "admin_home";
+      window.location.href = "/";
     } else {
       alert("Upload failed!");
     }
