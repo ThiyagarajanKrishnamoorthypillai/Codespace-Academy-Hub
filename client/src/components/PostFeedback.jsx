@@ -30,7 +30,7 @@ const { image, course, dateCreated } = location.state || {};
 const [cookies] = useCookies(['email']);
 
   //const userEmail = decodeURIComponent(document.cookie.replace(/(?:(?:^|.*;\s*)email\s*=\s*([^;]*).*$)|^.*$/, '$1'));
-const imageArray = Array.isArray(image) ? image : [image];
+const imageArray = Array.isArray(image) ? image : image ? [image] : [];
 
   const [formData, setFormData] = useState({
   useremail: cookies.email || '',

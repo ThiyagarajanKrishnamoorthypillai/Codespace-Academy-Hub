@@ -70,11 +70,12 @@ const ViewAnswerUser = () => {
                             {ans.questionImages && ans.questionImages.map((img, i) => (
                               <div className="col-4 col-sm-3 mb-2" key={i}>
                                 <img
-                                  src={`${import.meta.env.VITE_API_URL}/uploads/${img}`}
+                                  src= {img}
+
                                   alt={`Question ${i}`}
                                   className="img-fluid border rounded"
                                   style={{ width: '100%', height: '120px', objectFit: 'cover', cursor: 'pointer' }}
-                                  onClick={() => setSelectedImage(`${import.meta.env.VITE_API_URL}/uploads/${img}`)}
+                                  onClick={() => setSelectedImage(img)}
                                 />
                               </div>
                             ))}
@@ -88,11 +89,11 @@ const ViewAnswerUser = () => {
                         {ans.image.map((img, i) => (
                           <div className="col-4 col-sm-3 mb-2" key={i}>
                             <img
-                              src={`${import.meta.env.VITE_API_URL}/uploads/${img}`}
+                              src={img}
                               alt={`Answer ${i}`}
                               className="img-fluid border rounded"
                               style={{ width: '100%', height: '120px', objectFit: 'cover', cursor: 'pointer' }}
-                              onClick={() => setSelectedImage(`${import.meta.env.VITE_API_URL}/uploads/${img}`)}
+                              onClick={() => setSelectedImage(img)}
                             />
                           </div>
                         ))}
@@ -131,7 +132,7 @@ const ViewAnswerUser = () => {
         }}
       >
         <button
-          onClick={() => setSelectedImage(null)}
+          onClick={() => setSelectedImage(img)}
           style={{
             position: 'absolute',
             top: '10px',

@@ -170,11 +170,12 @@ const handleRemoveImage = (imgToRemove) => {
   <div className="row">
     {editedQuestion.existingImages.map((img, index) => (
       <div key={index} className="col-4 position-relative mb-3">
-        <img
-          src={`${import.meta.env.VITE_API_URL}/uploads/${img}`}
-          alt="existing"
-          className="img-fluid border rounded"
-        />
+      <img
+  src={img} // ✅ Now uses full Cloudinary URL
+  alt="existing"
+  className="img-fluid border rounded"
+/>
+
         <button
           type="button"
           className="btn btn-sm btn-danger position-absolute"

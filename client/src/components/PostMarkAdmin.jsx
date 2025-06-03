@@ -35,7 +35,7 @@ formData.append('adminemail', adminEmailFromCookie);
           'Content-Type': 'multipart/form-data'
         },
         withCredentials: true
-      });
+      }); 
       alert('Mark posted successfully');
       navigate('/admin_home');
 

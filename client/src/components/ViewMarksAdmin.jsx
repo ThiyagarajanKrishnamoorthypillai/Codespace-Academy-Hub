@@ -47,15 +47,17 @@ const ViewMarksAdmin = () => {
                 <p><strong>Marked By:</strong> {mark.adminemail}</p>
                 <p><strong>Date:</strong> {new Date(mark.dateMark).toLocaleString()}</p>
 
-                <p><strong>Image Mark:</strong></p>
-                {mark.imageMark && (
-                  <img
-                    src={`${import.meta.env.VITE_API_URL}/${mark.imageMark.replace('public\\', '')}`}
-                    alt="Mark"
-                    style={{ width: '100%', maxHeight: '250px', objectFit: 'cover' }}
-                    className="img-fluid rounded border"
-                  />
-                )}
+             <p><b>Mark's:</b></p>
+{mark.imageMark && (
+  <img
+    src={mark.imageMark}
+    alt="mark"
+    className="img-fluid rounded"
+    style={{ maxWidth: "100%", cursor: "pointer" }}
+    onClick={() => setSelectedImage(mark.imageMark)}
+  />
+)}
+
               </div>
             </div>
           ))}

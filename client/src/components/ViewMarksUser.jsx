@@ -63,19 +63,19 @@ const ViewMarksUser = () => {
                       
                       <p><b>Date:</b> {new Date(mark.dateMark).toLocaleDateString()}</p>
                       <p><b>Mark's:</b></p>
-                      <img src={`${import.meta.env.VITE_API_URL}/${mark.imageMark.replace('public\\', '')}`} alt="mark" className="img-fluid rounded" style={{ maxWidth: "100%", cursor: "pointer" }} onClick={() => setSelectedImage(`${import.meta.env.VITE_API_URL}/${mark.imageMark.replace('public\\', '')}`)} />
+                      <img src={mark.imageMark} alt="mark" className="img-fluid rounded" style={{ maxWidth: "100%", cursor: "pointer" }} onClick={() => setSelectedImage(`${import.meta.env.VITE_API_URL}/${mark.imageMark.replace('public\\', '')}`)} />
 
                       <p className="mt-2"><b>Answer Images:</b></p>
                       <div className="d-flex flex-wrap gap-2">
                         {mark.answerImages?.map((img, i) => (
-                          <img key={i} src={`${import.meta.env.VITE_API_URL}/uploads/${img}`} alt="Answer" width="60" style={{ cursor: "pointer" }} onClick={() => setSelectedImage(`${import.meta.env.VITE_API_URL}/uploads/${img}`)} />
+                          <img key={i} src={mark.imageMark} alt="Answer" width="60" style={{ cursor: "pointer" }} onClick={() => setSelectedImage(`${import.meta.env.VITE_API_URL}/uploads/${img}`)} />
                         ))}
                       </div>
 
                       <p className="mt-2"><b>Question Images:</b></p>
                       <div className="d-flex flex-wrap gap-2">
                         {mark.questionImages?.map((img, i) => (
-                          <img key={i} src={`${import.meta.env.VITE_API_URL}/uploads/${img}`} alt="Question" width="60" style={{ cursor: "pointer" }} onClick={() => setSelectedImage(`${import.meta.env.VITE_API_URL}/uploads/${img}`)} />
+                          <img key={i} src={mark.imageMark} alt="Question" width="60" style={{ cursor: "pointer" }} onClick={() => setSelectedImage(`${import.meta.env.VITE_API_URL}/uploads/${img}`)} />
                         ))}
                       </div>
                     </div>

@@ -93,11 +93,11 @@ const ViewQuestionUser = () => {
                           {question.image.map((img, idx) => (
                             <div className="col-6 col-md-3 mb-3" key={idx}>
                               <img
-                                src={`${import.meta.env.VITE_API_URL}/uploads/${img}`}
+                                src={img}
                                 alt={`Question ${idx}`}
                                 className="img-fluid rounded shadow-sm"
                                 style={{ cursor: 'pointer', width: '100%', height: 'auto', objectFit: 'cover' }}
-                                onClick={() => setSelectedImage(`${import.meta.env.VITE_API_URL}/uploads/${img}`)}
+                                onClick={() => setSelectedImage(img)}
                               />
                             </div>
                           ))}

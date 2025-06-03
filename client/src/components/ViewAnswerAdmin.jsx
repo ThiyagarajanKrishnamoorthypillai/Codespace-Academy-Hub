@@ -207,10 +207,11 @@ useEffect(() => {
                           {ans.image.map((img, i) => (
                             <div className="col-4 mb-2" key={i}>
                               <img
-                                src={`${import.meta.env.VITE_API_URL}/uploads/${img}`}
+                                img = {img}
+
                                 className="img-fluid border rounded"
                                 style={{ height: '120px', objectFit: 'cover', cursor: 'pointer' }}
-                                onClick={() => setSelectedImage(`${import.meta.env.VITE_API_URL}/uploads/${img}`)}
+                                onClick={() => setSelectedImage(img)}
                               />
                             </div>
                           ))}
@@ -226,10 +227,10 @@ useEffect(() => {
                           {ans.questionImages && ans.questionImages.map((img, i) => (
                             <div className="col-4 mb-2" key={i}>
                               <img
-                                src={`${import.meta.env.VITE_API_URL}/uploads/${img}`}
+                                src={img}
                                 className="img-fluid border rounded"
                                 style={{ height: '120px', objectFit: 'cover', cursor: 'pointer' }}
-                                onClick={() => setSelectedImage(`${import.meta.env.VITE_API_URL}/uploads/${img}`)}
+                                onClick={() => setSelectedImage(img)}
                               />
                             </div>
                           ))}

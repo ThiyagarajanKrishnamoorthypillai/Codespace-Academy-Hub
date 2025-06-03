@@ -135,24 +135,25 @@ const ViewQuestionAdmin = () => {
                   <hr />
 
                   {/* Images Grid */}
-                  <div className="row">
-                    {question.image.map((img, idx) => (
-                      <div className="col-6 col-md-3 mb-3" key={idx}>
-                        <img
-                          src={`${import.meta.env.VITE_API_URL}/uploads/${img}`}
-                          alt={`Image ${idx}`}
-                          className="img-fluid border rounded shadow-sm"
-                          style={{
-                            height: '180px',
-                            width: '100%',
-                            objectFit: 'cover',
-                            cursor: 'pointer',
-                          }}
-                          onClick={() => setSelectedImage(`${import.meta.env.VITE_API_URL}/uploads/${img}`)}
-                        />
-                      </div>
-                    ))}
-                  </div>
+                  {/* Images Grid */}
+<div className="row">
+  {question.image.map((img, idx) => (
+    <div className="col-6 col-md-3 mb-3" key={idx}>
+      <img
+        src={img} // ✅ Use Cloudinary URL directly
+        alt={`Image ${idx}`}
+        className="img-fluid border rounded shadow-sm"
+        style={{
+          height: '180px',
+          width: '100%',
+          objectFit: 'cover',
+          cursor: 'pointer',
+        }}
+        onClick={() => setSelectedImage(img)} // ✅ Full URL already
+      />
+    </div>
+  ))}
+</div>
 
                   {/* Buttons */}
                   

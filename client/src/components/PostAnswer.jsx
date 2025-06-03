@@ -134,7 +134,7 @@ const PostAnswer = () => {
                   <div className="row mt-4">
                     {images.map((img, idx) => (
                       <div className="col-6 col-md-3 mb-3" key={idx}>
-                        <img src={`${import.meta.env.VITE_API_URL}/uploads/${img}`} alt="Question Img" className="img-fluid rounded" />
+                        <img src={img} alt="Question Img" className="img-fluid rounded" />
                       </div>
                     ))}
                   </div>
