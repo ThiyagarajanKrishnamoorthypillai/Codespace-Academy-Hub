@@ -1,0 +1,12 @@
+.error-message {
+    color: red;
+  }
+  
+  .requirement-details {
+    border: 2px solid #007bff;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #f8f9fa;
+    margin-top: 20px;
+  }
+  
