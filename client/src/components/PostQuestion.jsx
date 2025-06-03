@@ -53,7 +53,7 @@ const PostQuestion = () => {
   }
 
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/question/`, {
+    const response = await fetch(`https://codespace-backend-piac.onrender.com/uploads/${img}/question/`, {
       method: 'POST',
       headers: {
         'x-auth-token': token,
@@ -63,7 +63,7 @@ const PostQuestion = () => {
 
     if (response.ok) {
       alert("Question papers uploaded successfully!");
-      window.location.href = "view_question_admin";
+      window.location.href = "admin_home";
     } else {
       alert("Upload failed!");
     }
