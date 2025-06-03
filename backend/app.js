@@ -74,12 +74,12 @@ app.use(async (req, res, next) => {
     } else {
       console.error('❌ Invalid license info. Bypassing in production.');
       if (process.env.NODE_ENV === 'production') return next();
-      process.exit(1);
+     
     }
   } catch (error) {
     console.error('⚠️ License file missing or unreadable:', error.message);
     if (process.env.NODE_ENV === 'production') return next();
-    process.exit(1);
+   
   }
 });
 
