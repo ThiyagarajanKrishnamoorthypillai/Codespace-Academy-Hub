@@ -76,21 +76,7 @@ router.get(`/:id`, async (req, res) =>{
 })
 
 
-router.post('/',  async (req,res)=>{
-    let question = new Question({
-        
-        adminemail: req.body.adminemail,
-        course: req.body.course,
-        image:req.body.image
-        
-    })
-    question = await question.save();
 
-    if(!question)
-    return res.status(400).send('the question cannot be created!')
-    res.send(question);
-    
-})
 
 
 

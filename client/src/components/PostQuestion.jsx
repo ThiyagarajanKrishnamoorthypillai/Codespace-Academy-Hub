@@ -49,7 +49,7 @@ const PostQuestion = () => {
   data.append("status", "pending");
 
   for (let i = 0; i < formData.imageFiles.length; i++) {
-    data.append("images", formData.imageFiles[i]);
+    data.append("image", formData.imageFiles[i]);
   }
 
   try {
