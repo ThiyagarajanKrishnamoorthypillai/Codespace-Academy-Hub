@@ -31,6 +31,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Logging
 app.use(morgan('tiny'));
+app.options('*', cors()); // handle preflight requests
 
 // CORS: Allow localhost + Vercel
 app.use(cors({
@@ -40,7 +41,7 @@ app.use(cors({
   ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization','x-auth-token']
 }));
 
 // License verification
@@ -71,12 +72,12 @@ app.use(async (req, res, next) => {
     } else {
       console.error('❌ Invalid license info. Bypassing in production.');
       if (process.env.NODE_ENV === 'production') return next();
-      
+      process.exit(1);
     }
   } catch (error) {
     console.error('⚠️ License file missing or unreadable:', error.message);
     if (process.env.NODE_ENV === 'production') return next();
-  
+    process.exit(1);
   }
 });
 
