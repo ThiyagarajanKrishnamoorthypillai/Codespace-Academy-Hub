@@ -14,13 +14,13 @@ const machineId = require('node-machine-id');
 require('dotenv/config');
 
 // Static uploads
-app.use('/uploads', express.static('./public/uploads'));
+//app.use('/uploads', express.static('./public/uploads'));
 app.use('/uploads', (req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET,OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   next();
-}, express.static('public/uploads'));
+}, express.static(path.join(__dirname, 'public/uploads')));
 
 // Body & Cookie parsers
 app.use(bodyParser.json());
