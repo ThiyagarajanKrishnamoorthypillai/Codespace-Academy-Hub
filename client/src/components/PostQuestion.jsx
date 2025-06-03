@@ -53,7 +53,7 @@ const PostQuestion = () => {
   }
 
   try {
-    const response = await fetch(`https://codespace-backend-piac.onrender.com/uploads/${img}/question/`, {
+    const response = await fetch(`https://codespace-backend-piac.onrender.com/uploads/${image}/question/`, {
       method: 'POST',
       headers: {
         'x-auth-token': token,
