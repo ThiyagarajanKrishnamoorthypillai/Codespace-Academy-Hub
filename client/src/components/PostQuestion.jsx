@@ -27,7 +27,7 @@ const PostQuestion = () => {
 
   const [formData, setFormData] = useState({
     course: '',
-    image: '',
+    
     
     
   });
