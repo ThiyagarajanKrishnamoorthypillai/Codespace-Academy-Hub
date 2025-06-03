@@ -66,7 +66,7 @@ const UpdateQuestion = () => {
 
     if (response.ok) {
       alert("Updated successfully !");
-      window.location.href = "/view_question_admin";
+      window.location.href = "/admin_home/view_question_admin";
     } else {
       console.error('Update failed');
     }

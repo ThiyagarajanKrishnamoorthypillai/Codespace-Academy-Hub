@@ -58,6 +58,7 @@ function App() {
 {/* Admin Sub-Layout */}  
             <Route path="update_question/:id" element={<UpdateQuestion/>}/>
             <Route path="update_feedback_admin" element={<UpdateFeedbackAdmin/>}/>
+            <Route path="view_question_admin" element={<ViewQuestionAdmin/>}/>
 
 
 {/* User routes with layout */}
@@ -79,7 +80,6 @@ function App() {
     <Route path="post_question" element={<PostQuestion />} />
     <Route path="admin_profile" element={<AdminProfile />} />
  
-<Route path="view_question_admin" element={<ViewQuestionAdmin/>}/>
             
              <Route path="view_answer_admin" element={<ViewAnswerAdmin/>}/>
 <Route path="view_feedback_admin" element={<ViewFeedbackAdmin/>}/>
