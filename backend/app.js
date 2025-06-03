@@ -19,8 +19,6 @@ app.use('/uploads', (req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET,OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
-
   next();
 }, express.static(path.join(__dirname, 'public/uploads')));
 
@@ -74,12 +72,12 @@ app.use(async (req, res, next) => {
     } else {
       console.error('❌ Invalid license info. Bypassing in production.');
       if (process.env.NODE_ENV === 'production') return next();
-     
+      process.exit(1);
     }
   } catch (error) {
     console.error('⚠️ License file missing or unreadable:', error.message);
     if (process.env.NODE_ENV === 'production') return next();
-   
+    process.exit(1);
   }
 });
 
