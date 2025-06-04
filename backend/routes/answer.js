@@ -1,67 +1,94 @@
-// ✅ UPDATED FILE: routes/answer.js
 const express = require('express');
 const router = express.Router();
 const { Answer } = require('../models/answer');
 const auth = require('../helpers/jwt');
 const multer = require('multer');
-const path = require('path');
+const cloudinary = require('../helpers/cloudinary');
+const streamifier = require('streamifier');
 
-// Local image upload config
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, '../public/uploads'));
-  },
-  filename: function (req, file, cb) {
-    const unique = Date.now() + '-' + Math.round(Math.random() * 1e9);
-    cb(null, unique + '-' + file.originalname);
-  }
-});
+// Use multer memory storage for buffer upload to Cloudinary
+const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-// Create answer
+// POST: Submit an answer with Cloudinary upload
 router.post('/', auth, upload.array('images'), async (req, res) => {
   try {
-    const images = req.files.map(file => file.filename);
- const {
-  useremail, name, stdid, dpt, college, course, status, dateCreated,
-  questionDateCreated, questionCourse, questionImages
-} = req.body;
+    const {
+      useremail, name, stdid, dpt, college, course, status,
+      dateCreated, questionDateCreated, questionCourse, questionImages
+    } = req.body;
+
+    // Upload images to Cloudinary
+    const uploadedImageUrls = [];
+
+    for (const file of req.files) {
+      const streamUpload = () => {
+        return new Promise((resolve, reject) => {
+          const stream = cloudinary.uploader.upload_stream(
+            { folder: 'answers' },
+            (error, result) => {
+              if (result) resolve(result.secure_url);
+              else reject(error);
+            }
+          );
+          streamifier.createReadStream(file.buffer).pipe(stream);
+        });
+      };
+
+      const imageUrl = await streamUpload();
+      uploadedImageUrls.push(imageUrl);
+    }
+
+    // Parse questionImages safely
+    let parsedImages = [];
+    try {
+      parsedImages = JSON.parse(questionImages || '[]');
+    } catch (err) {
+      console.warn('Invalid JSON for questionImages:', err.message);
+    }
 
     const answer = new Answer({
-  useremail,
-  name,
-  stdid,
-  dpt,
-  college,
-  course,
-  status,
-  dateCreated,
-  questionDateCreated,
-  questionCourse,
-  questionImages: JSON.parse(questionImages || '[]'),
-  image: images
-});
+      useremail,
+      name,
+      stdid,
+      dpt,
+      college,
+      course,
+      status,
+      dateCreated,
+      questionDateCreated,
+      questionCourse,
+      questionImages: parsedImages,
+      image: uploadedImageUrls
+    });
 
     const saved = await answer.save();
-    res.status(200).send(saved);
+    res.status(200).json(saved);
   } catch (err) {
-    console.error('Error saving answer:', err);
-    res.status(500).send({ message: 'Error saving answer', error: err });
+    console.error('❌ Error saving answer:', err);
+    res.status(500).json({ message: 'Error saving answer', error: err.message });
   }
 });
 
-// Get all answers
-router.get('/', async (req, res) => {
-  const answerList = await Answer.find();
-  if (!answerList) return res.status(500).json({ success: false });
-  res.status(200).send(answerList);
+// GET: All answers
+router.get('/', auth, async (req, res) => {
+  try {
+    const answers = await Answer.find().sort({ dateCreated: -1 });
+    res.status(200).json(answers);
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to fetch answers', error: err.message });
+  }
 });
 
-// Get answer by ID
-router.get('/:id', async (req, res) => {
-  const answer = await Answer.findById(req.params.id);
-  if (!answer) return res.status(500).json({ success: false });
-  res.send(answer);
+// GET: Answers by email (optional)
+router.get('/user/:email', auth, async (req, res) => {
+  try {
+    const email = req.params.email;
+    const answers = await Answer.find({ useremail: email });
+    res.status(200).json(answers);
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to fetch user answers', error: err.message });
+  }
 });
 
 module.exports = router;
