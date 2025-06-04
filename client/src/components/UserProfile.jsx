@@ -18,6 +18,8 @@ import imgBg from "./img/bg-img/9.png";
 import Logout from './Logout.jsx';
 import Title from './Title.jsx';
 import axios from 'axios';
+import AppFooter from './AppFooter.jsx';
+import AppHeader from './AppHeader.jsx';
 
 
 const UserProfile = () => {
@@ -76,7 +78,7 @@ const UserProfile = () => {
     <div>
         <div>
       
-      
+      <AppHeader/>
     <div className="page-content-wrapper">
       <div className="top-products-area py-0">
         <div className="container">
@@ -157,33 +159,7 @@ const UserProfile = () => {
     </div>
 
 
-            
-            <div className="footer-nav-area" id="footerNav" style={{ backgroundColor: "#fff", borderTop: "1px solid #ddd", height:"fit-content", }}>
-             <div className="container h-100 px-0">
-               <div className="suha-footer-nav h-100 d-flex flex-column justify-content-between">
-           
-                 {/* Navigation Links */}
-                 <ul className="h-100 d-flex align-items-center justify-content-center ps-0 mb-2">
-                   <li className="active">
-                     <Link to="/user_home"><i className="lni lni-home"></i> Home</Link>
-                   </li>
-                   <li><Logout /></li>
-                 </ul>
-           
-                 {/* Footer Bottom Row */}
-                 <div className="d-flex justify-content-between align-items-center w-100 px-0 pb-0 text-dark medium">
-                   <span>© Codespace Solutions | All Rights Reserved</span>
-                   <span className="d-flex gap-4">
-             <a href="https://wa.me/" target="_blank" rel="noreferrer"><i className="fa fa-whatsapp fa-lg text-success"></i></a>
-             <a href="https://facebook.com" target="_blank" rel="noreferrer"><i className="fa fa-facebook fa-lg text-primary"></i></a>
-             <a href="https://instagram.com" target="_blank" rel="noreferrer"><i className="fa fa-instagram fa-lg text-danger"></i></a>
-           </span>
-           
-                 </div>
-           
-               </div>
-             </div>
-           </div>
+            <AppFooter/>
 
 
 

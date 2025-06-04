@@ -5,7 +5,7 @@ const cloudinary = require('../helpers/cloudinary');
 const streamifier = require('streamifier');
 const Mark = require('../models/mark');
 const auth = require('../helpers/jwt');
- const Answer = require('../models/answer');
+const { Answer } = require('../models/answer');
 // Multer config for memory storage (for stream upload to Cloudinary)
 const storage = multer.memoryStorage();
 const upload = multer({ storage });

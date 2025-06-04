@@ -6,7 +6,10 @@ import imgSmall from "./img/core-img/logo-small.png";
 import imgBg from "./img/bg-img/9.png";
 import Logout from './Logout.jsx';
 import Title from './Title.jsx';
-
+import AppFooter from './AppFooter.jsx';
+import AppHeader from './AppHeader.jsx';
+import AppHeader from "./AppHeader";
+import AppFooter from "./AppFooter";
 const ViewMarksUser = () => {
   const [markData, setMarkData] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -39,7 +42,7 @@ const ViewMarksUser = () => {
 
   return (
     <div>
-     
+     <AppHeader/>
       <div className="page-content-wrapper">
         <div className="top-products-area py-0">
           <div className="container">
@@ -101,16 +104,9 @@ const ViewMarksUser = () => {
           </div>
         </div>
 
-        <div className="footer-nav-area" id="footerNav">
-          <div className="container h-100 px-0">
-            <div className="suha-footer-nav h-100">
-              <ul className="h-100 d-flex align-items-center justify-content-between ps-0">
-                <li><Link to="/user_home"><i className="lni lni-home"></i>Home</Link></li>
-                <li><Logout /></li>
-              </ul>
-            </div>
-          </div>
-        </div>
+     <AppFooter/>
+
+
       </div>
     </div>
   );

@@ -8,6 +8,7 @@ const PostMarkAdmin = () => {
   const [selectedId, setSelectedId] = useState('');
   const [imageMark, setImageMark] = useState([]);
   const navigate = useNavigate();
+const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     axios.get(`${import.meta.env.VITE_API_URL}/answer/`, {
@@ -22,8 +23,10 @@ const PostMarkAdmin = () => {
   };
 
   const handleSubmit = async () => {
-    if (!selectedId || imageMark.length === 0)
-      return alert('Please select an answer and upload at least one image');
+    if (!selectedId || imageMark.length === 0) {
+  alert('Please select an answer and upload at least one image');
+  return;
+}
 
     const adminEmailFromCookie = Cookies.get('adminemail');
     if (!adminEmailFromCookie) return alert("Admin email not found in cookies");
@@ -32,6 +35,7 @@ const PostMarkAdmin = () => {
     formData.append('answerId', selectedId);
     formData.append('adminemail', adminEmailFromCookie);
     imageMark.forEach(file => formData.append('imageMark', file));
+setLoading(true);
 
     try {
       await axios.post(`${import.meta.env.VITE_API_URL}/mark/post`, formData, {
@@ -43,13 +47,15 @@ const PostMarkAdmin = () => {
       });
 
       alert('Marks posted successfully');
-      navigate('/admin_home');
+setTimeout(() => navigate('/admin_home'), 1000);
       setSelectedId('');
       setImageMark([]);
     } catch (error) {
       console.error(error);
       alert('Failed to post marks');
-    }
+    }finally {
+  setLoading(false);
+}
   };
 
   return (
