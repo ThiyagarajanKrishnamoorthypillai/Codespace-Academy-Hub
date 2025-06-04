@@ -102,10 +102,7 @@ const PostAnswer = () => {
           </div>
         </div>
         <div className="mb-3">
-          <label>Status</label>
-          <select name="status" className="form-control" onChange={handleChange} required>
-            
-          </select>
+          
         </div>
         <div className="mb-3">
           <label>Upload Answer Images</label>
