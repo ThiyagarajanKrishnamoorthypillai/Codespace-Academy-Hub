@@ -62,7 +62,7 @@ const PostAnswer = () => {
         {
           headers: {
             'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${token}`
+            'x-auth-token': token
           }
         }
       );
@@ -74,7 +74,8 @@ const PostAnswer = () => {
     } finally {
       setUploading(false);
     }
-  };
+  };console.log(localStorage.getItem('token'));
+
 
   return (
     <div className="container mt-5 mb-5">
@@ -103,9 +104,7 @@ const PostAnswer = () => {
         <div className="mb-3">
           <label>Status</label>
           <select name="status" className="form-control" onChange={handleChange} required>
-            <option value="Pending">Pending</option>
-            <option value="Completed">Completed</option>
-            <option value="On-Progress">On-Progress</option>
+            
           </select>
         </div>
         <div className="mb-3">

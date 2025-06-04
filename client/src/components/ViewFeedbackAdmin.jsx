@@ -76,7 +76,7 @@ const ViewFeedbackAdmin = () => {
       {(Array.isArray(fb.image) ? fb.image : [fb.image]).map((img, i) => (
         <img
           key={i}
-          src={`${import.meta.env.VITE_API_URL}/uploads/${img}`}
+          src={img}
           alt="feedback"
           style={{
             width: '60px',
