@@ -6,7 +6,6 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Logout from './Logout.jsx';
 import AppFooter from '../components/AppFooter';
-import AppHeader from '../components/AppHeader';
 import "./css/bootstrap.min.css";
 import "./css/style.css";
 import "./js/bootstrap.bundle.min.js";
@@ -45,7 +44,6 @@ const ViewAnswerUser = () => {
 
   return (
     <div>
-            <AppHeader />
 
       {/* Page Content */}
       <div className="page-content-wrapper">

@@ -7,7 +7,6 @@ import imgBg from "./img/bg-img/9.png";
 import Logout from './Logout.jsx';
 import Title from './Title.jsx';
 import AppFooter from '../components/AppFooter';
-import AppHeader from '../components/AppHeader';
 
 const ViewMarksUser = () => {
   const [markData, setMarkData] = useState([]);
@@ -41,7 +40,6 @@ const ViewMarksUser = () => {
 
   return (
     <div>
-     <AppHeader/>
       <div className="page-content-wrapper">
         <div className="top-products-area py-0">
           <div className="container">
@@ -65,21 +63,50 @@ const ViewMarksUser = () => {
                       
                       <p><b>Date:</b> {new Date(mark.dateMark).toLocaleDateString()}</p>
                       <p><b>Mark's:</b></p>
-                      <img src={mark.imageMark} alt="mark" className="img-fluid rounded" style={{ maxWidth: "100%", cursor: "pointer" }} onClick={() => setSelectedImage(`${import.meta.env.VITE_API_URL}/${mark.imageMark.replace(img)}`)} />
+<div className="d-flex flex-wrap gap-2">
+  {mark.imageMark?.map((img, i) => (
+    <img
+      key={i}
+      src={img}
+      alt={`Mark ${i}`}
+      className="img-fluid rounded"
+      style={{ maxWidth: "100px", cursor: "pointer" }}
+      onClick={() => setSelectedImage(img)}
+    />
+  ))}
+</div>
 
-                      <p className="mt-2"><b>Answer Images:</b></p>
-                      <div className="d-flex flex-wrap gap-2">
-                        {mark.answerImages?.map((img, i) => (
-                          <img key={i} src={mark.imageMark} alt="Answer" width="60" style={{ cursor: "pointer" }} onClick={() => setSelectedImage(img)} />
-                        ))}
-                      </div>
+                     
+<p className="mt-2"><b>Answer Images:</b></p>
+<div className="d-flex flex-wrap gap-2">
+  {mark.answerImages?.map((img, i) => (
+    <img
+      key={i}
+      src={img}
+      alt={`Answer ${i}`}
+      width="60"
+      style={{ cursor: "pointer" }}
+      onClick={() => setSelectedImage(img)}
+    />
+  ))}
+</div>
 
-                      <p className="mt-2"><b>Question Images:</b></p>
-                      <div className="d-flex flex-wrap gap-2">
-                        {mark.questionImages?.map((img, i) => (
-                          <img key={i} src={mark.imageMark} alt="Question" width="60" style={{ cursor: "pointer" }} onClick={() => setSelectedImage(img)} />
-                        ))}
-                      </div>
+<p className="mt-2"><b>Question Images:</b></p>
+<div className="d-flex flex-wrap gap-2">
+  {mark.questionImages?.map((img, i) => (
+    <img
+      key={i}
+      src={img}
+      alt={`Question ${i}`}
+      width="60"
+      style={{ cursor: "pointer" }}
+      onClick={() => setSelectedImage(img)}
+    />
+  ))}
+</div>
+
+
+
                     </div>
                   </div>
                 </div>
