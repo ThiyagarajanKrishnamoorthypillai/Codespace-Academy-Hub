@@ -13,6 +13,26 @@ const machineId = require('node-machine-id');
 // ENV
 require('dotenv/config');
 
+
+// ✅ Proper CORS setup for Render (backend) + Vercel (frontend)
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://codespace-academy-hub.vercel.app'
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token']
+}));
+{/*
 // Static uploads
 //app.use('/uploads', express.static('./public/uploads'));
 app.use('/uploads', (req, res, next) => {
@@ -21,7 +41,7 @@ app.use('/uploads', (req, res, next) => {
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   next();
 }, express.static(path.join(__dirname, 'public/uploads')));
-
+*/}
 // Body & Cookie parsers
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

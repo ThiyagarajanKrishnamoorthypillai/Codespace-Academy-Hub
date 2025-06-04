@@ -6,11 +6,13 @@ import { useNavigate } from 'react-router-dom';
 const PostMarkAdmin = () => {
   const [answers, setAnswers] = useState([]);
   const [selectedId, setSelectedId] = useState('');
-  const [imageMark, setImageMark] = useState([]); // now an array
+  const [imageMark, setImageMark] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`${import.meta.env.VITE_API_URL}/answer/`)
+    axios.get(`${import.meta.env.VITE_API_URL}/answer/`, {
+      withCredentials: true,
+    })
       .then(res => setAnswers(res.data))
       .catch(err => console.error(err));
   }, []);
@@ -29,20 +31,19 @@ const PostMarkAdmin = () => {
     const formData = new FormData();
     formData.append('answerId', selectedId);
     formData.append('adminemail', adminEmailFromCookie);
-    imageMark.forEach(file => formData.append('imageMark', file)); // append each file
+    imageMark.forEach(file => formData.append('imageMark', file));
 
     try {
-     await axios.post(`${import.meta.env.VITE_API_URL}/mark/post`, formData, {
-  headers: {
-    'Content-Type': 'multipart/form-data',
-    'x-auth-token': localStorage.getItem('token')  // ✅ Add this
-  },
-  withCredentials: true
-});
+      await axios.post(`${import.meta.env.VITE_API_URL}/mark/post`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'x-auth-token': localStorage.getItem('token')  // ✅ Important
+        },
+        withCredentials: true
+      });
 
       alert('Marks posted successfully');
       navigate('/admin_home');
-
       setSelectedId('');
       setImageMark([]);
     } catch (error) {
