@@ -1,52 +1,57 @@
 const express = require('express');
 const router = express.Router();
+const multer = require('multer');
 const { Answer } = require('../models/answer');
 const auth = require('../helpers/jwt');
-const multer = require('multer');
 const cloudinary = require('../helpers/cloudinary');
-const streamifier = require('streamifier');
-const authenticate = require('../middleware/authMiddleware'); // or wherever your auth is
+const path = require('path');
+const fs = require('fs');
 
-// Use multer memory storage for buffer upload to Cloudinary
+// Use multer memory storage to directly access file buffer
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-// POST: Submit an answer with Cloudinary upload
-router.post('/', authenticate, upload.array('answerImages'), async (req, res) => {
+// POST /api/v1/answer — Create new answer with Cloudinary upload
+router.post('/', auth, upload.array('images'), async (req, res) => {
   try {
     const {
-      useremail, name, stdid, dpt, college, course, status,
-      dateCreated, questionDateCreated, questionCourse, questionImages
+      useremail,
+      name,
+      stdid,
+      dpt,
+      college,
+      course,
+      status = 'Pending',
+      dateCreated,
+      questionDateCreated,
+      questionCourse,
+      questionImages
     } = req.body;
 
-    // Upload images to Cloudinary
-    const uploadedImageUrls = [];
-
+    // Upload each image to Cloudinary
+    const uploadedImages = [];
     for (const file of req.files) {
-      const streamUpload = () => {
-        return new Promise((resolve, reject) => {
-          const stream = cloudinary.uploader.upload_stream(
-            { folder: 'answers' },
-            (error, result) => {
-              if (result) resolve(result.secure_url);
-              else reject(error);
-            }
-          );
-          streamifier.createReadStream(file.buffer).pipe(stream);
-        });
-      };
+      const uploadResult = await cloudinary.uploader.upload_stream(
+        {
+          folder: 'answers'
+        },
+        (error, result) => {
+          if (error) throw new Error('Cloudinary Upload Failed');
+          uploadedImages.push(result.secure_url);
+        }
+      );
 
-      const imageUrl = await streamUpload();
-      uploadedImageUrls.push(imageUrl);
+      // Send buffer to stream
+      const stream = cloudinary.uploader.upload_stream((err, result) => {
+        if (err) return;
+        uploadedImages.push(result.secure_url);
+      });
+
+      stream.end(file.buffer);
     }
 
-    // Parse questionImages safely
-    let parsedImages = [];
-    try {
-      parsedImages = JSON.parse(questionImages || '[]');
-    } catch (err) {
-      console.warn('Invalid JSON for questionImages:', err.message);
-    }
+    // Parse questionImages JSON safely
+    const parsedQuestionImages = questionImages ? JSON.parse(questionImages) : [];
 
     const answer = new Answer({
       useremail,
@@ -59,36 +64,46 @@ router.post('/', authenticate, upload.array('answerImages'), async (req, res) =>
       dateCreated,
       questionDateCreated,
       questionCourse,
-      questionImages: parsedImages,
-      image: uploadedImageUrls
+      questionImages: parsedQuestionImages,
+      image: uploadedImages
     });
 
-    const saved = await answer.save();
-    res.status(200).json(saved);
+    const savedAnswer = await answer.save();
+    res.status(200).json(savedAnswer);
   } catch (err) {
     console.error('❌ Error saving answer:', err);
-    res.status(500).json({ message: 'Error saving answer', error: err.message });
+    res.status(500).json({ message: 'Internal server error', error: err.message });
   }
 });
 
-// GET: All answers
-router.get('/', auth, async (req, res) => {
+// GET /api/v1/answer — View all answers
+router.get('/', async (req, res) => {
   try {
     const answers = await Answer.find().sort({ dateCreated: -1 });
     res.status(200).json(answers);
   } catch (err) {
-    res.status(500).json({ message: 'Failed to fetch answers', error: err.message });
+    res.status(500).json({ success: false, error: err.message });
   }
 });
 
-// GET: Answers by email (optional)
-router.get('/user/:email', auth, async (req, res) => {
+// GET /api/v1/answer/email/:email — Filter answers by email
+router.get('/email/:email', async (req, res) => {
   try {
-    const email = req.params.email;
-    const answers = await Answer.find({ useremail: email });
-    res.status(200).json(answers);
+    const userAnswers = await Answer.find({ useremail: req.params.email }).sort({ dateCreated: -1 });
+    res.status(200).json(userAnswers);
   } catch (err) {
-    res.status(500).json({ message: 'Failed to fetch user answers', error: err.message });
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// GET /api/v1/answer/:id — View one answer
+router.get('/:id', async (req, res) => {
+  try {
+    const answer = await Answer.findById(req.params.id);
+    if (!answer) return res.status(404).json({ success: false, message: 'Answer not found' });
+    res.status(200).json(answer);
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
   }
 });
 

@@ -1,129 +1,120 @@
+// ✅ UPDATED FILE: PostAnswer.jsx
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-import { toast } from 'react-toastify';
+import { useNavigate, useLocation } from 'react-router-dom';
+import Title from './Title';
 
 const PostAnswer = () => {
-  const navigate = useNavigate();
-  const [cookies] = useCookies(['token', 'email', 'course']);
+  const [cookies] = useCookies(['email', 'course']);
   const [formData, setFormData] = useState({
     name: '',
     stdid: '',
     dpt: '',
-    status: 'Pending',
+    college: '',
+    status: 'Pending'
   });
-  const [answerImages, setAnswerImages] = useState([]);
+  const [images, setImages] = useState([]);
+  const [uploading, setUploading] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const { date, course, images: questionImages } = location.state || {};
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleImageChange = (e) => {
-    setAnswerImages([...e.target.files]);
+  const handleFileChange = (e) => {
+    setImages([...e.target.files]);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!cookies.email || !cookies.course) {
-      toast.error('Login and select a course before submitting.');
+    setUploading(true);
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert('Not authenticated.');
       return;
     }
 
-    const data = new FormData();
-    data.append('name', formData.name);
-    data.append('stdid', formData.stdid);
-    data.append('dpt', formData.dpt);
-    data.append('email', cookies.email);
-    data.append('course', cookies.course);
-    data.append('status', formData.status);
-    answerImages.forEach((file) => data.append('answerImages', file));
+    const payload = new FormData();
+    payload.append('useremail', cookies.email);
+    payload.append('course', cookies.course);
+    payload.append('college', formData.college);
+    payload.append('name', formData.name);
+    payload.append('stdid', formData.stdid);
+    payload.append('dpt', formData.dpt);
+    payload.append('status', formData.status);
+    payload.append('dateCreated', new Date().toISOString());
+    payload.append('questionDateCreated', date);
+    payload.append('questionCourse', course);
+    payload.append('questionImages', JSON.stringify(questionImages));
+
+    images.forEach((img) => payload.append('images', img));
 
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/answer`, data, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${cookies.token}`,
-        },
-      });
-      toast.success('Answer submitted successfully');
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/answer`,
+        payload,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+      alert('Answer submitted successfully!');
       navigate('/view_answer_user');
-    } catch (error) {
-      console.error('Error uploading:', error);
-      toast.error('Submission failed');
+    } catch (err) {
+      console.error('Error uploading:', err);
+      alert('Submission failed. Check console for details.');
+    } finally {
+      setUploading(false);
     }
   };
 
   return (
-    <div className="container mt-4">
-      <h3 className="text-center text-primary mb-4">Submit Your Answer</h3>
-      <form onSubmit={handleSubmit} className="bg-light p-4 shadow rounded">
-        <div className="mb-3">
-          <label>Name</label>
-          <input
-            type="text"
-            className="form-control"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
+    <div className="container mt-5 mb-5">
+      <Title title="Submit Your Answer" />
+      <form onSubmit={handleSubmit} className="border rounded p-4 shadow bg-white">
+        <div className="row mb-3">
+          <div className="col-md-6">
+            <label>Name</label>
+            <input type="text" name="name" className="form-control" onChange={handleChange} required />
+          </div>
+          <div className="col-md-6">
+            <label>Student ID</label>
+            <input type="text" name="stdid" className="form-control" onChange={handleChange} required />
+          </div>
         </div>
-
-        <div className="mb-3">
-          <label>Student ID</label>
-          <input
-            type="text"
-            className="form-control"
-            name="stdid"
-            value={formData.stdid}
-            onChange={handleChange}
-            required
-          />
+        <div className="row mb-3">
+          <div className="col-md-6">
+            <label>Department</label>
+            <input type="text" name="dpt" className="form-control" onChange={handleChange} required />
+          </div>
+          <div className="col-md-6">
+            <label>College</label>
+            <input type="text" name="college" className="form-control" onChange={handleChange} required />
+          </div>
         </div>
-
-        <div className="mb-3">
-          <label>Department</label>
-          <input
-            type="text"
-            className="form-control"
-            name="dpt"
-            value={formData.dpt}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
         <div className="mb-3">
           <label>Status</label>
-          <select
-            className="form-select"
-            name="status"
-            value={formData.status}
-            onChange={handleChange}
-          >
+          <select name="status" className="form-control" onChange={handleChange} required>
             <option value="Pending">Pending</option>
             <option value="Completed">Completed</option>
             <option value="On-Progress">On-Progress</option>
           </select>
         </div>
-
         <div className="mb-3">
-          <label>Answer Images</label>
-          <input
-            type="file"
-            className="form-control"
-            multiple
-            accept="image/*"
-            onChange={handleImageChange}
-            required
-          />
+          <label>Upload Answer Images</label>
+          <input type="file" multiple accept="image/*" className="form-control" onChange={handleFileChange} required />
         </div>
-
-        <button type="submit" className="btn btn-success w-100">Submit Answer</button>
+        <button type="submit" className="btn btn-success w-100" disabled={uploading}>
+          {uploading ? 'Submitting...' : 'Submit Answer'}
+        </button>
       </form>
     </div>
   );
