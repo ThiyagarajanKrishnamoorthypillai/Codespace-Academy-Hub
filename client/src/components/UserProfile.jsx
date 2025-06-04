@@ -18,8 +18,8 @@ import imgBg from "./img/bg-img/9.png";
 import Logout from './Logout.jsx';
 import Title from './Title.jsx';
 import axios from 'axios';
-import AppFooter from './AppFooter.jsx';
-import AppHeader from './AppHeader.jsx';
+import AppFooter from '../components/AppFooter';
+import AppFooter from '../components/AppHeader';
 
 
 const UserProfile = () => {

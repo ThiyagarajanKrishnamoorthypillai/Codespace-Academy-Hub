@@ -11,8 +11,8 @@ import "./css/magnific-popup.css";
 import "./css/style.css";
 import "./js/jquery.min.js";  
 import "./js/bootstrap.bundle.min.js";
-import AppHeader from "./AppHeader";
-import AppFooter from "./AppFooter";
+import AppFooter from '../components/AppFooter';
+import AppFooter from '../components/AppHeader';
 {/*
 import "./js/waypoints.min.js";
 import "./js/jquery.easing.min.js";

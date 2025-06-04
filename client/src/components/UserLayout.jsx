@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import logo from './img/logo/logo trademark.png';
 import { useCookies } from 'react-cookie';
-import AppFooter from './AppFooter'; // add this at the top
-import AppHeader from './AppHeader';
-
+import AppFooter from '../components/AppFooter';
+import AppFooter from '../components/AppHeader';
 
 const UserLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);

@@ -8,8 +8,8 @@ import "./css/font-awesome.min.css";
 import "./css/lineicons.min.css";
 import "./css/magnific-popup.css";
 import "./css/style.css";
-import AppHeader from "./AppHeader";
-import AppFooter from "./AppFooter";
+import AppFooter from '../components/AppFooter';
+import AppFooter from '../components/AppHeader';
 import "./js/jquery.min.js";  
 import "./js/bootstrap.bundle.min.js";
 

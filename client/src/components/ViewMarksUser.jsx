@@ -6,8 +6,8 @@ import imgSmall from "./img/core-img/logo-small.png";
 import imgBg from "./img/bg-img/9.png";
 import Logout from './Logout.jsx';
 import Title from './Title.jsx';
-import AppFooter from './AppFooter.jsx';
-import AppHeader from './AppHeader.jsx';
+import AppFooter from '../components/AppFooter';
+import AppFooter from '../components/AppHeader';
 
 const ViewMarksUser = () => {
   const [markData, setMarkData] = useState([]);
