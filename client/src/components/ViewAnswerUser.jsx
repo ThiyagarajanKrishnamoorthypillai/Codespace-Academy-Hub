@@ -10,7 +10,6 @@ import AppFooter from "./AppFooter";
 import "./css/bootstrap.min.css";
 import "./css/style.css";
 import "./js/bootstrap.bundle.min.js";
-import AppFooter from './AppFooter.jsx';
 
 Modal.setAppElement('#root');
 
