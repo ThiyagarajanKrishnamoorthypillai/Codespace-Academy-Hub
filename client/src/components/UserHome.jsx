@@ -25,6 +25,7 @@ import Title from './Title';
 const UserHome = () => {
   const [cookies] = useCookies(['name', 'email']);
   const userName = cookies.name || 'User';
+   const course = cookies.course || 'User';
   const userEmail = cookies.email || '';
   const [sessionInfo, setSessionInfo] = useState(null);
   const [remainingTime, setRemainingTime] = useState('');
@@ -94,6 +95,7 @@ const UserHome = () => {
           />
           <h4 className="d-inline fw-bold text-primary mb-0">
             Welcome, <span className="text-success">{userName}</span>
+             Course, <span className="text-success">{course}</span>
           </h4>
         </div>
       </div>
