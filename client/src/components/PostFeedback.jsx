@@ -12,7 +12,6 @@ import "./css/style.css";
 import "./js/jquery.min.js";  
 import "./js/bootstrap.bundle.min.js";
 import AppFooter from '../components/AppFooter';
-import AppHeader from '../components/AppHeader';
 {/*
 import "./js/waypoints.min.js";
 import "./js/jquery.easing.min.js";
@@ -107,7 +106,6 @@ const handleSubmit = (e) => {
   return (
     <div>
         <div>
-      <AppHeader />
        
     <div className="page-content-wrapper">
       <div className="top-products-area py-3">
