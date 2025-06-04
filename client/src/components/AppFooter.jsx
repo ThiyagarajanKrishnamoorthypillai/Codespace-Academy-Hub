@@ -18,8 +18,8 @@ const AppFooter = () => {
     >
       <span className="text-muted">© Codespace Solutions | All Rights Reserved</span>
       <span className="text-muted">
-        <a href="https://www.instagram.com/codespace" className="text-decoration-none text-muted me-3" target="_blank" rel="noopener noreferrer">Instagram</a>
-        <a href="https://www.linkedin.com/company/codespace" className="text-decoration-none text-muted me-3" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        
+        <a href="https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://in.linkedin.com/company/codespace-solutions&ved=2ahUKEwjqpvaZxNeNAxUTh68BHWrCNKEQjjh6BAgdEAE&usg=AOvVaw0IF9suw-kMgOp1NjNq4hR7" className="text-decoration-none text-muted me-3" target="_blank" rel="noopener noreferrer">LinkedIn</a>
         v1.0.0
       </span>
     </footer>

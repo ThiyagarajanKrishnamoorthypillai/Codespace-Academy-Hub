@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import logo from './img/logo/logo trademark.png';
 import { useCookies } from 'react-cookie';
+import AppFooter from './AppFooter'; // add this at the top
+import AppHeader from './AppHeader';
 
 
 const UserLayout = () => {
@@ -38,59 +40,64 @@ const handleLogout = () => {
   return (
     <>
       {/* Sidebar */}
-      <div
-        className="d-flex flex-column justify-content-between bg-white border-end px-4 py-4 shadow-sm"
-        style={{
-          width: '300px',
-          height: '100vh',
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          zIndex: 1000,
-        }}
-      >
-        <div>
-          <div className="text-center mb-4">
-            <img src={logo} alt="Logo" style={{ width: '500px' }} />
-            <h6 className="mt-1  text-dark">Codespace Academy Hub</h6>
-          </div>
+<div
+  className="d-flex flex-column justify-content-between"
+  style={{
+    width: '300px',
+    height: '100vh',
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    zIndex: 1000,
+    background: 'linear-gradient(to bottom, #e3f2fd, #f9f9ff)',
+    borderRight: '2px solid #cfe2ff',
+    overflowY: 'auto',
+  }}
+>
+  <div>
+    <div className="text-center mb-4 pt-4">
+      <img src={logo} alt="Logo" style={{ width: '80%' }} />
+      <h6 className="mt-2 text-dark fw-semibold">Codespace Academy Hub</h6>
+    </div>
 
-          <nav className="d-flex flex-column gap-3 mb-5">
-            {navItems.map(({ path, label }) => (
-              <Link
-                key={path}
-                to={path}
-                className={`text-decoration-none px-2 py-2 rounded fw-medium ${
-                  location.pathname === path
-                    ? 'text-primary border-start border-4 border-primary bg-light'
-                    : 'text-dark'
-                }`}
-                style={{
-                  transition: 'all 0.2s ease-in-out',
-                  paddingLeft: '1rem'
-                }}
-              >
-                {label}
-              </Link>
-            ))}
-          </nav>
-        </div>
+    <nav className="d-flex flex-column gap-2 px-3">
+      {navItems.map(({ path, label }) => (
+        <Link
+          key={path}
+          to={path}
+          className={`text-decoration-none px-3 py-2 rounded fw-medium ${
+            location.pathname === path
+              ? 'text-primary border-start border-4 border-primary bg-light'
+              : 'text-dark'
+          }`}
+          style={{
+            transition: 'all 0.2s ease-in-out',
+            fontSize: '15px',
+          }}
+        >
+          {label}
+        </Link>
+      ))}
+    </nav>
+  </div>
 
-        <div>
-          <button
-            onClick={handleLogout}
-            className="btn w-100 text-danger fw-semibold py-2 px-3 rounded-pill logout-btn"
-            style={{
-              backgroundColor: '#f8d7da',
-              border: '1px solid #f5c2c7',
-              transition: 'all 0.2s ease-in-out',
-              textAlign: 'center',
-            }}
-          >
-            Logout
-          </button>
-        </div>
-      </div>
+  <div className="text-center p-3">
+    <button
+      onClick={handleLogout}
+      className="btn text-danger text-decoration-underline fw-semibold w-100"
+      style={{
+        backgroundColor: 'transparent',
+        border: 'none',
+        transition: 'background-color 0.2s ease-in-out',
+      }}
+      onMouseOver={(e) => (e.currentTarget.style.backgroundColor = '#fcebea')}
+      onMouseOut={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
+    >
+      Logout
+    </button>
+  </div>
+</div>
+
 
       {/* Right Content */}
       <div
@@ -102,7 +109,7 @@ const handleLogout = () => {
           padding: '24px',
           paddingBottom: '70px', // space for fixed footer
         }}
-      >
+      > <AppHeader />
         <div style={{ flex: 1, overflowY: 'auto' }}>
           <button
             className="btn btn-outline-secondary mb-3 d-md-none"
@@ -115,40 +122,8 @@ const handleLogout = () => {
       </div>
 
       {/* Sticky Footer Below Right Content Only */}
-      <footer
-        className="d-flex justify-content-between align-items-center px-4 py-2 bg-white border-top shadow-sm"
-        style={{
-          fontFamily: 'Poppins, sans-serif',
-          fontSize: '14px',
-          position: 'fixed',
-          bottom: 0,
-          left: '300px', // starts after sidebar
-          right: 0,
-          height: '48px',
-          zIndex: 999,
-        }}
-      >
-        <span className="text-muted">© Codespace Solutions | All Rights Reserved</span>
-        <span className="text-muted">
-          <a
-            href="https://www.instagram.com/codespace"
-            className="text-decoration-none text-muted me-3"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Instagram
-          </a>
-          <a
-            href="https://www.linkedin.com/company/codespace"
-            className="text-decoration-none text-muted me-3"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            LinkedIn
-          </a>
-          v1.0.0
-        </span>
-      </footer>
+      <AppFooter />
+
     </>
   );
 };

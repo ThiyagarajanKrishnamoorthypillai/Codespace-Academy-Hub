@@ -66,7 +66,7 @@ router.post('/google-login', async (req, res) => {
     await user.save();
   }
 
-  return res.status(200).json({ user });
+return res.status(200).json({ user, firstTime: !user.course });
 });
 
 // ✅ PUT /update-course – MUST BE ABOVE `/:id`

@@ -38,17 +38,20 @@ const Login = () => {
     <GoogleOAuthProvider clientId="502137770921-hge1c2omjad4e3r0t2prrg1cfn3705cm.apps.googleusercontent.com">
       <AppHeader />
       <div
-        className="d-flex align-items-center justify-content-center text-center"
-        style={{
-          minHeight: 'calc(100vh - 128px)',
-          background: 'linear-gradient(to right, #d6e6f2, #f0f4ff)'
-        }}
-      >
-        <div className="p-4 bg-white shadow rounded" style={{ width: '100%', maxWidth: '400px' }}>
-          <h5 className="mb-3 text-primary fw-semibold">Login with Google</h5>
-          <GoogleLogin onSuccess={handleSuccess} onError={() => alert("Login failed")} />
-        </div>
-      </div>
+  className="container d-flex align-items-center justify-content-center"
+  style={{
+    minHeight: 'calc(100vh - 128px)',
+    background: 'linear-gradient(to right, #d6e6f2, #f0f4ff)'
+  }}
+>
+  <div className="w-100" style={{ maxWidth: '400px' }}>
+    <div className="p-4 bg-white shadow rounded text-center">
+      <h5 className="mb-3 text-primary fw-semibold">Login with Google</h5>
+      <GoogleLogin onSuccess={handleSuccess} onError={() => alert("Login failed")} />
+    </div>
+  </div>
+</div>
+
       <AppFooter />
     </GoogleOAuthProvider>
   );
