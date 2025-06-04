@@ -8,8 +8,7 @@ import Logout from './Logout.jsx';
 import Title from './Title.jsx';
 import AppFooter from './AppFooter.jsx';
 import AppHeader from './AppHeader.jsx';
-import AppHeader from "./AppHeader";
-import AppFooter from "./AppFooter";
+
 const ViewMarksUser = () => {
   const [markData, setMarkData] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
