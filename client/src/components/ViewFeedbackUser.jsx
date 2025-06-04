@@ -9,7 +9,6 @@ import "./css/lineicons.min.css";
 import "./css/magnific-popup.css";
 import "./css/style.css";
 import AppFooter from '../components/AppFooter';
-import AppHeader from '../components/AppHeader';
 import "./js/jquery.min.js";  
 import "./js/bootstrap.bundle.min.js";
 
@@ -71,7 +70,6 @@ const ViewFeedbackUser = () => {
     <div>
         <div>
       
-              <AppHeader />
 
     <div className="page-content-wrapper">
       <div className="top-products-area py-3">
