@@ -1,27 +1,44 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
-const path = require('path');
-const { Answer } = require('../models/answer');
+const cloudinary = require('../helpers/cloudinary');
+const streamifier = require('streamifier');
 const Mark = require('../models/mark');
+const auth = require('../helpers/jwt');
 
-// Multer config
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, './public/uploads/'),
-  filename: (req, file, cb) => cb(null, Date.now() + '-' + file.originalname)
-});
+// Multer config for memory storage (for stream upload to Cloudinary)
+const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-router.post('/post', upload.single('imageMark'), async (req, res) => {
+// POST: Upload imageMark(s) and save mark entry
+router.post('/post', auth, upload.array('imageMark'), async (req, res) => {
   try {
-    const { answerId } = req.body;
-    const imageMark = req.file?.path || '';
-const adminemail = req.body.adminemail;
+    const { answerId, adminemail } = req.body;
+    if (!answerId || !req.files || req.files.length === 0 || !adminemail) {
+      return res.status(400).json({ message: "Missing fields" });
+    }
 
-    const answer = await Answer.findById(answerId);
-    if (!answer) return res.status(404).json({ error: 'Answer not found' });
+    const answer = await require('../models/answer').findById(answerId);
+    if (!answer) return res.status(404).json({ message: "Answer not found" });
 
-    const newMark = new Mark({
+    // Upload all imageMark[] files to Cloudinary
+    const imageMarkUrls = [];
+    for (const file of req.files) {
+      const streamUpload = () =>
+        new Promise((resolve, reject) => {
+          const stream = cloudinary.uploader.upload_stream({ folder: 'marks' }, (error, result) => {
+            if (result) resolve(result.secure_url);
+            else reject(error);
+          });
+          streamifier.createReadStream(file.buffer).pipe(stream);
+        });
+
+      const imageUrl = await streamUpload();
+      imageMarkUrls.push(imageUrl);
+    }
+
+    // Save mark record
+    const mark = new Mark({
       useremail: answer.useremail,
       name: answer.name,
       stdid: answer.stdid,
@@ -33,63 +50,27 @@ const adminemail = req.body.adminemail;
       questionImages: answer.questionImages,
       answerImages: answer.image,
       status: answer.status,
-      imageMark,
-      adminemail,
-      dateMark: new Date().toISOString()
+      imageMark: imageMarkUrls,
+      adminemail
     });
 
-    await newMark.save();
-    res.json({ message: 'Mark posted successfully', data: newMark });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Internal Server Error' });
+    const saved = await mark.save();
+    res.status(200).json(saved);
+
+  } catch (error) {
+    console.error("Error in /mark/post:", error);
+    res.status(500).json({ message: "Internal server error", error });
   }
 });
-
-
-
 
 // ✅ GET all marks
 router.get('/', async (req, res) => {
   try {
-    const marks = await Mark.find().sort({ dateMark: -1 });
-    res.json(marks);
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to fetch marks' });
-  }
-});
-
-
-// ✅ GET mark by ID
-router.get('/:id', async (req, res) => {
-  try {
-    const mark = await Mark.findById(req.params.id);
-    if (!mark) return res.status(404).json({ error: 'Mark not found' });
-    res.json(mark);
-  } catch (err) {
-    res.status(500).json({ error: 'Error fetching mark' });
-  }
-});
-
-
-// ✅ PUT update mark by ID (e.g., status, imageMark)
-router.put('/:id', upload.single('imageMark'), async (req, res) => {
-  try {
-    const updatedData = { ...req.body };
-
-    // If new image is uploaded, update the imageMark
-    if (req.file) {
-      updatedData.imageMark = req.file.path;
-    }
-
-    const updatedMark = await Mark.findByIdAndUpdate(req.params.id, updatedData, {
-      new: true
-    });
-
-    if (!updatedMark) return res.status(404).json({ error: 'Mark not found' });
-    res.json({ message: 'Mark updated', data: updatedMark });
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to update mark' });
+    const marks = await Mark.find().sort({ createdAt: -1 });
+    res.status(200).json(marks);
+  } catch (error) {
+    console.error("Error fetching marks:", error);
+    res.status(500).json({ message: "Failed to fetch marks", error });
   }
 });
 

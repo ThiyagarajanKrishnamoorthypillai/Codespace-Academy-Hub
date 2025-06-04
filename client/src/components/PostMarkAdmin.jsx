@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Cookies from 'js-cookie'; // ✅ Make sure this is imported
+import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 
 const PostMarkAdmin = () => {
   const [answers, setAnswers] = useState([]);
   const [selectedId, setSelectedId] = useState('');
-  const [imageMark, setImageMark] = useState(null);
-const navigate = useNavigate();
+  const [imageMark, setImageMark] = useState([]); // now an array
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get(`${import.meta.env.VITE_API_URL}/answer/`)
@@ -15,35 +15,35 @@ const navigate = useNavigate();
       .catch(err => console.error(err));
   }, []);
 
+  const handleImageChange = (e) => {
+    setImageMark([...e.target.files]);
+  };
+
   const handleSubmit = async () => {
-    if (!selectedId || !imageMark) return alert('All fields required');
+    if (!selectedId || imageMark.length === 0)
+      return alert('Please select an answer and upload at least one image');
+
+    const adminEmailFromCookie = Cookies.get('adminemail');
+    if (!adminEmailFromCookie) return alert("Admin email not found in cookies");
 
     const formData = new FormData();
     formData.append('answerId', selectedId);
-    formData.append('imageMark', imageMark);
-
-    // ✅ Correct way to get the cookie value
-const adminEmailFromCookie = Cookies.get('adminemail');
-if (!adminEmailFromCookie) return alert("Admin email not found in cookies");
-
-formData.append('adminemail', adminEmailFromCookie);
-
+    formData.append('adminemail', adminEmailFromCookie);
+    imageMark.forEach(file => formData.append('imageMark', file)); // append each file
 
     try {
       await axios.post(`${import.meta.env.VITE_API_URL}/mark/post`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
+        headers: { 'Content-Type': 'multipart/form-data' },
         withCredentials: true
-      }); 
-      alert('Mark posted successfully');
+      });
+      alert('Marks posted successfully');
       navigate('/admin_home');
 
       setSelectedId('');
-      setImageMark(null);
+      setImageMark([]);
     } catch (error) {
       console.error(error);
-      alert('Failed to post mark');
+      alert('Failed to post marks');
     }
   };
 
@@ -52,7 +52,7 @@ formData.append('adminemail', adminEmailFromCookie);
       <h4 className="mb-3">Post Mark</h4>
 
       <div className="mb-3">
-        <label>Select Answer</label>
+        <label>Select Student's Answer</label>
         <select className="form-control" value={selectedId} onChange={(e) => setSelectedId(e.target.value)}>
           <option value="">Select</option>
           {answers.map(ans => (
@@ -64,12 +64,13 @@ formData.append('adminemail', adminEmailFromCookie);
       </div>
 
       <div className="mb-3">
-        <label>Image Mark</label>
+        <label>Upload Mark Images</label>
         <input
           type="file"
           className="form-control"
-          onChange={(e) => setImageMark(e.target.files[0])}
+          onChange={handleImageChange}
           accept="image/*"
+          multiple
         />
       </div>
 
