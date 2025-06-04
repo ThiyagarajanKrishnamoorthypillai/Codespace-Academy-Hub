@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import { differenceInMilliseconds, formatDistanceStrict } from 'date-fns';
-import AppFooter from '../components/AppFooter';
-import AppHeader from '../components/AppHeader';
 
 const UserDashboard = () => {
   const [sessionInfo, setSessionInfo] = useState(null);
@@ -32,7 +30,6 @@ const UserDashboard = () => {
 
   return (
     <>
-      <AppHeader/>  
       <div className="container py-4" style={{ background: 'linear-gradient(to right, #f5f8fd, #fdfdfd)', minHeight: 'calc(100vh - 118px)' }}>
       <div className="row justify-content-between align-items-start">
           {/* Session Info */}
@@ -72,7 +69,6 @@ const UserDashboard = () => {
           </div>
         </div>
       </div>
-      <AppFooter />
     </>
   );
 };
