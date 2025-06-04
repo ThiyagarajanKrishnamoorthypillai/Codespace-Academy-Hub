@@ -16,7 +16,11 @@ const markSchema = new mongoose.Schema({
     enum: ['Pending', 'Completed', 'On-Progress'],
     default: 'Pending'
   },
-  imageMark: String,       // Uploaded image path
+  imageMark: {
+  type: [String], // ✅ make it an array of strings
+  required: true
+},
+  // Uploaded image path
   dateMark: {              // Mark posting date
     type: String,
     default: new Date().toISOString()
