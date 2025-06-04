@@ -32,9 +32,9 @@ const UserDashboard = () => {
 
   return (
     <>
-      
+      <AppHeader/>  
       <div className="container py-4" style={{ background: 'linear-gradient(to right, #f5f8fd, #fdfdfd)', minHeight: 'calc(100vh - 118px)' }}>
-        <div className="row justify-content-between align-items-start">
+      <div className="row justify-content-between align-items-start">
           {/* Session Info */}
           <div className="col-12 col-md-7 mb-4">
             {sessionInfo && (
