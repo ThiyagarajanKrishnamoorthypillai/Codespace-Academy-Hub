@@ -95,6 +95,11 @@ router.get('/email/:email', async (req, res) => {
     res.status(500).json({ success: false, error: err.message });
   }
 });
+router.get('/email/:useremail', auth, async (req, res) => {
+  const answerList = await Answer.find({ useremail: req.params.useremail });
+  if (!answerList) return res.status(500).json({ success: false });
+  res.status(200).send(answerList);
+});
 
 // GET /api/v1/answer/:id — View one answer
 router.get('/:id', async (req, res) => {

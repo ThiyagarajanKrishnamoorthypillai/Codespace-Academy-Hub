@@ -65,7 +65,7 @@ const imageArray = Array.isArray(image) ? image : image ? [image] : [];
         console.log('Feedback data posted successfully!');
         // Handle success, e.g., redirect to another page
         alert('Submitted Successful');
-        window.location.href = "user_home/view_feedback_user";
+        window.location.href = "/user_home";
 
       } else {
         console.error('Error posting Feedback data:', response.statusText);

@@ -1,4 +1,4 @@
-// ✅ ViewAnswerUser.jsx
+// ✅ ViewAnswerUser.jsx (Final Working Version with Correct Route & Token)
 import React, { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
@@ -8,13 +8,13 @@ const ViewAnswerUser = () => {
   const [cookies] = useCookies(['email']);
   const [answers, setAnswers] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
-  const userEmail = cookies.email;
+  const useremail = cookies.email;
 
   useEffect(() => {
     const fetchAnswers = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/answer/user/${userEmail}`, {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/answer/email/${useremail}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setAnswers(res.data);
@@ -23,8 +23,8 @@ const ViewAnswerUser = () => {
       }
     };
 
-    if (userEmail) fetchAnswers();
-  }, [userEmail]);
+    if (useremail) fetchAnswers();
+  }, [useremail]);
 
   return (
     <div className="container py-4">
@@ -40,7 +40,7 @@ const ViewAnswerUser = () => {
               <p><strong>Status:</strong> <span className="fw-bold text-primary">{ans.status}</span></p>
               <p><strong>Date:</strong> {new Date(ans.dateCreated).toLocaleDateString()}</p>
               <div className="row">
-                {ans.answerImages.map((img, idx) => (
+                {ans.image.map((img, idx) => (
                   <div className="col-6 col-md-3 mb-3" key={idx}>
                     <img
                       src={img}

@@ -67,7 +67,7 @@ const PostAnswer = () => {
         }
       );
       alert('Answer submitted successfully!');
-      navigate('/view_answer_user');
+      navigate('/user_home');
     } catch (err) {
       console.error('Error uploading:', err);
       alert('Submission failed. Check console for details.');
