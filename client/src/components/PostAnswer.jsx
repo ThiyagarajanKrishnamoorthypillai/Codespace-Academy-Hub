@@ -101,9 +101,7 @@ const PostAnswer = () => {
             <input type="text" name="college" className="form-control" onChange={handleChange} required />
           </div>
         </div>
-        <div className="mb-3">
-          
-        </div>
+       
         <div className="mb-3">
           <label>Upload Answer Images</label>
           <input type="file" multiple accept="image/*" className="form-control" onChange={handleFileChange} required />
