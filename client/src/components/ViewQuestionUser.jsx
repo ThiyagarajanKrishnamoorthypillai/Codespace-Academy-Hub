@@ -107,7 +107,7 @@ const ViewQuestionUser = () => {
   <div className="col-12 text-end">
     <span
       className="write-answer-link me-3"
-      onClick={() => navigate('/post_answer', {
+      onClick={() => navigate('/user_home/post_answer', {
         state: {
           date: question.dateCreated,
           course: question.course,
@@ -120,7 +120,7 @@ const ViewQuestionUser = () => {
     |
    <span
   className="write-answer-link ms-3"
-  onClick={() => navigate('/post_feedback', {
+  onClick={() => navigate('/user_home/post_feedback', {
     state: {
       image: question.image[0], // assuming 1st image
       course: question.course,
