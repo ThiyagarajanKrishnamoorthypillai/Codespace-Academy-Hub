@@ -1,54 +1,131 @@
-// ✅ PostAnswer.jsx
 import React, { useState } from 'react';
-import { useCookies } from 'react-cookie';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
+import { toast } from 'react-toastify';
 
 const PostAnswer = () => {
-  const [formData, setFormData] = useState({ name: '', stdid: '', dpt: '', status: 'Pending' });
-  const [images, setImages] = useState([]);
-  const [cookies] = useCookies(['email', 'course']);
+  const navigate = useNavigate();
+  const [cookies] = useCookies(['token', 'email', 'course']);
+  const [formData, setFormData] = useState({
+    name: '',
+    stdid: '',
+    dpt: '',
+    status: 'Pending',
+  });
+  const [answerImages, setAnswerImages] = useState([]);
 
-  const handleInputChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  const handleFileChange = (e) => {
-    setImages([...e.target.files]);
+  const handleImageChange = (e) => {
+    setAnswerImages([...e.target.files]);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const uploadData = new FormData();
-    images.forEach((file) => uploadData.append('answerImages', file));
-    uploadData.append('name', formData.name);
-    uploadData.append('stdid', formData.stdid);
-    uploadData.append('dpt', formData.dpt);
-    uploadData.append('status', formData.status);
-    uploadData.append('email', cookies.email);
-    uploadData.append('course', cookies.course);
+    if (!cookies.email || !cookies.course) {
+      toast.error('Login and select a course before submitting.');
+      return;
+    }
+
+    const data = new FormData();
+    data.append('name', formData.name);
+    data.append('stdid', formData.stdid);
+    data.append('dpt', formData.dpt);
+    data.append('email', cookies.email);
+    data.append('course', cookies.course);
+    data.append('status', formData.status);
+    answerImages.forEach((file) => data.append('answerImages', file));
 
     try {
-      const res = await axios.post(`${import.meta.env.VITE_API_URL}/answer`, uploadData);
-      alert('Answer submitted successfully');
-    } catch (err) {
-      console.error('Error uploading:', err);
-      alert('Submission failed');
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/answer`, data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${cookies.token}`,
+        },
+      });
+      toast.success('Answer submitted successfully');
+      navigate('/view_answer_user');
+    } catch (error) {
+      console.error('Error uploading:', error);
+      toast.error('Submission failed');
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} encType="multipart/form-data">
-      <input type="text" name="name" placeholder="Name" onChange={handleInputChange} required />
-      <input type="text" name="stdid" placeholder="Student ID" onChange={handleInputChange} required />
-      <input type="text" name="dpt" placeholder="Department" onChange={handleInputChange} required />
-      <select name="status" onChange={handleInputChange} defaultValue="Pending">
-        <option value="Pending">Pending</option>
-        <option value="Completed">Completed</option>
-        <option value="On-Progress">On-Progress</option>
-      </select>
-      <input type="file" name="answerImages" multiple onChange={handleFileChange} accept="image/*" required />
-      <button type="submit">Submit Answer</button>
-    </form>
+    <div className="container mt-4">
+      <h3 className="text-center text-primary mb-4">Submit Your Answer</h3>
+      <form onSubmit={handleSubmit} className="bg-light p-4 shadow rounded">
+        <div className="mb-3">
+          <label>Name</label>
+          <input
+            type="text"
+            className="form-control"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="mb-3">
+          <label>Student ID</label>
+          <input
+            type="text"
+            className="form-control"
+            name="stdid"
+            value={formData.stdid}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="mb-3">
+          <label>Department</label>
+          <input
+            type="text"
+            className="form-control"
+            name="dpt"
+            value={formData.dpt}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="mb-3">
+          <label>Status</label>
+          <select
+            className="form-select"
+            name="status"
+            value={formData.status}
+            onChange={handleChange}
+          >
+            <option value="Pending">Pending</option>
+            <option value="Completed">Completed</option>
+            <option value="On-Progress">On-Progress</option>
+          </select>
+        </div>
+
+        <div className="mb-3">
+          <label>Answer Images</label>
+          <input
+            type="file"
+            className="form-control"
+            multiple
+            accept="image/*"
+            onChange={handleImageChange}
+            required
+          />
+        </div>
+
+        <button type="submit" className="btn btn-success w-100">Submit Answer</button>
+      </form>
+    </div>
   );
 };
 

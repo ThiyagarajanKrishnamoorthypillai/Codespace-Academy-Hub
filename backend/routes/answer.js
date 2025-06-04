@@ -5,13 +5,14 @@ const auth = require('../helpers/jwt');
 const multer = require('multer');
 const cloudinary = require('../helpers/cloudinary');
 const streamifier = require('streamifier');
+const authenticate = require('../middleware/authMiddleware'); // or wherever your auth is
 
 // Use multer memory storage for buffer upload to Cloudinary
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 // POST: Submit an answer with Cloudinary upload
-router.post('/', auth, upload.array('images'), async (req, res) => {
+router.post('/', authenticate, upload.array('answerImages'), async (req, res) => {
   try {
     const {
       useremail, name, stdid, dpt, college, course, status,
