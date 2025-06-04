@@ -24,20 +24,21 @@ const answer = await Answer.findById(answerId);
     if (!answer) return res.status(404).json({ message: "Answer not found" });
 
     // Upload all imageMark[] files to Cloudinary
-    const imageMarkUrls = [];
-    for (const file of req.files) {
-      const streamUpload = () =>
-        new Promise((resolve, reject) => {
-          const stream = cloudinary.uploader.upload_stream({ folder: 'marks' }, (error, result) => {
-            if (result) resolve(result.secure_url);
-            else reject(error);
-          });
-          streamifier.createReadStream(file.buffer).pipe(stream);
-        });
+   const imageMarkUrls = await Promise.all(
+  req.files.map(file => {
+    return new Promise((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        { folder: 'marks' },
+        (error, result) => {
+          if (result) resolve(result.secure_url);
+          else reject(error);
+        }
+      );
+      streamifier.createReadStream(file.buffer).pipe(stream);
+    });
+  })
+);
 
-      const imageUrl = await streamUpload();
-      imageMarkUrls.push(imageUrl);
-    }
 
     // Save mark record
     const mark = new Mark({

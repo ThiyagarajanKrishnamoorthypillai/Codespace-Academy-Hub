@@ -40,9 +40,10 @@ setLoading(true);
     try {
       await axios.post(`${import.meta.env.VITE_API_URL}/mark/post`, formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          
           'x-auth-token': localStorage.getItem('token')  // ✅ Important
         },
+        timeout: 15000, // 15 seconds
         withCredentials: true
       });
 
@@ -50,10 +51,17 @@ setLoading(true);
 setTimeout(() => navigate('/admin_home'), 1000);
       setSelectedId('');
       setImageMark([]);
-    } catch (error) {
-      console.error(error);
-      alert('Failed to post marks');
-    }finally {
+    }  catch (error) {
+  console.error('❌ Post error:', error);
+  if (error.code === 'ERR_BAD_RESPONSE') {
+    alert('Upload failed. Try again later. (500 Server Error)');
+  } else if (error.code === 'ECONNABORTED') {
+    alert('Upload timeout. Please try again.');
+  } else {
+    alert('Something went wrong');
+  }
+}
+finally {
   setLoading(false);
 }
   };
