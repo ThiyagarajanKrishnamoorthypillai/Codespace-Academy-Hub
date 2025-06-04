@@ -52,7 +52,8 @@ function App() {
             <Route path='/select_course' element={<SelectCourse/>}/>
             <Route path='/google_auth_provider' element={<GoogleAuthProvider/>}/>
         {/* User Sub-Layout */}  
-            
+            <Route path="post_answer" element={<PostAnswer/>}/>
+<Route path="post_feedback" element={<PostFeedback/>}/>
             
 
 {/* Admin Sub-Layout */}  
@@ -71,8 +72,7 @@ function App() {
 <Route path="view_feedback_user" element={<ViewFeedbackUser/>}/>
 <Route path="view_marks_user" element={<ViewMarksUser/>}/>
  <Route path="edit_profile/:id" element={<EditUserProfile />} /> 
-<Route path="post_answer" element={<PostAnswer/>}/>
-<Route path="post_feedback" element={<PostFeedback/>}/>
+
   </Route>
 
             

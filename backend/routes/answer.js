@@ -29,26 +29,21 @@ router.post('/', auth, upload.array('images'), async (req, res) => {
     } = req.body;
 
     // Upload each image to Cloudinary
-    const uploadedImages = [];
-    for (const file of req.files) {
-      const uploadResult = await cloudinary.uploader.upload_stream(
-        {
-          folder: 'answers'
-        },
+ const uploadedImages = await Promise.all(
+  req.files.map(file =>
+    new Promise((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        { folder: 'answers' },
         (error, result) => {
-          if (error) throw new Error('Cloudinary Upload Failed');
-          uploadedImages.push(result.secure_url);
+          if (error) return reject(error);
+          resolve(result.secure_url);
         }
       );
-
-      // Send buffer to stream
-      const stream = cloudinary.uploader.upload_stream((err, result) => {
-        if (err) return;
-        uploadedImages.push(result.secure_url);
-      });
-
       stream.end(file.buffer);
-    }
+    })
+  )
+);
+
 
     // Parse questionImages JSON safely
     const parsedQuestionImages = questionImages ? JSON.parse(questionImages) : [];
