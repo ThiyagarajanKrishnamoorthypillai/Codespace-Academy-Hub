@@ -4,7 +4,7 @@ const router = express.Router();
 const auth = require('../helpers/jwt');
 const multer = require('multer');
 const streamifier = require('streamifier');
-const cloudinary = require('../utils/cloudinary');
+const cloudinary = require('../helpers/cloudinary');
 
 const storage = multer.memoryStorage(); // 👈 use memory for cloudinary
 const upload = multer({ storage: storage });
