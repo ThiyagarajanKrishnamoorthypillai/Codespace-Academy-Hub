@@ -69,11 +69,17 @@ const UserHome = () => {
             <div className="bg-light border rounded p-3 shadow-sm">
               <h6 className="fw-bold text-dark mb-2">Current Session</h6>
               <div className="d-flex flex-wrap gap-3">
-                <span><b>Course:</b> {sessionInfo.course}</span>
-                <span><b>Batch:</b> {sessionInfo.batch}</span>
-                <span><b>Status:</b> <span className="text-primary">{sessionInfo.status || 'Ongoing'}</span></span>
-                <span><b>Duration:</b> {sessionInfo.durationHours} hrs</span>
-                <span><b>Remaining:</b> <span className={remainingTime === 'Finished' ? 'text-danger fw-bold' : 'text-success fw-bold'}>{remainingTime}</span></span>
+                <span><b>Course: </b> {sessionInfo.course}</span>
+                <span><b>Batch: </b> {sessionInfo.batch}</span>
+                <span><b>Status: </b> <span className="text-primary">{sessionInfo.status || 'Ongoing'}</span></span>
+                <span><b>Duration: </b> {sessionInfo.durationHours} hrs</span>
+                <span>
+  <b>Remaining: </b>
+  <span className={remainingTime <= 0 ? 'text-danger fw-bold' : 'text-success fw-bold'}>
+    {remainingTime <= 0 ? 'Finished' : `${Math.ceil(remainingTime / (1000 * 60 * 60))} hours`}
+  </span>
+</span>
+
               </div>
             </div>
           </div>
