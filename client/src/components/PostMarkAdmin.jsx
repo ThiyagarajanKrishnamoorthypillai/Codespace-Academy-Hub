@@ -32,10 +32,14 @@ const PostMarkAdmin = () => {
     imageMark.forEach(file => formData.append('imageMark', file)); // append each file
 
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/mark/post`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-        withCredentials: true
-      });
+     await axios.post(`${import.meta.env.VITE_API_URL}/mark/post`, formData, {
+  headers: {
+    'Content-Type': 'multipart/form-data',
+    'x-auth-token': localStorage.getItem('token')  // ✅ Add this
+  },
+  withCredentials: true
+});
+
       alert('Marks posted successfully');
       navigate('/admin_home');
 
