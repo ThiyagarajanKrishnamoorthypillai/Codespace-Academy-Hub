@@ -19,7 +19,7 @@ import Logout from './Logout.jsx';
 import Title from './Title.jsx';
 import axios from 'axios';
 import AppFooter from '../components/AppFooter';
-import AppFooter from '../components/AppHeader';
+import AppHeader from '../components/AppHeader';
 
 
 const UserProfile = () => {

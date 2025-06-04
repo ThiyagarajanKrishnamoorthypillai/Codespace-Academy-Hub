@@ -7,7 +7,7 @@ import imgBg from "./img/bg-img/9.png";
 import Logout from './Logout.jsx';
 import Title from './Title.jsx';
 import AppFooter from '../components/AppFooter';
-import AppFooter from '../components/AppHeader';
+import AppHeader from '../components/AppHeader';
 
 const ViewMarksUser = () => {
   const [markData, setMarkData] = useState([]);

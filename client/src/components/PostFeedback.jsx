@@ -12,7 +12,7 @@ import "./css/style.css";
 import "./js/jquery.min.js";  
 import "./js/bootstrap.bundle.min.js";
 import AppFooter from '../components/AppFooter';
-import AppFooter from '../components/AppHeader';
+import AppHeader from '../components/AppHeader';
 {/*
 import "./js/waypoints.min.js";
 import "./js/jquery.easing.min.js";

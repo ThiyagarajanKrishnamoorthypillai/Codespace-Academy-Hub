@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import { differenceInMilliseconds, formatDistanceStrict } from 'date-fns';
 import AppFooter from '../components/AppFooter';
-import AppFooter from '../components/AppHeader';
+import AppHeader from '../components/AppHeader';
 
 const UserDashboard = () => {
   const [sessionInfo, setSessionInfo] = useState(null);
