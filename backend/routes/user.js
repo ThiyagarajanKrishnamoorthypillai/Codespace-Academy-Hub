@@ -55,23 +55,19 @@ router.get('/profile/:email', async (req, res) => {
 
 // ✅ POST /google-login – create user if not exists
 router.post('/google-login', async (req, res) => {
-  const { email, name, course } = req.body;
+  const { email, name } = req.body;
+  if (!email) return res.status(400).json({ message: "Missing email" });
 
-  if (!email || !name) {
-    return res.status(400).json({ message: 'Missing email or name' });
-  }
-
+  // Check in DB if user exists
   let user = await User.findOne({ email });
-
   if (!user) {
-    user = new User({ name, email, course: course || null });
+    // Optional: auto-register
+    user = new User({ email, name });
     await user.save();
-    return res.status(201).json({ user, firstTime: true });
   }
 
-  return res.status(200).json({ user, firstTime: !user.course });
+  return res.status(200).json({ user });
 });
-
 
 // ✅ PUT /update-course – MUST BE ABOVE `/:id`
 router.put('/update-course', async (req, res) => {
