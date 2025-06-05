@@ -15,19 +15,25 @@ router.get(`/`, async (req, res) =>{
 })
 
 
+router.post('/login', async (req,res) => {
+    const admin = await Admin.findOne({ email: req.body.email });
+    const secret = process.env.secret;
 
-// ✅ POST /admin/google-login
-router.post('/google-login', async (req, res) => {
-  const { email, name } = req.body;
+    if (!admin) return res.status(400).send('The admin not found');
 
-  if (!email) return res.status(400).json({ message: "Missing email" });
-
-  let admin = await Admin.findOne({ email });
-  if (!admin) {
-    return res.status(403).json({ message: "Not an authorized admin" });
-  }
-
-  return res.status(200).json({ admin });
+    if (bcrypt.compareSync(req.body.password, admin.passwordHash)) {
+        const token = jwt.sign(
+            {
+                adminemail: admin.email,
+                isAdmin: admin.isAdmin
+            },
+            secret,
+            { expiresIn: '1d' }
+        );
+        res.status(200).send({ admin: admin.email, token: token });
+    } else {
+        res.status(400).send('Password is wrong!');
+    }
 });
 
 
