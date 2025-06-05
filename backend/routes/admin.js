@@ -15,26 +15,32 @@ router.get(`/`, async (req, res) =>{
 })
 
 
-router.post('/login', async (req,res) => {
-    const admin = await Admin.findOne({ email: req.body.email });
-    const secret = process.env.secret;
+router.post('/login', async (req, res) => {
+  const admin = await Admin.findOne({ email: req.body.email });
+  const secret = process.env.secret;
 
-    if (!admin) return res.status(400).send('The admin not found');
+  if (!admin || !admin.passwordHash) {
+    return res.status(400).send('Admin not found or missing password.');
+  }
 
-    if (bcrypt.compareSync(req.body.password, admin.passwordHash)) {
-        const token = jwt.sign(
-            {
-                adminemail: admin.email,
-                isAdmin: admin.isAdmin
-            },
-            secret,
-            { expiresIn: '1d' }
-        );
-        res.status(200).send({ admin: admin.email, token: token });
-    } else {
-        res.status(400).send('Password is wrong!');
-    }
+  const isMatch = bcrypt.compareSync(req.body.password, admin.passwordHash);
+  if (!isMatch) {
+    return res.status(400).send('Password is wrong!');
+  }
+
+  const token = jwt.sign(
+    {
+      adminemail: admin.email,
+      isAdmin: admin.isAdmin
+    },
+    secret,
+    { expiresIn: '1d' }
+  );
+
+  return res.status(200).send({ admin: admin.email, token });
 });
+
+
 
 
     

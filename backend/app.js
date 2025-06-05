@@ -32,6 +32,7 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token']
 }));
 
+
 // ✅ Proper CORS setup for Render (backend) + Vercel (frontend)
 
 {/*
@@ -53,7 +54,6 @@ app.use(express.urlencoded({ extended: true }));
 
 // Logging
 app.use(morgan('tiny'));
-app.options('*', cors()); // handle preflight requests
 
 
 
