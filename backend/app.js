@@ -13,8 +13,7 @@ const machineId = require('node-machine-id');
 // ENV
 require('dotenv/config');
 
-
-// ✅ Proper CORS setup for Render (backend) + Vercel (frontend)
+// CORS: Allow localhost + Vercel
 const allowedOrigins = [
   'http://localhost:5173',
   'https://codespace-academy-hub.vercel.app'
@@ -32,6 +31,9 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token']
 }));
+
+// ✅ Proper CORS setup for Render (backend) + Vercel (frontend)
+
 {/*
 // Static uploads
 //app.use('/uploads', express.static('./public/uploads'));
@@ -53,16 +55,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(morgan('tiny'));
 app.options('*', cors()); // handle preflight requests
 
-// CORS: Allow localhost + Vercel
-app.use(cors({
-  origin: [
-    'http://localhost:5173',
-    'https://codespace-academy-hub.vercel.app'
-  ],
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization','x-auth-token']
-}));
+
 
 // License verification
 const configPath = path.resolve(__dirname, 'helpers', 'config.json');
