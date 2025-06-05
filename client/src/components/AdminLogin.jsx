@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
-import './css/style.css'; // Add your styling imports
+import './css/style.css';
 import imgfolder from './img/core-img/logo-white.png';
 
 const AdminLogin = () => {
@@ -30,41 +30,67 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="login-wrapper d-flex align-items-center justify-content-center text-center">
-      <div className="background-shape"></div>
-      <div className="container">
-        <div className="row justify-content-center">
-          <div className="col-12 col-sm-9 col-md-7 col-lg-6 col-xl-5">
-            <img className="big-logo" src={imgfolder} alt="logo" />
-            <div className="register-form mt-5 px-4">
-              <form onSubmit={handleLogin}>
-                <div className="form-group text-start mb-4">
-                  <span>Email</span>
-                  <input
-                    className="form-control"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="admin@gmail.com"
-                    required
-                  />
-                </div>
-                <div className="form-group text-start mb-4">
-                  <span>Password</span>
-                  <input
-                    className="form-control"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="test"
-                    required
-                  />
-                </div>
-                <button className="btn btn-warning btn-lg w-100" type="submit">Log In</button>
-              </form>
+    <div
+      className="d-flex justify-content-center align-items-center"
+      style={{
+        minHeight: '100vh',
+        background: 'linear-gradient(to right, #6a11cb, #2575fc)',
+        padding: '20px'
+      }}
+    >
+      <div className="card p-4 shadow-lg" style={{ width: '100%', maxWidth: '400px', borderRadius: '15px' }}>
+        <div className="text-center mb-4">
+          <img src={imgfolder} alt="Admin Logo" style={{ maxWidth: '150px' }} />
+          <h4 className="mt-3" style={{ color: '#333', fontWeight: 'bold' }}>Admin Login</h4>
+        </div>
+        <form onSubmit={handleLogin}>
+          <div className="form-group mb-3">
+            <label className="form-label" style={{ color: '#333', fontWeight: '500' }}>Email</label>
+            <div className="input-group">
+              <span className="input-group-text bg-light">
+                <i className="fa fa-envelope"></i>
+              </span>
+              <input
+                type="email"
+                className="form-control"
+                placeholder="admin@gmail.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
             </div>
           </div>
-        </div>
+
+          <div className="form-group mb-4">
+            <label className="form-label" style={{ color: '#333', fontWeight: '500' }}>Password</label>
+            <div className="input-group">
+              <span className="input-group-text bg-light">
+                <i className="fa fa-lock"></i>
+              </span>
+              <input
+                type="password"
+                className="form-control"
+                placeholder="test"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+          </div>
+
+          <button
+            className="btn w-100"
+            style={{
+              background: 'linear-gradient(to right, #fc4a1a, #f7b733)',
+              color: 'white',
+              fontWeight: '600',
+              border: 'none'
+            }}
+            type="submit"
+          >
+            Log In
+          </button>
+        </form>
       </div>
     </div>
   );
