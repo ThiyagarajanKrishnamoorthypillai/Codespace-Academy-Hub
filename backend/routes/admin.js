@@ -1,4 +1,4 @@
-const Admin = require('../models/admin'); // ✅ correct
+const {Admin} = require('../models/admin'); // ✅ correct
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');

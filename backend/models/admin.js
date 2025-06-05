@@ -4,12 +4,13 @@ const adminSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    unique: true
+    
   },
-  name: {
-    type: String,
-    required: false
-  },
+     passwordHash: {
+        type: String,
+        required: true,
+    },
+
   isAdmin: {
     type: Boolean,
     default: true
@@ -24,4 +25,5 @@ adminSchema.set('toJSON', {
   virtuals: true,
 });
 
-module.exports = mongoose.model('Admin', adminSchema);
+exports.Admin = mongoose.model('Admin', adminSchema);
+exports.adminSchema = adminSchema;
