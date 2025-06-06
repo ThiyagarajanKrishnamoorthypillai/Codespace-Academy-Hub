@@ -65,32 +65,30 @@ function App() {
   <Route path="/user_home" element={<UserLayout />}>
     <Route index element={<UserDashboard />} /> 
     <Route path="view_question_user" element={<ViewQuestionUser />} />
-      <Route path="post_answer" element={<PostAnswer/>}/>
-<Route path="post_feedback" element={<PostFeedback/>}/>
- <Route path="user_profile" element={<UserProfile />} />   
- <Route path="view_answer_user" element={<ViewAnswerUser/>}/>
-<Route path="view_feedback_user" element={<ViewFeedbackUser/>}/>
-<Route path="view_marks_user" element={<ViewMarksUser/>}/>
- <Route path="edit_profile/:id" element={<EditUserProfile />} /> 
+    <Route path="post_answer" element={<PostAnswer/>}/>
+    <Route path="post_feedback" element={<PostFeedback/>}/>
+    <Route path="user_profile" element={<UserProfile />} />   
+    <Route path="view_answer_user" element={<ViewAnswerUser/>}/>
+    <Route path="view_feedback_user" element={<ViewFeedbackUser/>}/>
+    <Route path="view_marks_user" element={<ViewMarksUser/>}/>
+    <Route path="edit_profile/:id" element={<EditUserProfile />} /> 
 
   </Route>
 
             
             {/* Admin routes with layout */}
-  <Route path="/admin_home" element={<AdminLayout />}>
+    <Route path="/admin_home" element={<AdminLayout />}>
     <Route index element={<AdminDashboard />} />
     <Route path="post_question" element={<PostQuestion />} />
     <Route path="admin_profile" element={<AdminProfile />} />
-             <Route path="view_question_admin" element={<ViewQuestionAdmin/>}/>
-
-            
-             <Route path="view_answer_admin" element={<ViewAnswerAdmin/>}/>
-<Route path="view_feedback_admin" element={<ViewFeedbackAdmin/>}/>
-<Route path="post_mark_admin" element={<PostMarkAdmin/>}/>
-<Route path="view_marks_admin" element={<ViewMarksAdmin/>}/>
-<Route path="start_session" element={<StartSession/>}/>
-<Route path="view_user_admin" element={<ViewUserAdmin />} /> 
-            <Route path="admin_profile" element={<AdminProfile />} />
+    <Route path="view_question_admin" element={<ViewQuestionAdmin/>}/>
+     <Route path="view_answer_admin" element={<ViewAnswerAdmin/>}/>
+      <Route path="view_feedback_admin" element={<ViewFeedbackAdmin/>}/>
+      <Route path="post_mark_admin" element={<PostMarkAdmin/>}/>
+      <Route path="view_marks_admin" element={<ViewMarksAdmin/>}/>
+      <Route path="start_session" element={<StartSession/>}/>
+      <Route path="view_user_admin" element={<ViewUserAdmin />} /> 
+      <Route path="admin_profile" element={<AdminProfile />} />
            
   </Route>
 
