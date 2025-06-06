@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import Modal from 'react-modal';
-import axios from 'axios';
+import axios from '../utils/axiosInstance';
 import { Link } from 'react-router-dom';
 import Logout from './Logout.jsx';
 import AppFooter from '../components/AppFooter';

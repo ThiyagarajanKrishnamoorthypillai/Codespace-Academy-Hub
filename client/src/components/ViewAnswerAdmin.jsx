@@ -1,7 +1,7 @@
 // ViewAnswerAdmin.jsx
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import axios from '../utils/axiosInstance';
 import Modal from 'react-modal';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';

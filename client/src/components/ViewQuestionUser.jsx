@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-import axios from 'axios';
+import axios from '../utils/axiosInstance';
 import Modal from 'react-modal';
 
 import "./css/bootstrap.min.css";
