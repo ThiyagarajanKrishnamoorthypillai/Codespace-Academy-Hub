@@ -61,38 +61,7 @@ const EditProfile = (id) => {
     <div>
         <div>
       
-        <div className="header-area" id="headerArea">
-        <div className="container h-100 d-flex align-items-center justify-content-between">
-    
-        <div className="header-area" id="headerArea">
-        <div className="container h-100 d-flex align-items-center justify-content-between">
-            <div className="logo-wrapper" style={{color:'#020310'}}><img src={imgSmall} alt="" style={{ width: "200px", height: "70px" }} />   <Title /> </div>
         
-            <div className="suha-navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#suhaOffcanvas" aria-controls="suhaOffcanvas"><span></span><span></span><span></span></div>
-        </div>
-        </div>  
-
-{/* tabindex="-1" */}
-        <div className="offcanvas offcanvas-start suha-offcanvas-wrap"  id="suhaOffcanvas" aria-labelledby="suhaOffcanvasLabel">
-      <button className="btn-close btn-close-white text-reset" type="button" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-
-      <div className="offcanvas-body">
-        <div className="sidenav-profile">
-          <div className="user-profile"><img src={imgBg} alt=""/></div>
-          <div className="user-info">
-            <h6 className="user-name mb-1"> Nutrient Requirement's to User Based On Their Health Condition </h6>
-         
-          </div>
-        </div>
-    
-        <ul className="sidenav-nav ps-0">
-          <li><Link to="/admin_home"><i className="lni lni-home"></i>Home</Link></li>
-          <li><Logout /></li>  
-          </ul>
-      </div>
-    </div>
-      </div>
-    </div>
     <div className="page-content-wrapper">
       <div className="top-products-area py-3">
         <div className="container">
