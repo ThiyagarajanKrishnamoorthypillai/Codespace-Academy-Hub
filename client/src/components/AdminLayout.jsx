@@ -112,12 +112,12 @@ const [cookies, setCookie, removeCookie] = useCookies();
           padding: '24px',
           paddingBottom: '70px', // space for footer
         }}
-      >
+      ><AppHeader />
         <div style={{ flex: 1, overflowY: 'auto' }}>
           <button
             className="btn btn-outline-secondary mb-3 d-md-none"
             onClick={() => setSidebarOpen(!sidebarOpen)}
-          ><AppHeader />
+          >
             ☰ Menu
           </button>
           <Outlet />
