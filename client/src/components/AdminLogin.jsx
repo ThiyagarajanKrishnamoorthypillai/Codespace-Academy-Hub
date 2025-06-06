@@ -3,7 +3,7 @@ import { useCookies } from 'react-cookie';
 import axios from 'axios';
 import './css/style.css';
 import imgfolder from './img/core-img/logo-white.png';
-import { useLoading } from '../context/LoadingProvider'; // adjust path as needed
+import { useLoading } from './context/LoadingProvider'; // adjust path as needed
 
 const AdminLogin = () => {
   const { showLoader, hideLoader } = useLoading();

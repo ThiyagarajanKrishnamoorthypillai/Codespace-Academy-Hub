@@ -19,7 +19,7 @@ import Logout from './Logout.jsx';
 import Title from './Title.jsx';
 import axios from 'axios';
 import AppFooter from '../components/AppFooter';
-import AppHeader from '../components/AppHeader';
+
 
 
 const UserProfile = () => {
@@ -78,7 +78,7 @@ const UserProfile = () => {
     <div>
         <div>
       
-      <AppHeader/>
+     
     <div className="page-content-wrapper">
       <div className="top-products-area py-0">
         <div className="container">
