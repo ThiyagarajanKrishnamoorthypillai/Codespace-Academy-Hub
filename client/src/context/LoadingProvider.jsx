@@ -1,18 +1,18 @@
-// src/context/LoadingContext.jsx
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
+import { registerLoaderHandler } from '../utils/loaderControl'; // 👈 register loader globally
 
 const LoadingContext = createContext();
-
 export const useLoading = () => useContext(LoadingContext);
 
 export const LoadingProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
 
-  const showLoader = () => setLoading(true);
-  const hideLoader = () => setLoading(false);
+  useEffect(() => {
+    registerLoaderHandler(setLoading); // 👈 make loader globally callable
+  }, []);
 
   return (
-    <LoadingContext.Provider value={{ loading, showLoader, hideLoader }}>
+    <LoadingContext.Provider value={{ loading }}>
       {children}
 
       {loading && (

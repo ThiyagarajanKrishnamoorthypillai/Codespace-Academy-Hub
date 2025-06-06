@@ -23,7 +23,7 @@ import Logout from './Logout';
 import Title from './Title';
 
 const UserHome = () => {
-  const [cookies] = useCookies(['name', 'email']);
+  const [cookies] = useCookies(['name', 'email','course']);
   const userName = cookies.name || 'User';
    const course = cookies.course || 'User';
   const userEmail = cookies.email || '';
@@ -101,7 +101,7 @@ const UserHome = () => {
           />
           <h4 className="d-inline fw-bold text-primary mb-0">
             Welcome, <span className="text-success">{userName}</span>
-             Course, <span className="text-success">{course}</span>
+             Course, <span className="text-primary">{course}</span>
           </h4>
         </div>
       </div>
