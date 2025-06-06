@@ -203,19 +203,19 @@ useEffect(() => {
                         <p><b>Course:</b> {ans.course}</p>
                         <p><b>Email:</b> {ans.useremail}</p>
                         <p><b>Submitted:</b> {new Date(ans.dateCreated).toLocaleString()}</p>
-                        <div className="row">
-                          {ans.image.map((img, i) => (
-                            <div className="col-4 mb-2" key={i}>
-                              <img
-                                img = {img}
+                     <div className="row">
+  {Array.isArray(ans.image) && ans.image.length > 0 && ans.image.map((img, i) => (
+    <div className="col-4 mb-2" key={i}>
+      <img
+        src={img} // ✅ FIXED
+        className="img-fluid border rounded"
+        style={{ height: '120px', objectFit: 'cover', cursor: 'pointer' }}
+        onClick={() => setSelectedImage(img)}
+      />
+    </div>
+  ))}
+</div>
 
-                                className="img-fluid border rounded"
-                                style={{ height: '120px', objectFit: 'cover', cursor: 'pointer' }}
-                                onClick={() => setSelectedImage(img)}
-                              />
-                            </div>
-                          ))}
-                        </div>
                       </div>
 
                       {/* Question Side */}

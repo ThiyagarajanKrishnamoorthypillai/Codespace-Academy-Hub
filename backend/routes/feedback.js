@@ -2,6 +2,7 @@ const {Feedback} = require('../models/feedback');
 const express = require('express');
 const router = express.Router();
 const auth = require('../helpers/jwt');
+const adminAuth = require('../helpers/adminAuth');
 
 // vendoremail  useremail  name  feedback
 
@@ -44,7 +45,7 @@ router.post('/',  auth, async (req,res)=>{
     
 })
 
-router.put('/:id', auth, async (req, res) => {
+router.put('/:id', adminAuth, async (req, res) => {
   const updated = await Feedback.findByIdAndUpdate(
     req.params.id,
     {
