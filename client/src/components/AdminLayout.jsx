@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import logo from './img/logo/logo trademark.png';
 import { useCookies } from 'react-cookie';
+import AppHeader from '../components/AppHeader';
 
 
 const AdminLayout = () => {
@@ -116,7 +117,7 @@ const [cookies, setCookie, removeCookie] = useCookies();
           <button
             className="btn btn-outline-secondary mb-3 d-md-none"
             onClick={() => setSidebarOpen(!sidebarOpen)}
-          >
+          ><AppHeader />
             ☰ Menu
           </button>
           <Outlet />
@@ -139,16 +140,16 @@ const [cookies, setCookie, removeCookie] = useCookies();
       >
         <span className="text-muted">© Codespace Solutions | All Rights Reserved</span>
         <span className="text-muted">
-          <a
+         {/*<a
             href="https://www.instagram.com/codespace"
             className="text-decoration-none text-muted me-3"
             target="_blank"
             rel="noopener noreferrer"
           >
             Instagram
-          </a>
+          </a>*/}
           <a
-            href="https://www.linkedin.com/company/codespace"
+            href="https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://in.linkedin.com/company/codespace-solutions&ved=2ahUKEwjqpvaZxNeNAxUTh68BHWrCNKEQjjh6BAgdEAE&usg=AOvVaw0IF9suw-kMgOp1NjNq4hR7"
             className="text-decoration-none text-muted me-3"
             target="_blank"
             rel="noopener noreferrer"
