@@ -1,6 +1,6 @@
 // ✅ UPDATED FILE: PostAnswer.jsx
 import React, { useState } from 'react';
-import axios from 'axios';
+import axios from '../utils/axiosInstance';
 import { useCookies } from 'react-cookie';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Title from './Title';

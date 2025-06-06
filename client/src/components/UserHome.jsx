@@ -10,7 +10,7 @@ import "./css/style.css";
 import "./js/jquery.min.js";  
 import "./js/bootstrap.bundle.min.js";
 import { useCookies } from 'react-cookie';
-import axios from 'axios';
+import axios from '../utils/axiosInstance';
 import { differenceInMilliseconds, formatDistanceStrict } from 'date-fns';
 
 import imgSmall from "./img/core-img/logo-small.png";
@@ -25,7 +25,7 @@ import Title from './Title';
 const UserHome = () => {
   const [cookies] = useCookies(['name', 'email','course']);
   const userName = cookies.name || 'User';
-   const course = cookies.course || 'Not selected';
+  const course = cookies.course || 'User';
   const userEmail = cookies.email || '';
   const [sessionInfo, setSessionInfo] = useState(null);
   const [remainingTime, setRemainingTime] = useState('');
@@ -101,7 +101,7 @@ const UserHome = () => {
           />
           <h4 className="d-inline fw-bold text-primary mb-0">
             Welcome, <span className="text-success">{userName}</span>{' '}
-             Course, <span className="text-primary">{course}</span>
+              <span className="text-primary">{course}</span>
           </h4>
         </div>
       </div>
