@@ -44,7 +44,7 @@ setLoading(true);
           'x-auth-token': localStorage.getItem('token')  // ✅ Important
         },
         timeout: 15000, // 15 seconds
-        withCredentials: true
+       // withCredentials: true
       });
 
       alert('Marks posted successfully');
