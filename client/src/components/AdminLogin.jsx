@@ -3,14 +3,17 @@ import { useCookies } from 'react-cookie';
 import axios from 'axios';
 import './css/style.css';
 import imgfolder from './img/core-img/logo-white.png';
+import { useLoading } from '../context/LoadingProvider'; // adjust path as needed
 
 const AdminLogin = () => {
+  const { showLoader, hideLoader } = useLoading();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [cookies, setCookie] = useCookies(['adminemail']);
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    showLoader(); // ✅ show global spinner
     try {
       const res = await axios.post(`${import.meta.env.VITE_API_URL}/admin/login`, {
         email,
@@ -26,6 +29,8 @@ const AdminLogin = () => {
       }
     } catch (err) {
       alert(err.response?.data || "Login Failed");
+    }finally {
+      hideLoader(); // ✅ hide spinner
     }
   };
 
