@@ -47,7 +47,7 @@ await axios.put(`${import.meta.env.VITE_API_URL}/feedback/${formData._id}`, form
   },
 });
       alert('Feedback updated successfully!');
-      navigate('/view_feedback_admin');
+      navigate('/admin_home');
     } catch (err) {
       console.error("Update error:", err.message);
       alert('Failed to update feedback.');

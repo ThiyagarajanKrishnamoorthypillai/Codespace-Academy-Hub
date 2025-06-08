@@ -53,7 +53,7 @@ const AdminHome = () => {
         <div className="sidenav-profile">
           <div className="user-profile"><img src={imgBg} alt=""/></div>
           <div className="user-info">
-            <h6 className="user-name mb-1">Institutional Learning & Examination System </h6>
+            <h6 className="user-name mb-1">Codespace Academy Hub </h6>
          
           </div>
         </div>

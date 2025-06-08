@@ -11,7 +11,7 @@ const AdminDashboard = () => {
         alt="Codespace Logo"
         className="w-24 h-24 mb-4 drop-shadow-xl rounded-full border-2 border-white"
       />
-      <h1 className="text-4xl font-bold tracking-wide text-white drop-shadow-lg">
+      <h1 className="text-4xl font-bold tracking-wide text-success drop-shadow-lg">
         Codespace Academy Hub
       </h1>
     </div>
