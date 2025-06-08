@@ -5,7 +5,6 @@ import './css/style.css';
 import imgfolder from './img/core-img/logo-white.png';
 import AppHeader from "./AppHeader";
 import AppFooter from "./AppFooter";
-import AppFooter from "./AppFooter";
 
 const AdminLogin = () => {
   const [email, setEmail] = useState('');
