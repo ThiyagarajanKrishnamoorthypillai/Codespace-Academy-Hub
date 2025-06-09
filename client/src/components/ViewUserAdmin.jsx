@@ -76,26 +76,23 @@ const ViewUserAdmin = () => {
               </div>
             </div>
 
-            <div className="row" style={{marginTop:10}}>
-                {filteredData.map((user) => (
-              <div key={user._id} className="col-12 col-md-6">                                        
-        
-              <div className="card product-card" style={{marginBottom:10}}>
-                <div className="card-body"    >
-                      <a className="product-title d-block"  >Student Name:  <b> {user.name} </b></a>
-                      <a className="product-title d-block"  >Student's Email: {user.email} </a>
-                      <a className="product-title d-block"  >Course: {user.course}  </a>
-                      
-                    </div>
-                  </div>   
-                
-          			 
-              </div>
+          {users.map((user, index) => (
+  <tr key={user._id}>
+    <td>{index + 1}</td>
+    <td>{user.name}</td>
+    <td>{user.email}</td>
+    <td>{user.course}</td>
+    <td>
+      <button
+        className="btn btn-danger btn-sm"
+        onClick={() => handleDelete(user._id)}
+      >
+        Remove
+      </button>
+    </td>
+  </tr>
+))}
 
-
-              ))}
-              
-        </div>
            
         </div>
     </div>
