@@ -74,7 +74,7 @@ const handleLogout = () => {
   style={{
     transition: 'all 0.3s ease',
     fontSize: '15px',
-    color: location.pathname === path ? '#673ab7' : '#673ab7', // active color
+    color: location.pathname === path ? '#f5efff' : '#f5efff', // active color
     backgroundColor: location.pathname === path ? '#e7f0ff' : 'transparent', // active bg
   }}
   onMouseOver={(e) => {
