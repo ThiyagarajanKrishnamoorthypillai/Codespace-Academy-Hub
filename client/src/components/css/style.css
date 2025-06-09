@@ -4372,3 +4372,22 @@ a.text-primary:hover {
   0% { opacity: 0; }
   100% { opacity: 1; }
 }
+.sidebar a {
+  position: relative;
+  display: inline-block;
+}
+
+.sidebar a::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #673ab7;
+  transition: width 0.3s;
+}
+
+.sidebar a:hover::after {
+  width: 100%;
+}
