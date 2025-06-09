@@ -85,23 +85,42 @@ const handleDelete = async (userId) => {
               </div>
             </div>
 
+            <div className="card shadow-sm p-3 bg-white rounded mt-4">
+  <h5 className="mb-3 text-center text-primary fw-bold">User List</h5>
+<table className="table table-hover table-bordered text-center">
+  <thead className="table-primary">
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Course</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
     {filteredData.map((u, index) => (
-  <tr key={u._id}>
-    <td>{index + 1}</td>
-    <td>{u.name}</td>
-    <td>{u.email}</td>
-    <td>{u.course}</td>
-    <td>
-      <button
-        className="btn btn-danger btn-sm"
-        onClick={() => handleDelete(u._id)}
-      >
-        Remove
-      </button>
-    </td>
-  </tr>
-))}
-
+      <tr key={u._id} className="align-middle">
+        <td>{index + 1}</td>
+        <td className="fw-semibold text-dark">{u.name}</td>
+        <td className="text-muted">{u.email}</td>
+        <td className="text-info fw-medium">{u.course}</td>
+        <td>
+          <button
+            className="btn btn-outline-danger btn-sm"
+            onClick={() => {
+              if (window.confirm(`Are you sure you want to delete ${u.name}?`)) {
+                handleDelete(u._id);
+              }
+            }}
+          >
+            ❌ Remove
+          </button>
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+</div>
 
 
            
