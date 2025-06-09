@@ -22,15 +22,15 @@ const ViewUserAdmin = () => {
   
  
 
-  const [donationData, setDonationData] = useState([]);
+  const [userData, setUserData] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    const fetchDonationData = async () => {
+    const fetchUserData = async () => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/user/`);
         if (response.status === 200) {
-          setDonationData(response.data);
+          setUserData(response.data);
         } else {
           console.error('Error fetching user data:', response.statusText);
         }
@@ -39,11 +39,11 @@ const ViewUserAdmin = () => {
       }
     };
 
-    fetchDonationData();
+    fetchUserData();
   }, []);
 
    // Filter data based on the search term
-   const filteredData = donationData.filter((user) =>{ 
+   const filteredData = userData.filter((user) =>{ 
         const isMatch = Object.values(user).some((field) =>
      field.toString().toLowerCase().includes(searchTerm.toLowerCase() )
      );
@@ -53,18 +53,15 @@ const ViewUserAdmin = () => {
 
     return isMatch;
   });  
-
 const handleDelete = async (userId) => {
-  if (window.confirm("Are you sure you want to delete this user?")) {
-    try {
-      await axios.delete(`${import.meta.env.VITE_API_URL}/user/${userId}`);
-      setUser((prev) => prev.filter((u) => u._id !== userId));
-    } catch (error) {
-      console.error("Delete error:", error);
-      alert("Failed to delete user");
-    }
+  try {
+    await axios.delete(`${import.meta.env.VITE_API_URL}/user/${userId}`);
+    setUserData((prev) => prev.filter((u) => u._id !== userId));
+  } catch (err) {
+    console.error("Delete error", err);
   }
 };
+
 
   return (
     <div>
@@ -88,22 +85,24 @@ const handleDelete = async (userId) => {
               </div>
             </div>
 
-          {user.map((user, index) => (
-  <tr key={user._id}>
+    {filteredData.map((u, index) => (
+  <tr key={u._id}>
     <td>{index + 1}</td>
-    <td>{user.name}</td>
-    <td>{user.email}</td>
-    <td>{user.course}</td>
+    <td>{u.name}</td>
+    <td>{u.email}</td>
+    <td>{u.course}</td>
     <td>
       <button
         className="btn btn-danger btn-sm"
-        onClick={() => handleDelete(user._id)}
+        onClick={() => handleDelete(u._id)}
       >
         Remove
       </button>
     </td>
   </tr>
 ))}
+
+
 
            
         </div>
