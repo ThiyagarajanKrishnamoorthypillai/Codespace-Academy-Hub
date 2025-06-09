@@ -106,7 +106,7 @@ const handleDelete = async (userId) => {
         <td className="fw-medium" style={{ color: '#0d47a1' }}>{u.course}</td>
         <td>
           <button
-            className="btn  btn-sm"
+            className="btn text-danger btn-sm"
             onClick={() => {
               if (window.confirm(`Are you sure you want to delete ${u.name}?`)) {
                 handleDelete(u._id);
