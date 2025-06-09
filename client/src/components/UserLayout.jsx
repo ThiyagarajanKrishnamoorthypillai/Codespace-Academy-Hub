@@ -68,7 +68,8 @@ const handleLogout = () => {
   to={path}
   className="text-decoration-none px-3 py-2 rounded fw-medium"
   style={{
-    transition: 'all 0.4s ease', // ✅ Smooth transition
+    transition: 'all 0.4s ease',
+    transform: 'scale(1)',
     fontSize: '15px',
     color: location.pathname === path ? '#673ab7' : '#212529',
     backgroundColor: location.pathname === path ? '#f5efff' : 'transparent',
@@ -78,8 +79,9 @@ const handleLogout = () => {
   onMouseOver={(e) => {
     if (location.pathname !== path) {
       e.currentTarget.style.backgroundColor = '#f5efff';
-      e.currentTarget.style.color = '#673ab7';
+      e.currentTarget.style.color = '#0d6efd'; // ✅ Blue on hover
       e.currentTarget.style.borderLeft = '4px solid #673ab7';
+      e.currentTarget.style.transform = 'scale(1.03)';
     }
   }}
   onMouseOut={(e) => {
@@ -87,11 +89,13 @@ const handleLogout = () => {
       e.currentTarget.style.backgroundColor = 'transparent';
       e.currentTarget.style.color = '#212529';
       e.currentTarget.style.borderLeft = '4px solid transparent';
+      e.currentTarget.style.transform = 'scale(1)';
     }
   }}
 >
   {label}
 </Link>
+
 
 
 
