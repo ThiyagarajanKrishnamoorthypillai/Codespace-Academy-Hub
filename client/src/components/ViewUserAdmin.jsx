@@ -54,6 +54,18 @@ const ViewUserAdmin = () => {
     return isMatch;
   });  
 
+const handleDelete = async (userId) => {
+  if (window.confirm("Are you sure you want to delete this user?")) {
+    try {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/user/${userId}`);
+      setUser((prev) => prev.filter((u) => u._id !== userId));
+    } catch (error) {
+      console.error("Delete error:", error);
+      alert("Failed to delete user");
+    }
+  }
+};
+
   return (
     <div>
         <div>
