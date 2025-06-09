@@ -77,8 +77,8 @@ const handleLogout = () => {
   }}
  onMouseOver={(e) => {
   if (location.pathname !== path) {
-    e.currentTarget.style.backgroundColor = '#e7f0ff'; // soft blue background
-    e.currentTarget.style.color = '#0a58ca'; // dark blue text
+    e.currentTarget.style.backgroundColor = 'darkblue'; // soft blue background
+    e.currentTarget.style.color = 'white'; // dark blue text
   }
 }}
 onMouseOut={(e) => {
