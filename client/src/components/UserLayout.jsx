@@ -48,7 +48,7 @@ const handleLogout = () => {
     top: 0,
     left: 0,
     zIndex: 1000,
-    background: 'linear-gradient(to bottom right,rgb(236, 227, 172),rgb(143, 189, 223))',
+    background: 'linear-gradient(to bottom right,rgb(213, 217, 243),rgb(231, 231, 238))',
     borderRight: '1px solid #dee2e6',
     boxShadow: '2px 0 8px rgba(0,0,0,0.05)',
     fontFamily: 'Poppins, sans-serif',
@@ -74,19 +74,19 @@ const handleLogout = () => {
   style={{
     transition: 'all 0.3s ease',
     fontSize: '15px',
-    color: location.pathname === path ? '#00008B' : '#212529', // active color
+    color: location.pathname === path ? '##673ab7' : '#212529', // active color
     backgroundColor: location.pathname === path ? '#e7f0ff' : 'transparent', // active bg
   }}
   onMouseOver={(e) => {
     if (location.pathname !== path) {
       e.currentTarget.style.backgroundColor = '#e7f0ff'; // hover bg
-      e.currentTarget.style.color = '#00008B'; // hover text
+      e.currentTarget.style.color = '##673ab7'; // hover text
     }
   }}
   onMouseOut={(e) => {
     if (location.pathname !== path) {
       e.currentTarget.style.backgroundColor = 'transparent';
-      e.currentTarget.style.color = '#212529';
+      e.currentTarget.style.color = '##673ab7';
     }
   }}
 >
