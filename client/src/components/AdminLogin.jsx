@@ -44,77 +44,85 @@ const AdminLogin = () => {
       <AppHeader />
     </div>
 
-    <div className="flex-grow-1 d-flex justify-content-center align-items-center px-3">
-      <div
-        className="p-4 shadow"
+    <div
+  className="d-flex justify-content-center align-items-center"
+  style={{
+    minHeight: '100vh', // ✅ Full height to center vertically
+    padding: '20px',    // ✅ Padding for small devices
+    background: 'linear-gradient(to right, #e3f2fd, #ede7f6)', // optional soft bg
+  }}
+>
+  <div
+    className="p-4 shadow"
+    style={{
+      maxWidth: '360px',
+      width: '100%',
+      borderRadius: '16px',
+      backgroundColor: 'rgba(255, 255, 255, 0.85)',
+      backdropFilter: 'blur(10px)',
+      boxShadow: '0 6px 20px rgba(0,0,0,0.08)',
+    }}
+  >
+    <div className="text-center mb-4">
+      <img
+        src={imgfolder}
+        alt="Admin Logo"
         style={{
-          maxWidth: '360px',
-          width: '100%',
-          marginTop: '20px',
-          marginBottom: '20px',
-          borderRadius: '16px',
-          backgroundColor: 'rgba(255, 255, 255, 0.85)', // ✅ lighter glass
-          backdropFilter: 'blur(10px)',
-          boxShadow: '0 6px 20px rgba(0,0,0,0.08)',
+          width: '60px', // ✅ Reduced image size
+          height: '60px',
+          objectFit: 'contain',
+          filter: 'drop-shadow(0 2px 3px rgba(0,0,0,0.2))',
+        }}
+      />
+      <h5 className="mt-3 text-dark fw-semibold">Admin Login</h5>
+    </div>
+
+    <form onSubmit={handleLogin} autoComplete="off">
+      <div className="form-group mb-3">
+        <label className="form-label text-dark">Email</label>
+        <div className="input-group">
+          <span className="input-group-text bg-white"><i className="fa fa-envelope"></i></span>
+          <input
+            type="email"
+            className="form-control"
+            placeholder="Enter admin email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            autoComplete="new-email"
+          />
+        </div>
+      </div>
+
+      <div className="form-group mb-4">
+        <label className="form-label text-dark">Password</label>
+        <div className="input-group">
+          <span className="input-group-text bg-white"><i className="fa fa-lock"></i></span>
+          <input
+            type="password"
+            className="form-control"
+            placeholder="Enter password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            autoComplete="new-password"
+          />
+        </div>
+      </div>
+
+      <button
+        className="btn w-100 fw-bold text-white"
+        style={{
+          background: 'linear-gradient(to right, #667eea, #764ba2)',
+          border: 'none',
         }}
       >
-        <div className="text-center mb-4">
-          <img
-            src={imgfolder}
-            alt="Admin Logo"
-            style={{
-              width: '90px',
-              filter: 'drop-shadow(0 2px 3px rgba(0,0,0,0.2))',
-            }}
-          />
-          <h5 className="mt-3 text-dark fw-semibold">Admin Login</h5>
-        </div>
+        Log In
+      </button>
+    </form>
+  </div>
+</div>
 
-        <form onSubmit={handleLogin} autoComplete="off">
-          <div className="form-group mb-3">
-            <label className="form-label text-dark">Email</label>
-            <div className="input-group">
-              <span className="input-group-text bg-white"><i className="fa fa-envelope"></i></span>
-              <input
-                type="email"
-                className="form-control"
-                placeholder="Enter admin email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                autoComplete="new-email"
-              />
-            </div>
-          </div>
-
-          <div className="form-group mb-4">
-            <label className="form-label text-dark">Password</label>
-            <div className="input-group">
-              <span className="input-group-text bg-white"><i className="fa fa-lock"></i></span>
-              <input
-                type="password"
-                className="form-control"
-                placeholder="Enter password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                autoComplete="new-password"
-              />
-            </div>
-          </div>
-
-          <button
-            className="btn w-100 fw-bold text-white"
-            style={{
-              background: 'linear-gradient(to right, #667eea, #764ba2)', // ✅ soft blue gradient
-              border: 'none',
-            }}
-          >
-            Log In
-          </button>
-        </form>
-      </div>
-    </div>
 
     <div className="w-100">
       <AppFooter />
