@@ -36,7 +36,7 @@ const UserDashboard = () => {
           {/* Session Info */}
           <div className="col-12 col-md-7 mb-4">
             {sessionInfo && (
-              <div className="p-4 shadow rounded bg-white border border-2 border-info hover-scale transition-all">
+              <div className="p-4 shadow rounded bg-white border border-1 border-primary hover-scale transition-all">
                 <h5 className="fw-bold text-info mb-3">📘 Current Session</h5>
                 <ul className="list-unstyled">
                   <li><b>Course:</b> {sessionInfo.course}</li>
@@ -52,7 +52,7 @@ const UserDashboard = () => {
           {/* Welcome User */}
           <div className="col-12 col-md-5 text-md-end text-center">
             <div className="d-flex justify-content-md-end justify-content-center align-items-center gap-3">
-              <img
+            {/*  <img
                 src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
                 alt="User Icon"
                 style={{
@@ -62,7 +62,7 @@ const UserDashboard = () => {
                   border: '2px solid #0d6efd',
                   backgroundColor: '#fff'
                 }}
-              />
+              />*/}
               <h4 className="text-dark mb-0">
                 Welcome, <span className="text-success">{userName}</span><br />
                 Course:<span className="text-success">{course}</span>
