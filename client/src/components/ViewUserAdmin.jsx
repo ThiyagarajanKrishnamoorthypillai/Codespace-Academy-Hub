@@ -76,7 +76,7 @@ const ViewUserAdmin = () => {
               </div>
             </div>
 
-          {users.map((user, index) => (
+          {user.map((user, index) => (
   <tr key={user._id}>
     <td>{index + 1}</td>
     <td>{user.name}</td>
