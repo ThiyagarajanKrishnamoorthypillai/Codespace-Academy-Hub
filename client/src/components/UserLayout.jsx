@@ -70,25 +70,29 @@ const handleLogout = () => {
   style={{
     transition: 'all 0.3s ease',
     fontSize: '15px',
-    color: location.pathname === path ? '#673ab7' : '#212529', // ✅ Purple if active, else black
+    color: location.pathname === path ? '#673ab7' : '#212529',
     backgroundColor: location.pathname === path ? '#f5efff' : 'transparent',
+    borderLeft: location.pathname === path ? '4px solid #673ab7' : '4px solid transparent',
     fontWeight: location.pathname === path ? '600' : '500',
   }}
   onMouseOver={(e) => {
     if (location.pathname !== path) {
-      e.currentTarget.style.backgroundColor = '#f5efff'; // soft purple background
-      e.currentTarget.style.color = '#673ab7';           // hover to purple
+      e.currentTarget.style.backgroundColor = '#f5efff';
+      e.currentTarget.style.color = '#673ab7';
+      e.currentTarget.style.borderLeft = '4px solid #673ab7';
     }
   }}
   onMouseOut={(e) => {
     if (location.pathname !== path) {
       e.currentTarget.style.backgroundColor = 'transparent';
-      e.currentTarget.style.color = '#212529';           // revert to black if not active
+      e.currentTarget.style.color = '#212529';
+      e.currentTarget.style.borderLeft = '4px solid transparent';
     }
   }}
 >
   {label}
 </Link>
+
 
 
 
