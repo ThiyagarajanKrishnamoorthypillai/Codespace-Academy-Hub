@@ -48,7 +48,7 @@ const handleLogout = () => {
     top: 0,
     left: 0,
     zIndex: 1000,
-    background: 'linear-gradient(to bottom right,rgb(255, 255, 255),rgb(51, 69, 236))',
+    background: 'linear-gradient(to bottom right,rgb(255, 255, 255),rgb(243, 244, 255))',
     borderRight: '1px solid #dee2e6',
     boxShadow: '2px 0 8px rgba(0,0,0,0.05)',
     fontFamily: 'Poppins, sans-serif',
@@ -63,7 +63,7 @@ const handleLogout = () => {
 
     <nav className="d-flex flex-column gap-2 px-3">
       {navItems.map(({ path, label }) => (
-      <Link
+     <Link
   key={path}
   to={path}
   className={`text-decoration-none px-3 py-2 rounded fw-medium ${
@@ -74,19 +74,19 @@ const handleLogout = () => {
   style={{
     transition: 'all 0.3s ease',
     fontSize: '15px',
-    color: location.pathname === path ? '##673ab7' : '#673ab7', // active color
-    backgroundColor: location.pathname === path ? '#673ab7' : 'transparent', // active bg
+    color: location.pathname === path ? '#673ab7' : '#673ab7', // active color
+    backgroundColor: location.pathname === path ? '#e7f0ff' : 'transparent', // active bg
   }}
   onMouseOver={(e) => {
     if (location.pathname !== path) {
-      e.currentTarget.style.backgroundColor = '#673ab7'; // hover bg
-      e.currentTarget.style.color = '##673ab7'; // hover text
+      e.currentTarget.style.backgroundColor = '#e7f0ff'; // hover bg
+      e.currentTarget.style.color = '#673ab7'; // hover text
     }
   }}
   onMouseOut={(e) => {
     if (location.pathname !== path) {
       e.currentTarget.style.backgroundColor = 'transparent';
-      e.currentTarget.style.color = '##673ab7';
+      e.currentTarget.style.color = '#673ab7';
     }
   }}
 >
