@@ -37,41 +37,44 @@ const AdminLogin = () => {
    <div
     className="min-vh-100 d-flex flex-column"
     style={{
-      background: `linear-gradient(135deg, rgba(106, 17, 203, 0.5), rgba(37, 117, 252, 0.5))`,
-      backgroundSize: 'cover',
-      overflow: 'hidden',
+      backgroundColor: '#f4f6f9', // ✅ Light background
     }}
   >
     <div className="w-100">
       <AppHeader />
     </div>
 
-    <div className="flex-grow-1 d-flex justify-content-center align-items-center">
+    <div className="flex-grow-1 d-flex justify-content-center align-items-center px-3">
       <div
         className="p-4 shadow"
         style={{
-          maxWidth: '420px',
+          maxWidth: '360px',
           width: '100%',
-          borderRadius: '20px',
-          backgroundColor: 'rgba(255, 255, 255, 0.08)',
-          backdropFilter: 'blur(12px)',
-          boxShadow: '0 8px 20px rgba(0,0,0,0.1)',
+          marginTop: '20px',
+          marginBottom: '20px',
+          borderRadius: '16px',
+          backgroundColor: 'rgba(255, 255, 255, 0.85)', // ✅ lighter glass
+          backdropFilter: 'blur(10px)',
+          boxShadow: '0 6px 20px rgba(0,0,0,0.08)',
         }}
       >
         <div className="text-center mb-4">
           <img
             src={imgfolder}
             alt="Admin Logo"
-            style={{ width: '100px', filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))' }}
+            style={{
+              width: '90px',
+              filter: 'drop-shadow(0 2px 3px rgba(0,0,0,0.2))',
+            }}
           />
-          <h4 className="mt-3 text-white fw-semibold">Admin Login</h4>
+          <h5 className="mt-3 text-dark fw-semibold">Admin Login</h5>
         </div>
 
         <form onSubmit={handleLogin} autoComplete="off">
           <div className="form-group mb-3">
-            <label className="form-label text-light">Email</label>
+            <label className="form-label text-dark">Email</label>
             <div className="input-group">
-              <span className="input-group-text bg-light"><i className="fa fa-envelope"></i></span>
+              <span className="input-group-text bg-white"><i className="fa fa-envelope"></i></span>
               <input
                 type="email"
                 className="form-control"
@@ -85,9 +88,9 @@ const AdminLogin = () => {
           </div>
 
           <div className="form-group mb-4">
-            <label className="form-label text-light">Password</label>
+            <label className="form-label text-dark">Password</label>
             <div className="input-group">
-              <span className="input-group-text bg-light"><i className="fa fa-lock"></i></span>
+              <span className="input-group-text bg-white"><i className="fa fa-lock"></i></span>
               <input
                 type="password"
                 className="form-control"
@@ -103,9 +106,8 @@ const AdminLogin = () => {
           <button
             className="btn w-100 fw-bold text-white"
             style={{
-              background: 'linear-gradient(to right, #fc4a1a, #f7b733)',
+              background: 'linear-gradient(to right, #667eea, #764ba2)', // ✅ soft blue gradient
               border: 'none',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
             }}
           >
             Log In
