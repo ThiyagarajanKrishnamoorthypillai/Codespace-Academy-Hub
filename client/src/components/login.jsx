@@ -5,7 +5,7 @@ import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import { jwtDecode } from 'jwt-decode';
 import AppHeader from "./AppHeader";
 import AppFooter from "./AppFooter";
-import { useLoading } from '../components/LoadingProvider';
+import { useLoading } from '../context/LoadingProvider';
 import { showGlobalLoader, hideGlobalLoader } from '../utils/loaderControl';
 
 
