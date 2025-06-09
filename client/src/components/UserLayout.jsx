@@ -36,6 +36,7 @@ const handleLogout = () => {
   ];
 
   return (
+    
     <>
       {/* Sidebar */}
 <div
@@ -47,11 +48,13 @@ const handleLogout = () => {
     top: 0,
     left: 0,
     zIndex: 1000,
-    background: 'linear-gradient(to bottom, #e3f2fd, #f9f9ff)',
-    borderRight: '2px solid #cfe2ff',
-    overflowY: 'auto',
+    background: 'linear-gradient(to bottom right, #ffffff, #e3f2fd)',
+    borderRight: '1px solid #dee2e6',
+    boxShadow: '2px 0 8px rgba(0,0,0,0.05)',
+    fontFamily: 'Poppins, sans-serif',
   }}
 >
+
   <div>
     <div className="text-center mb-4 pt-4">
       <img src={logo} alt="Logo" style={{ width: '80%' }} />
@@ -60,21 +63,34 @@ const handleLogout = () => {
 
     <nav className="d-flex flex-column gap-2 px-3">
       {navItems.map(({ path, label }) => (
-        <Link
-          key={path}
-          to={path}
-          className={`text-decoration-none px-3 py-2 rounded fw-medium ${
-            location.pathname === path
-              ? 'text-primary border-start border-4 border-primary bg-light'
-              : 'text-dark'
-          }`}
-          style={{
-            transition: 'all 0.2s ease-in-out',
-            fontSize: '15px',
-          }}
-        >
-          {label}
-        </Link>
+      <Link
+  key={path}
+  to={path}
+  className={`text-decoration-none px-3 py-2 rounded fw-medium ${
+    location.pathname === path
+      ? 'text-primary border-start border-4 border-primary bg-light shadow-sm'
+      : 'text-dark'
+  }`}
+  style={{
+    transition: 'all 0.3s ease',
+    fontSize: '15px',
+  }}
+  onMouseOver={(e) => {
+    if (location.pathname !== path) {
+      e.currentTarget.style.backgroundColor = '#f1faff';
+      e.currentTarget.style.color = '#0d6efd';
+    }
+  }}
+  onMouseOut={(e) => {
+    if (location.pathname !== path) {
+      e.currentTarget.style.backgroundColor = 'transparent';
+      e.currentTarget.style.color = '#212529';
+    }
+  }}
+>
+  {label}
+</Link>
+
       ))}
     </nav>
   </div>
