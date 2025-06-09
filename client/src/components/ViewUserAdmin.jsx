@@ -28,7 +28,7 @@ const ViewUserAdmin = () => {
   useEffect(() => {
     const fetchDonationData = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/v1/user/`);
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/user/`);
         if (response.status === 200) {
           setDonationData(response.data);
         } else {
