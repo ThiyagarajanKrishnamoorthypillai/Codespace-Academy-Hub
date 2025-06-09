@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link , useNavigate} from 'react-router-dom';
 import axios from '../utils/axiosInstance';
 import "./css/bootstrap.min.css";
 import "./css/owl.carousel.min.css";
@@ -21,12 +20,7 @@ import Title from './Title.jsx';
 
 const ViewUserAdmin = () => {
   
-  
-  const navigate = useNavigate();
-
-  const UpdateStatusAdmin = (id) => {
-    navigate("/update_status_admin/" + id);
-  }
+ 
 
   const [donationData, setDonationData] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -64,38 +58,6 @@ const ViewUserAdmin = () => {
     <div>
         <div>
       
-        <div className="header-area" id="headerArea">
-        <div className="container h-100 d-flex align-items-center justify-content-between">
-    
-        <div className="header-area" id="headerArea">
-        <div className="container h-100 d-flex align-items-center justify-content-between">
-            <div className="logo-wrapper" style={{color:'#020310'}}><img src={imgSmall} alt=""/> <Title /> </div>
-        
-            <div className="suha-navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#suhaOffcanvas" aria-controls="suhaOffcanvas"><span></span><span></span><span></span></div>
-        </div>
-        </div>  
-
-{/* tabindex="-1" */}
-        <div className="offcanvas offcanvas-start suha-offcanvas-wrap"  id="suhaOffcanvas" aria-labelledby="suhaOffcanvasLabel">
-      <button className="btn-close btn-close-white text-reset" type="button" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-
-      <div className="offcanvas-body">
-        <div className="sidenav-profile">
-          <div className="user-profile"><img src={imgBg} alt=""/></div>
-          <div className="user-info">
-            <h6 className="user-name mb-1">Go Get App</h6>
-         
-          </div>
-        </div>
-    
-        <ul className="sidenav-nav ps-0">
-          <li><Link to="/admin_home"><i className="lni lni-home"></i>Home</Link></li>
-          <li><Logout /></li>  
-          </ul>
-      </div>
-    </div>
-      </div>
-    </div>
     <div className="page-content-wrapper">
       <div className="top-products-area py-3">
         <div className="container">
@@ -120,10 +82,9 @@ const ViewUserAdmin = () => {
         
               <div className="card product-card" style={{marginBottom:10}}>
                 <div className="card-body"    >
-                      <a className="product-title d-block"  >Name:  <b> {user.name} </b></a>
-                      <a className="product-title d-block"  >Email: {user.email} </a>
-                      <a className="product-title d-block"  >Mobile: {user.phone}  </a>
-                      <a className="product-title d-block"  >City: {user.city}  </a>
+                      <a className="product-title d-block"  >Student Name:  <b> {user.name} </b></a>
+                      <a className="product-title d-block"  >Student's Email: {user.email} </a>
+                      <a className="product-title d-block"  >Course: {user.course}  </a>
                       
                     </div>
                   </div>   
@@ -141,16 +102,7 @@ const ViewUserAdmin = () => {
 
 
             
-            <div className="footer-nav-area" id="footerNav">
-              <div className="container h-100 px-0">
-                <div className="suha-footer-nav h-100">
-                  <ul className="h-100 d-flex align-items-center justify-content-between ps-0">
-                    <li className="active"> <Link to="/admin_home" ><i className="lni lni-home"></i>Home </Link> </li>
-                    <li><Logout /></li> 
-                  </ul>
-                </div>
-              </div>
-            </div>
+            
 
 
 
