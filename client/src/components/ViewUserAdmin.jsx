@@ -86,7 +86,7 @@ const handleDelete = async (userId) => {
             </div>
 
             <div className="card shadow-sm p-3 bg-white rounded mt-4">
-  <h5 className="mb-3 text-center text-primary fw-bold">User List</h5>
+  <h5 className="mb-3 text-center text-dark fw-bold">Student's List</h5>
 <table className="table table-hover table-bordered text-center">
   <thead className="table-primary">
     <tr>
@@ -103,10 +103,10 @@ const handleDelete = async (userId) => {
         <td>{index + 1}</td>
         <td className="fw-semibold text-dark">{u.name}</td>
         <td className="text-muted">{u.email}</td>
-        <td className="text-info fw-medium">{u.course}</td>
+        <td className="fw-medium" style={{ color: '#0d47a1' }}>{u.course}</td>
         <td>
           <button
-            className="btn btn-outline-danger btn-sm"
+            className="btn  btn-sm"
             onClick={() => {
               if (window.confirm(`Are you sure you want to delete ${u.name}?`)) {
                 handleDelete(u._id);
