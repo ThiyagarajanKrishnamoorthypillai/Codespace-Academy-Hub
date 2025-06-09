@@ -47,7 +47,7 @@ const AdminLogin = () => {
    <div
   className="d-flex justify-content-center align-items-center"
   style={{
-    minHeight: '100vh',         // ✅ Full screen height
+    minHeight: '70vh',         // ✅ Full screen height
     overflow: 'hidden',         // ✅ Prevent scrollbars
     margin: 0,
     padding: 0,
