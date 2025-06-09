@@ -75,18 +75,19 @@ const handleLogout = () => {
     transition: 'all 0.3s ease',
     fontSize: '15px',
   }}
-  onMouseOver={(e) => {
-    if (location.pathname !== path) {
-      e.currentTarget.style.backgroundColor = '#f1faff';
-      e.currentTarget.style.color = '#0d6efd';
-    }
-  }}
-  onMouseOut={(e) => {
-    if (location.pathname !== path) {
-      e.currentTarget.style.backgroundColor = 'transparent';
-      e.currentTarget.style.color = '#212529';
-    }
-  }}
+ onMouseOver={(e) => {
+  if (location.pathname !== path) {
+    e.currentTarget.style.backgroundColor = '#e7f0ff'; // soft blue background
+    e.currentTarget.style.color = '#0a58ca'; // dark blue text
+  }
+}}
+onMouseOut={(e) => {
+  if (location.pathname !== path) {
+    e.currentTarget.style.backgroundColor = 'transparent';
+    e.currentTarget.style.color = '#212529'; // default dark text
+  }
+}}
+
 >
   {label}
 </Link>

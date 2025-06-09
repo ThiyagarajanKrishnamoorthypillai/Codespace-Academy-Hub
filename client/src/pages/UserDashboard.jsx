@@ -36,7 +36,7 @@ const UserDashboard = () => {
           {/* Session Info */}
           <div className="col-12 col-md-7 mb-4">
             {sessionInfo && (
-              <div className="p-4 shadow rounded bg-white border border-1 border-primary hover-scale transition-all">
+              <div className="p-4 shadow rounded bg-white border border-primary hover-scale transition-all">
                 <h5 className="fw-bold text-info mb-3">📘 Current Session</h5>
                 <ul className="list-unstyled">
                   <li><b>Course:</b> {sessionInfo.course}</li>
