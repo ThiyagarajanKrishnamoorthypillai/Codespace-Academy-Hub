@@ -6,9 +6,10 @@ import { differenceInMilliseconds, formatDistanceStrict } from 'date-fns';
 const UserDashboard = () => {
   const [sessionInfo, setSessionInfo] = useState(null);
   const [remainingTime, setRemainingTime] = useState('');
-  const [cookies] = useCookies(['name', 'email']);
+  const [cookies] = useCookies(['name', 'email', 'course']);
   const userName = cookies.name || 'User';
   const userEmail = cookies.email || '';
+  const course = cookies.course || 'User';
 
   useEffect(() => {
     if (!userEmail) return;
@@ -42,7 +43,7 @@ const UserDashboard = () => {
                   <li><b>Batch:</b> {sessionInfo.batch}</li>
                   <li><b>Status:</b> <span className="text-info fw-bold">{sessionInfo.status}</span></li>
                   <li><b>Duration:</b> {sessionInfo.durationHours} hrs</li>
-                  <li><b>Remaining:</b> <span className={remainingTime === 'Finished' ? 'text-danger fw-bold' : 'text-success fw-bold'}>{remainingTime}</span></li>
+                  <li><b>Remaining:</b> <span className={remainingTime === 'Finished' ? 'text-success fw-bold' : 'text-success fw-bold'}>{remainingTime}</span></li>
                 </ul>
               </div>
             )}
@@ -64,6 +65,7 @@ const UserDashboard = () => {
               />
               <h4 className="text-dark mb-0">
                 Welcome, <span className="text-success">{userName}</span>
+                Course:<span className="text-success">{course}</span>
               </h4>
             </div>
           </div>
