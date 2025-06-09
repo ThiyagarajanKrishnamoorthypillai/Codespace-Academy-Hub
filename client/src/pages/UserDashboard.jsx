@@ -64,7 +64,7 @@ const UserDashboard = () => {
                 }}
               />
               <h4 className="text-dark mb-0">
-                Welcome, <span className="text-success">{userName}</span>
+                Welcome, <span className="text-success">{userName}</span>{''}
                 Course:<span className="text-success">{course}</span>
               </h4>
             </div>
