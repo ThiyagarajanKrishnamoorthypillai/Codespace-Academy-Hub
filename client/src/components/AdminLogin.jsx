@@ -44,12 +44,14 @@ const AdminLogin = () => {
       <AppHeader />
     </div>
 
-    <div
+   <div
   className="d-flex justify-content-center align-items-center"
   style={{
-    minHeight: '100vh', // ✅ Full height to center vertically
-    padding: '20px',    // ✅ Padding for small devices
-    background: 'linear-gradient(to right, #e3f2fd, #ede7f6)', // optional soft bg
+    minHeight: '100vh',         // ✅ Full screen height
+    overflow: 'hidden',         // ✅ Prevent scrollbars
+    margin: 0,
+    padding: 0,
+    background: 'linear-gradient(to right, #e3f2fd, #ede7f6)', // optional light bg
   }}
 >
   <div
@@ -68,7 +70,7 @@ const AdminLogin = () => {
         src={imgfolder}
         alt="Admin Logo"
         style={{
-          width: '60px', // ✅ Reduced image size
+          width: '60px', // ✅ Smaller image
           height: '60px',
           objectFit: 'contain',
           filter: 'drop-shadow(0 2px 3px rgba(0,0,0,0.2))',
@@ -122,6 +124,7 @@ const AdminLogin = () => {
     </form>
   </div>
 </div>
+
 
 
     <div className="w-100">
