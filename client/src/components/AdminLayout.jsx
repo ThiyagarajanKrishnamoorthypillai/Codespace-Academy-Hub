@@ -37,7 +37,9 @@ const [cookies, setCookie, removeCookie] = useCookies();
     { path: '/admin_home/view_feedback_admin', label: "View Student's Doubts" },
     { path: '/admin_home/post_mark_admin', label: 'Add Marks' },
     { path: '/admin_home/view_marks_admin', label: 'View Marks' },
+    { path: '/admin_home/view_user_admin', label: 'View Student Profile' },
     { path: '/admin_home/admin_profile', label: 'My Profile' }
+    
   ];
 
   return (
