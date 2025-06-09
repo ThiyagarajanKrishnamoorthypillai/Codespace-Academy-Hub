@@ -36,16 +36,40 @@ const UserDashboard = () => {
           {/* Session Info */}
           <div className="col-12 col-md-7 mb-4">
             {sessionInfo && (
-              <div className="p-4 shadow rounded bg-white border border-primary hover-scale transition-all">
-                <h5 className="fw-bold text-info mb-3">📘 Current Session</h5>
-                <ul className="list-unstyled">
-                  <li><b>Course:</b> {sessionInfo.course}</li>
-                  <li><b>Batch:</b> {sessionInfo.batch}</li>
-                  <li><b>Status:</b> <span className="text-info fw-bold">{sessionInfo.status}</span></li>
-                  <li><b>Duration:</b> {sessionInfo.durationHours} hrs</li>
-                  <li><b>Remaining:</b> <span className={remainingTime === 'Finished' ? 'text-success fw-bold' : 'text-success fw-bold'}>{remainingTime}</span></li>
-                </ul>
-              </div>
+             <div
+  className="p-4 shadow rounded bg-white border transition-all"
+  style={{
+    borderColor: '#ffc107', // ✅ yellow border
+    transition: 'transform 0.3s ease, border-color 0.3s ease',
+    animation: 'fadeIn 1s ease-in-out',
+  }}
+  onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.03)')}
+  onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+>
+  <h5
+    className="fw-bold mb-3"
+    style={{
+      color: '#673ab7', // 📘 violet-ish for header
+      animation: 'textPop 1s ease-in-out',
+    }}
+  >
+    📘 Current Session
+  </h5>
+
+  <ul className="list-unstyled" style={{ animation: 'textFade 1.2s ease' }}>
+    <li><b style={{ color: '#e91e63' }}>Course:</b> <span style={{ color: '#3f51b5' }}>{sessionInfo.course}</span></li>
+    <li><b style={{ color: '#009688' }}>Batch:</b> <span style={{ color: '#795548' }}>{sessionInfo.batch}</span></li>
+    <li><b style={{ color: '#ff5722' }}>Status:</b> <span style={{ color: '#0d6efd', fontWeight: 'bold' }}>{sessionInfo.status}</span></li>
+    <li><b style={{ color: '#3f51b5' }}>Duration:</b> <span style={{ color: '#673ab7' }}>{sessionInfo.durationHours} hrs</span></li>
+    <li>
+      <b style={{ color: '#4caf50' }}>Remaining:</b>{' '}
+      <span className={remainingTime === 'Finished' ? 'text-success fw-bold' : 'text-warning fw-bold'}>
+        {remainingTime}
+      </span>
+    </li>
+  </ul>
+</div>
+
             )}
           </div>
 
@@ -65,7 +89,7 @@ const UserDashboard = () => {
               />*/}
               <h4 className="text-dark mb-0">
                 Welcome, <span className="text-success">{userName}</span><br />
-                Course:<span className="text-success">{course}</span>
+                Course: <span className="text-success">{course}</span>
               </h4>
             </div>
           </div>
