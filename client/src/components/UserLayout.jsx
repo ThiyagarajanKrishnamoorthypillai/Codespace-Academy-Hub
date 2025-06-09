@@ -78,17 +78,18 @@ const handleLogout = () => {
     backgroundColor: location.pathname === path ? '#e7f0ff' : 'transparent', // active bg
   }}
   onMouseOver={(e) => {
-    if (location.pathname !== path) {
-      e.currentTarget.style.backgroundColor = '#e7f0ff'; // hover bg
-      e.currentTarget.style.color = '#673ab7'; // hover text
-    }
-  }}
-  onMouseOut={(e) => {
-    if (location.pathname !== path) {
-      e.currentTarget.style.backgroundColor = 'transparent';
-      e.currentTarget.style.color = '#673ab7';
-    }
-  }}
+  if (location.pathname !== path) {
+    e.currentTarget.style.backgroundColor = '#f5efff'; // soft purple bg
+    e.currentTarget.style.color = '#673ab7';            // purple text
+  }
+}}
+onMouseOut={(e) => {
+  if (location.pathname !== path) {
+    e.currentTarget.style.backgroundColor = 'transparent';
+    e.currentTarget.style.color = '#673ab7';            // keep purple text
+  }
+}}
+
 >
   {label}
 </Link>

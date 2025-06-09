@@ -74,25 +74,29 @@ const UserDashboard = () => {
           </div>
 
           {/* Welcome User */}
-          <div className="col-12 col-md-5 text-md-end text-center">
-            <div className="d-flex justify-content-md-end justify-content-center align-items-center gap-3">
-            {/*  <img
-                src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
-                alt="User Icon"
-                style={{
-                  width: '50px',
-                  height: '50px',
-                  borderRadius: '50%',
-                  border: '2px solid #0d6efd',
-                  backgroundColor: '#fff'
-                }}
-              />*/}
-              <h4 className="text-dark mb-0">
-                Welcome, <span className="text-success">{userName}</span><br />
-                Course: <span className="text-success">{course}</span>
-              </h4>
-            </div>
-          </div>
+         <div className="col-12 col-md-5 text-md-end text-center">
+  <div className="d-flex justify-content-md-end justify-content-center align-items-center gap-2 flex-wrap">
+    <img
+      src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
+      alt="User Icon"
+      style={{
+        width: '36px',
+        height: '36px',
+        borderRadius: '50%',
+        border: '2px solid #673ab7',
+        backgroundColor: '#f5efff',
+        padding: '2px'
+      }}
+    />
+    <div className="text-md-end text-center">
+      <span style={{ fontSize: '0.9rem', color: '#343a40' }}>
+        Welcome, <span style={{ color: '#673ab7', fontWeight: 500 }}>{userName}</span><br />
+        <small>Course: <span style={{ color: '#673ab7', fontWeight: 500 }}>{course}</span></small>
+      </span>
+    </div>
+  </div>
+</div>
+
         </div>
       </div>
     </>
