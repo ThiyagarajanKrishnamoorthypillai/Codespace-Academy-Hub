@@ -33,84 +33,73 @@ const AdminLogin = () => {
   };
 
 
-    return (
-      <div>
-        <AppHeader />
+      return (
   <div
-    className="d-flex justify-content-center align-items-center"
+    className="vh-100 overflow-hidden"
     style={{
-      minHeight: '100vh',
-      background: `linear-gradient(rgba(106, 17, 203, 0.7), rgba(37, 117, 252, 0.7)), url('/path-to-bg.jpg') center/cover no-repeat`,
-      padding: '20px'
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      background: `linear-gradient(rgba(106, 17, 203, 0.6), rgba(37, 117, 252, 0.6))`,
     }}
   >
+    <AppHeader />
     <div
       className="card p-4 shadow-lg"
       style={{
         width: '100%',
         maxWidth: '400px',
         borderRadius: '15px',
-        backgroundColor: 'rgba(255, 255, 255, 0.95)', // translucent white
-        backdropFilter: 'blur(10px)' // glass effect
+        backgroundColor: 'rgba(255, 255, 255, 0.95)',
+        backdropFilter: 'blur(10px)',
+        zIndex: 1,
       }}
     >
       <div className="text-center mb-4">
-        <img src={imgfolder} alt="Admin Logo" style={{ maxWidth: '150px' }} />
+        <img src={imgfolder} alt="Admin Logo" style={{ maxWidth: '120px' }} />
         <h4 className="mt-3" style={{ color: '#333', fontWeight: 'bold' }}>Admin Login</h4>
       </div>
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleLogin} autoComplete="off">
         <div className="form-group mb-3">
-          <label className="form-label" style={{ color: '#333', fontWeight: '500' }}>Email</label>
+          <label className="form-label">Email</label>
           <div className="input-group">
-            <span className="input-group-text bg-light">
-              <i className="fa fa-envelope"></i>
-            </span>
+            <span className="input-group-text bg-light"><i className="fa fa-envelope"></i></span>
             <input
               type="email"
               className="form-control"
-              placeholder="admin@gmail.com"
+              placeholder="Enter admin email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              autoComplete="new-email"
             />
           </div>
         </div>
 
         <div className="form-group mb-4">
-          <label className="form-label" style={{ color: '#333', fontWeight: '500' }}>Password</label>
+          <label className="form-label">Password</label>
           <div className="input-group">
-            <span className="input-group-text bg-light">
-              <i className="fa fa-lock"></i>
-            </span>
+            <span className="input-group-text bg-light"><i className="fa fa-lock"></i></span>
             <input
               type="password"
               className="form-control"
-              placeholder="test"
+              placeholder="Enter password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              autoComplete="new-password"
             />
           </div>
         </div>
 
-        <button
-          className="btn w-100"
-          style={{
-            background: 'linear-gradient(to right, #fc4a1a, #f7b733)',
-            color: 'white',
-            fontWeight: '600',
-            border: 'none'
-          }}
-          type="submit"
-        >
+        <button className="btn w-100 text-white fw-bold" style={{ background: 'linear-gradient(to right, #fc4a1a, #f7b733)' }}>
           Log In
         </button>
       </form>
     </div>
+    <AppFooter />
   </div>
-  <AppFooter />
-  </div>
-     
 );
  
 };
