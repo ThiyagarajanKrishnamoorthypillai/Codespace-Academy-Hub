@@ -63,36 +63,37 @@ const handleLogout = () => {
 
     <nav className="d-flex flex-column gap-2 px-3">
       {navItems.map(({ path, label }) => (
-     <Link
+    <Link
   key={path}
   to={path}
   className={`text-decoration-none px-3 py-2 rounded fw-medium ${
     location.pathname === path
-      ? 'text-primary border-start border-4 border-primary bg-light shadow-sm'
-      : 'text-dark'
+      ? 'border-start border-4 bg-light shadow-sm'
+      : ''
   }`}
   style={{
     transition: 'all 0.3s ease',
     fontSize: '15px',
-    color: location.pathname === path ? '#f5efff' : '#f5efff', // active color
-    backgroundColor: location.pathname === path ? '#e7f0ff' : 'transparent', // active bg
+    color: '#673ab7', // ✅ always purple
+    backgroundColor: location.pathname === path ? '#f5efff' : 'transparent',
+    fontWeight: location.pathname === path ? '600' : '500',
   }}
   onMouseOver={(e) => {
-  if (location.pathname !== path) {
-    e.currentTarget.style.backgroundColor = '#f5efff'; // soft purple bg
-    e.currentTarget.style.color = '#673ab7';            // purple text
-  }
-}}
-onMouseOut={(e) => {
-  if (location.pathname !== path) {
-    e.currentTarget.style.backgroundColor = 'transparent';
-    e.currentTarget.style.color = '#673ab7';            // keep purple text
-  }
-}}
-
+    if (location.pathname !== path) {
+      e.currentTarget.style.backgroundColor = '#f5efff';
+      e.currentTarget.style.color = '#5a2ca0';
+    }
+  }}
+  onMouseOut={(e) => {
+    if (location.pathname !== path) {
+      e.currentTarget.style.backgroundColor = 'transparent';
+      e.currentTarget.style.color = '#673ab7';
+    }
+  }}
 >
   {label}
 </Link>
+
 
 
       ))}
