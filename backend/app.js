@@ -103,6 +103,9 @@ const feedbackRoutes = require('./routes/feedback');
 const markRoutes = require('./routes/mark');
 const sessionRoutes = require('./routes/session');
 
+const committeeRoutes = require('./routes/committee');
+const tutorRoutes = require('./routes/tutor');
+
 const api = process.env.API_URL;
 
 app.use(`${api}/question`, questionRoutes);
@@ -112,6 +115,9 @@ app.use(`${api}/admin`, adminRoutes);
 app.use(`${api}/feedback`, feedbackRoutes);
 app.use(`${api}/mark`, markRoutes);
 app.use(`${api}/session`, sessionRoutes);
+
+app.use(`${api}/committee`, committeeRoutes);
+app.use(`${api}/tutor`, tutorRoutes);
 
 // MongoDB Atlas Connection
 mongoose.connect(process.env.CONNECTION_STRING, {

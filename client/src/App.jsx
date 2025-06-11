@@ -1,20 +1,16 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
-//import "./App.css";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 
-import { Routes, Route, Link, BrowserRouter } from "react-router-dom";
+// Import existing components
 import Login from "./components/login";
 import AdminLogin from "./components/AdminLogin";
-import UserRegister from  "./components/UserRegister";
-import UserHome from  "./components/UserHome";
+import UserRegister from "./components/UserRegister";
 import UserProfile from './components/UserProfile';
 import EditUserProfile from './components/EditUserProfile';
 import Index from './components/Index';
-import AdminHome from './components/AdminHome';
 import ViewUserAdmin from './components/ViewUserAdmin';
-
 import ResetPassword from './components/ResetPassword';
-
 import AdminProfile from './components/AdminProfile';
 import PostQuestion from './components/PostQuestion';
 import ViewQuestionAdmin from './components/ViewQuestionAdmin';
@@ -37,70 +33,82 @@ import UserLayout from './components/UserLayout';
 import AdminLayout from './components/AdminLayout';
 import UserDashboard from './pages/UserDashboard';
 import AdminDashboard from './pages/AdminDashboard';
+import CommitteeLogin from './components/CommitteeLogin';
+import TutorLogin from './components/TutorLogin';
+
+// ✅ New Committee & Tutor Components
+import CommitteeLayout from './components/CommitteeLayout';
+import TutorLayout from './components/TutorLayout';
+import CommitteeHome from './components/CommitteeHome';
+import TutorHome from './components/TutorHome';
+import CommitteeDashboard from './pages/CommitteeDashboard';
+import TutorDashboard from './pages/TutorDashboard';
 
 function App() {
   return (
-      <div>
-        <BrowserRouter>
-          <Routes>
-      
-            <Route path='/' element={<Index />} />
-            <Route path='/user_login' element={<Login />} />
-            <Route path='/admin_login' element={<AdminLogin />} />
-            <Route path='/user_register' element={<UserRegister />} />
-            <Route path='/reset_password' element={<ResetPassword />} />
-            <Route path='/select_course' element={<SelectCourse/>}/>
-            <Route path='/google_auth_provider' element={<GoogleAuthProvider/>}/>
-        {/* User Sub-Layout */}  
-            
-            
+    <div>
+      <BrowserRouter>
+        <Routes>
 
-{/* Admin Sub-Layout */}  
-            <Route path="update_question/:id" element={<UpdateQuestion/>}/>
-            <Route path="update_feedback_admin" element={<UpdateFeedbackAdmin/>}/>
-            
+          {/* Common login routes */}
+          <Route path='/' element={<Index />} />
+          <Route path='/user_login' element={<Login />} />
+          <Route path='/admin_login' element={<AdminLogin />} />
+          <Route path='/committee_login' element={<CommitteeLogin />} />
+          <Route path='/tutor_login' element={<TutorLogin />} />
+          <Route path='/user_register' element={<UserRegister />} />
+          <Route path='/reset_password' element={<ResetPassword />} />
+          <Route path='/select_course' element={<SelectCourse />} />
+          <Route path='/google_auth_provider' element={<GoogleAuthProvider />} />
 
+          {/* User Routes */}
+          <Route path="/user_home" element={<UserLayout />}>
+            <Route index element={<UserDashboard />} />
+            <Route path="view_question_user" element={<ViewQuestionUser />} />
+            <Route path="post_answer" element={<PostAnswer />} />
+            <Route path="post_feedback" element={<PostFeedback />} />
+            <Route path="user_profile" element={<UserProfile />} />
+            <Route path="view_answer_user" element={<ViewAnswerUser />} />
+            <Route path="view_feedback_user" element={<ViewFeedbackUser />} />
+            <Route path="view_marks_user" element={<ViewMarksUser />} />
+            <Route path="edit_profile/:id" element={<EditUserProfile />} />
+          </Route>
 
-{/* User routes with layout */}
-  <Route path="/user_home" element={<UserLayout />}>
-    <Route index element={<UserDashboard />} /> 
-    <Route path="view_question_user" element={<ViewQuestionUser />} />
-    <Route path="post_answer" element={<PostAnswer/>}/>
-    <Route path="post_feedback" element={<PostFeedback/>}/>
-    <Route path="user_profile" element={<UserProfile />} />   
-    <Route path="view_answer_user" element={<ViewAnswerUser/>}/>
-    <Route path="view_feedback_user" element={<ViewFeedbackUser/>}/>
-    <Route path="view_marks_user" element={<ViewMarksUser/>}/>
-    <Route path="edit_profile/:id" element={<EditUserProfile />} /> 
+          {/* Admin Routes */}
+          <Route path="/admin_home" element={<AdminLayout />}>
+            <Route index element={<AdminDashboard />} />
+            <Route path="post_question" element={<PostQuestion />} />
+            <Route path="admin_profile" element={<AdminProfile />} />
+            <Route path="view_question_admin" element={<ViewQuestionAdmin />} />
+            <Route path="view_answer_admin" element={<ViewAnswerAdmin />} />
+            <Route path="view_feedback_admin" element={<ViewFeedbackAdmin />} />
+            <Route path="post_mark_admin" element={<PostMarkAdmin />} />
+            <Route path="view_marks_admin" element={<ViewMarksAdmin />} />
+            <Route path="start_session" element={<StartSession />} />
+            <Route path="view_user_admin" element={<ViewUserAdmin />} />
+            <Route path="admin_profile" element={<AdminProfile />} />
+          </Route>
 
-  </Route>
+          {/* Committee Routes */}
+          <Route path="/committee_home" element={<CommitteeLayout />}>
+            <Route index element={<CommitteeDashboard />} />
+            <Route path="home" element={<CommitteeHome />} />
+          </Route>
 
-            
-            {/* Admin routes with layout */}
-    <Route path="/admin_home" element={<AdminLayout />}>
-    <Route index element={<AdminDashboard />} />
-    <Route path="post_question" element={<PostQuestion />} />
-    <Route path="admin_profile" element={<AdminProfile />} />
-    <Route path="view_question_admin" element={<ViewQuestionAdmin/>}/>
-     <Route path="view_answer_admin" element={<ViewAnswerAdmin/>}/>
-      <Route path="view_feedback_admin" element={<ViewFeedbackAdmin/>}/>
-      <Route path="post_mark_admin" element={<PostMarkAdmin/>}/>
-      <Route path="view_marks_admin" element={<ViewMarksAdmin/>}/>
-      <Route path="start_session" element={<StartSession/>}/>
-      <Route path="view_user_admin" element={<ViewUserAdmin />} /> 
-      <Route path="admin_profile" element={<AdminProfile />} />
-           
-  </Route>
+          {/* Tutor Routes */}
+          <Route path="/tutor_home" element={<TutorLayout />}>
+            <Route index element={<TutorDashboard />} />
+            <Route path="home" element={<TutorHome />} />
+          </Route>
 
+          {/* Update Routes (for updateQuestion, updateFeedback) */}
+          <Route path="update_question/:id" element={<UpdateQuestion />} />
+          <Route path="update_feedback_admin" element={<UpdateFeedbackAdmin />} />
 
-          </Routes>
-
-        </BrowserRouter>
-      </div>
-    );
+        </Routes>
+      </BrowserRouter>
+    </div>
+  );
 }
 
-
-
 export default App;
-
