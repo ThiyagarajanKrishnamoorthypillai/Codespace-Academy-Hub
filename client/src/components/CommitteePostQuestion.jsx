@@ -36,9 +36,13 @@ const CommitteePostQuestion = () => {
     data.append("committeeemail", committeeEmail);
     data.append("status", "pending");
 
-    for (let i = 0; i < formData.imageFiles.length; i++) {
-      data.append("images", formData.imageFiles[i]);
-    }
+   for (let i = 0; i < (formData.imageFiles?.length || 0); i++) {
+  data.append("images", formData.imageFiles[i]);
+}
+for (let i = 0; i < (formData.pdfFiles?.length || 0); i++) {
+  data.append("pdfs", formData.pdfFiles[i]);
+}
+
 
     try {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/question/`, {
@@ -121,15 +125,16 @@ const CommitteePostQuestion = () => {
                     </div>
 
                     <div className="mb-3">
-                      <div className="title mb-2"><span>Upload Images:</span></div>
-                      <input
-                        type="file"
-                        multiple
-                        accept="image/*"
-                        className="form-control"
-                        onChange={(e) => setFormData({ ...formData, imageFiles: e.target.files })}
-                      />
-                    </div>
+  <div className="title mb-2"><span>Upload PDFs:</span></div>
+  <input
+    type="file"
+    multiple
+    accept="application/pdf"
+    className="form-control"
+    onChange={(e) => setFormData({ ...formData, pdfFiles: e.target.files })}
+  />
+</div>
+
 
                     <button className="btn btn-success w-100" type="submit">Submit</button>
                   </form>

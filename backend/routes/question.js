@@ -21,22 +21,30 @@ const uploadToCloudinary = (fileBuffer) => {
 };
 
 // POST question with images
-router.post('/', upload.array('images'), async (req, res) => {
+router.post('/', upload.fields([
+  { name: 'images', maxCount: 10 },
+  { name: 'pdfs', maxCount: 10 }
+]), async (req, res) => {
   try {
-    const cloudinaryUrls = await Promise.all(req.files.map(file => uploadToCloudinary(file.buffer)));
+    const imageUrls = req.files['images']
+      ? await Promise.all(req.files['images'].map(file => uploadToCloudinary(file.buffer)))
+      : [];
+
+    const pdfUrls = req.files['pdfs']
+      ? await Promise.all(req.files['pdfs'].map(file => uploadToCloudinary(file.buffer, 'application/pdf')))
+      : [];
 
     const data = {
       course: req.body.course,
-      image: cloudinaryUrls,
+      image: imageUrls,
+      pdf: pdfUrls,
       status: req.body.status || 'pending'
     };
 
-    // ✅ Check who is posting
     if (req.body.adminemail) {
       data.adminemail = req.body.adminemail;
       data.dateCreated = Date.now();
     }
-
     if (req.body.committeeemail) {
       data.committeeemail = req.body.committeeemail;
       data.committedate = Date.now();
@@ -44,14 +52,13 @@ router.post('/', upload.array('images'), async (req, res) => {
 
     const question = new Question(data);
     const saved = await question.save();
-    if (!saved) return res.status(400).send('Failed to save question');
     res.status(200).send(saved);
-
   } catch (err) {
-    console.error('Cloudinary upload error:', err);
+    console.error('Upload error:', err);
     res.status(500).send({ message: 'Upload failed', error: err });
   }
 });
+
 
 
 // GET all

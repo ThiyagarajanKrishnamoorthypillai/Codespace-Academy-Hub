@@ -5,6 +5,7 @@ const questionSchema = mongoose.Schema({
   committeeemail: { type: String },  // ✅ new field
   course: { type: String, required: true },
   image: { type: [String], required: true },
+  pdf: { type: [String] }, // ✅ ADD PDF support
   status: { type: String, default: 'pending' },
   dateCreated: { type: Date, default: Date.now },  // ✅ old
   committedate: { type: Date }  // ✅ new field

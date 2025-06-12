@@ -120,7 +120,7 @@ const ResetPassword = () => {
 
   return (
     <div>
-            
+          
         <div className="login-wrapper d-flex align-items-center justify-content-center text-center">
         <div className="background-shape"></div>
              <div className="container">
