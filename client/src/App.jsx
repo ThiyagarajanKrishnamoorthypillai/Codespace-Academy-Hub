@@ -90,10 +90,19 @@ function App() {
           </Route>
 
           {/* Committee Routes */}
-          <Route path="/committee_home" element={<CommitteeLayout />}>
-            <Route index element={<CommitteeDashboard />} />
-            <Route path="home" element={<CommitteeHome />} />
-          </Route>
+         <Route path="/committee_home" element={<CommitteeLayout />}>
+  <Route index element={<CommitteeDashboard />} />
+  <Route path="post_question" element={<PostQuestion />} />
+  <Route path="admin_profile" element={<AdminProfile />} />
+  <Route path="view_question_admin" element={<ViewQuestionAdmin />} />
+  <Route path="view_answer_admin" element={<ViewAnswerAdmin />} />
+  <Route path="view_feedback_admin" element={<ViewFeedbackAdmin />} />
+  <Route path="post_mark_admin" element={<PostMarkAdmin />} />
+  <Route path="view_marks_admin" element={<ViewMarksAdmin />} />
+  <Route path="start_session" element={<StartSession />} />
+  <Route path="view_user_admin" element={<ViewUserAdmin />} />
+</Route>
+
 
           {/* Tutor Routes */}
           <Route path="/tutor_home" element={<TutorLayout />}>
