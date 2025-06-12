@@ -22,10 +22,12 @@ const CommitteePostQuestion = () => {
   const [validationErrors, setValidationErrors] = useState({});
 
   const postQuestionData = async () => {
-    if (!formData.course || !formData.imageFiles || formData.imageFiles.length === 0) {
-      setValidationErrors({ message: "Course and at least one image are required" });
-      return;
-    }
+     if (!formData.course || 
+     ((!formData.imageFiles || formData.imageFiles.length === 0) && 
+      (!formData.pdfFiles || formData.pdfFiles.length === 0))) {
+    setValidationErrors({ message: "Course and at least one image or one PDF is required" });
+    return;
+  }
 
     // ✅ Read committeeemail from cookie
     const committeeEmail = decodeURIComponent(document.cookie.replace(/(?:(?:^|.*;\s*)committeeemail\s*=\s*([^;]*).*$)|^.*$/, '$1'));

@@ -35,8 +35,10 @@ const PostQuestion = () => {
 
 
   const postQuestionData = async () => {
-  if (!formData.course || !formData.imageFiles || formData.imageFiles.length === 0) {
-    setValidationErrors({ message: "Course and at least one image are required" });
+   if (!formData.course || 
+     ((!formData.imageFiles || formData.imageFiles.length === 0) && 
+      (!formData.pdfFiles || formData.pdfFiles.length === 0))) {
+    setValidationErrors({ message: "Course and at least one image or one PDF is required" });
     return;
   }
 
