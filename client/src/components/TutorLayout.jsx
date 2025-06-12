@@ -15,13 +15,18 @@ const TutorLayout = () => {
     if (confirmLogout) {
       removeCookie("tutoremail", { path: '/' });
       removeCookie("tutorcourse", { path: '/' });
+      
       localStorage.removeItem("token");
       navigate('/');
     }
   };
 
   const navItems = [
-    { path: '/tutor_home', label: 'Tutor Home' }
+    { path: '/tutor_home', label: 'Tutor Home' },
+    { path: '/admin_home/view_answer_tutor', label: "View Student's Answer Sheet" },
+    { path: '/admin_home/view_feedback_tutor', label: "View Student's Doubts" },
+    { path: '/tutor_home/post_mark_tutor', label: 'Add Marks' },
+    { path: '/tutor_home/view_marks_tutor', label: 'View Marks' },
     // Add more tutor features here if needed
   ];
 

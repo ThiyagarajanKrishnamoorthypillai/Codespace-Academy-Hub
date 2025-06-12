@@ -48,6 +48,10 @@ import ViewQuestionCommittee from './components/ViewQuestionCommittee';
 import ViewAnswerCommittee from './components/ViewAnswerCommittee';
 import CommitteeProfile from './components/CommitteeProfile';
 import EditCommitteeProfile from './components/EditCommitteeProfile';
+import PostMarkTutor from './components/PostMarkTutor';
+import ViewMarksTutor from './components/ViewMarksTutor';
+import ViewAnswerTutor from './components/ViewAnswerTutor';
+import ViewFeedbackTutor from './components/ViewFeedbackTutor';
 
 function App() {
   return (
@@ -116,6 +120,12 @@ function App() {
           <Route path="/tutor_home" element={<TutorLayout />}>
             <Route index element={<TutorDashboard />} />
             <Route path="home" element={<TutorHome />} />
+            <Route path="post_mark_tutor" element={<PostMarkTutor />} />
+            <Route path="view_marks_tutor" element={<ViewMarksTutor />} />
+            <Route path="view_answer_tutor" element={<ViewAnswerTutor />} />
+            <Route path="view_feedback_tutor" element={<ViewFeedbackTutor />} />
+
+
           </Route>
 
           {/* Update Routes (for updateQuestion, updateFeedback) */}

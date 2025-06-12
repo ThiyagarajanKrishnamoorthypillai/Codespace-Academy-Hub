@@ -25,7 +25,8 @@ const markSchema = new mongoose.Schema({
     type: String,
     default: new Date().toISOString()
   },
-  adminemail: String
+  adminemail: String,
+  tutoremail: String  // ✅ ADD tutor field (new)
 }, {
   timestamps: true
 });

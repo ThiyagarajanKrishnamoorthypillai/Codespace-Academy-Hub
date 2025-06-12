@@ -66,6 +66,58 @@ const answer = await Answer.findById(answerId);
   }
 });
 
+
+router.post('/post-tutor', upload.array('imageMark'), async (req, res) => {
+  try {
+    const { answerId, tutoremail } = req.body;
+    if (!answerId || !req.files || req.files.length === 0 || !tutoremail) {
+      return res.status(400).json({ message: "Missing fields" });
+    }
+
+    const answer = await Answer.findById(answerId);
+    if (!answer) return res.status(404).json({ message: "Answer not found" });
+
+    const imageMarkUrls = await Promise.all(
+      req.files.map(file => {
+        return new Promise((resolve, reject) => {
+          const stream = cloudinary.uploader.upload_stream(
+            { folder: 'marks' },
+            (error, result) => {
+              if (result) resolve(result.secure_url);
+              else reject(error);
+            }
+          );
+          streamifier.createReadStream(file.buffer).pipe(stream);
+        });
+      })
+    );
+
+    const mark = new Mark({
+      useremail: answer.useremail,
+      name: answer.name,
+      stdid: answer.stdid,
+      dpt: answer.dpt,
+      college: answer.college,
+      course: answer.course,
+      questionCourse: answer.questionCourse,
+      questionDateCreated: answer.questionDateCreated,
+      questionImages: answer.questionImages,
+      answerImages: answer.image,
+      status: answer.status,
+      imageMark: imageMarkUrls,
+      tutoremail   // ✅ store tutor email
+    });
+
+    const saved = await mark.save();
+    res.status(200).json(saved);
+
+  } catch (error) {
+    console.error("Error in /mark/post-tutor:", error);
+    res.status(500).json({ message: "Internal server error", error });
+  }
+});
+
+
 // ✅ GET all marks
 router.get('/', async (req, res) => {
   try {
