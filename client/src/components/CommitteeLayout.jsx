@@ -28,7 +28,7 @@ const CommitteeLayout = () => {
     
     
     { path: '/committee_home/view_user_admin', label: 'View Student Profile' },
-    { path: '/committee_home/admin_profile', label: 'My Profile' }
+    { path: '/committee_home/committee_profile', label: 'My Profile' }
   ];
 
   return (
