@@ -47,23 +47,22 @@ const ViewQuestionAdmin = () => {
   };
 
   useEffect(() => {
-    const fetchQuestionData = async () => {
-      try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/question/`);
-        const data = await response.json();
-        const adminemail = decodeURIComponent(document.cookie.replace(/(?:(?:^|.*;\s*)adminemail\s*=\s*([^;]*).*$)|^.*$/, '$1'));
-        const filteredQuestion = data.filter((question) => question.adminemail === adminemail);
-        setQuestionData(filteredQuestion);
-        setFilteredData(filteredQuestion);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching question data:', error.message);
-        setLoading(false);
-      }
-    };
+  const fetchQuestionData = async () => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/question/`);
+      const data = await response.json();
+      setQuestionData(data);
+      setFilteredData(data);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching question data:', error.message);
+      setLoading(false);
+    }
+  };
 
-    fetchQuestionData();
-  }, []);
+  fetchQuestionData();
+}, []);
+
 
   const handleSearch = (term) => {
     setSearchTerm(term);
@@ -118,18 +117,23 @@ const ViewQuestionAdmin = () => {
                 <div className="card-body">
                   <div className="row">
                     {/* Metadata */}
-                    <div className="col-12 col-md-4 mb-2">
-                      <strong>Course:</strong> <span className="text-primary">{question.course}</span>
-                    </div>
-                   {/* <div className="col-12 col-md-4 mb-2">
-                      <strong>Status:</strong>{' '}
-                      <span className={`badge ${question.status === 'pending' ? 'bg-warning text-dark' : 'bg-success'}`}>
-                        {question.status}
-                      </span>
-                    </div>*/}
-                    <div className="col-12 col-md-4 mb-3">
-                      <strong>Date:</strong> {new Date(question.dateCreated).toLocaleDateString('en-GB', timeOptions)}
-                    </div>
+                  <div className="col-12 col-md-4 mb-2">
+  <strong>Course:</strong> <span className="text-primary">{question.course}</span>
+</div>
+
+<div className="col-12 col-md-4 mb-2">
+  <strong>Email:</strong> <span className="text-success">{question.adminemail || question.committeeemail || 'N/A'}</span>
+</div>
+
+<div className="col-12 col-md-4 mb-3">
+  <strong>Date:</strong> 
+  {question.dateCreated 
+    ? new Date(question.dateCreated).toLocaleDateString('en-GB', timeOptions) 
+    : (question.committedate 
+        ? new Date(question.committedate).toLocaleDateString('en-GB', timeOptions) 
+        : 'N/A')}
+</div>
+
                   </div>
 
                   <hr />

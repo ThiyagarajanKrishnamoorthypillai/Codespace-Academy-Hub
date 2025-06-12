@@ -115,16 +115,21 @@ const ViewQuestionCommittee = () => {
                     <div className="card shadow-sm">
                       <div className="card-body">
                         <div className="row">
-                          <div className="col-12 col-md-4 mb-2">
-                            <strong>Course:</strong> <span className="text-primary">{question.course}</span>
-                          </div>
+                        <div className="col-12 col-md-4 mb-2">
+  <strong>Course:</strong> <span className="text-primary">{question.course}</span>
+</div>
 
-                          <div className="col-12 col-md-4 mb-3">
-                            <strong>Date:</strong> 
-                            {question.committedate 
-                              ? new Date(question.committedate).toLocaleDateString('en-GB', timeOptions) 
-                              : 'N/A'}
-                          </div>
+<div className="col-12 col-md-4 mb-2">
+  <strong>Committee Email:</strong> <span className="text-success">{question.committeeemail || 'N/A'}</span>
+</div>
+
+<div className="col-12 col-md-4 mb-3">
+  <strong>Date:</strong> 
+  {question.committedate 
+    ? new Date(question.committedate).toLocaleDateString('en-GB', timeOptions) 
+    : 'N/A'}
+</div>
+
                         </div>
 
                         <hr />
@@ -143,7 +148,7 @@ const ViewQuestionCommittee = () => {
                           ))}
                         </div>
 
-                        <div className="text-end mt-3">
+                     {/*   <div className="text-end mt-3">
                           <button
                             className="btn btn-sm btn-outline-primary me-2"
                             style={{ minWidth: '100px' }}
@@ -158,7 +163,7 @@ const ViewQuestionCommittee = () => {
                           >
                             Delete
                           </button>
-                        </div>
+                        </div> */}
 
                       </div>
                     </div>
