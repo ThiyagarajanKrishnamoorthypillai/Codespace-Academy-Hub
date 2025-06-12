@@ -13,6 +13,20 @@ router.get(`/`, async (req, res) => {
   res.send(committeeList);
 });
 
+
+router.get('/:id', async (req, res) => {
+  try {
+    const committee = await Committee.findById(req.params.id);
+    if (!committee) {
+      return res.status(404).send('Committee not found');
+    }
+    res.send(committee);
+  } catch (error) {
+    res.status(500).send('Error fetching committee');
+  }
+});
+
+
 // Committee Login API
 router.post('/login', async (req, res) => {
   const committee = await Committee.findOne({ email: req.body.email });
@@ -49,5 +63,27 @@ router.post(`/`, async (req, res) => {
 
   res.send(committee);
 });
+
+router.put('/:id', async (req, res) => {
+  try {
+    const committee = await Committee.findById(req.params.id);
+    if (!committee) {
+      return res.status(404).send('Committee not found');
+    }
+
+    committee.email = req.body.email;
+
+    // ✅ If passwordHash changed → update it
+    if (req.body.passwordHash && req.body.passwordHash !== committee.passwordHash) {
+      committee.passwordHash = bcrypt.hashSync(req.body.passwordHash, 10);
+    }
+
+    const updatedCommittee = await committee.save();
+    res.send(updatedCommittee);
+  } catch (error) {
+    res.status(500).send('Error updating committee');
+  }
+});
+
 
 module.exports = router;

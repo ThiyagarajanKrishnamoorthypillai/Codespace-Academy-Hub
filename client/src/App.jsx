@@ -47,6 +47,7 @@ import CommitteePostQuestion from './components/CommitteePostQuestion';
 import ViewQuestionCommittee from './components/ViewQuestionCommittee';
 import ViewAnswerCommittee from './components/ViewAnswerCommittee';
 import CommitteeProfile from './components/CommitteeProfile';
+import EditCommitteeProfile from './components/EditCommitteeProfile';
 
 function App() {
   return (
@@ -100,6 +101,8 @@ function App() {
   <Route path="committee_profile" element={<CommitteeProfile/>} />
   <Route path="view_question_committee" element={<ViewQuestionCommittee />} />
   <Route path="view_answer_committee" element={<ViewAnswerCommittee />} />
+  <Route path="edit_committee_profile/:id" element={<EditCommitteeProfile />} />
+
   <Route path="view_feedback_admin" element={<ViewFeedbackAdmin />} />
   <Route path="post_mark_admin" element={<PostMarkAdmin />} />
   <Route path="view_marks_admin" element={<ViewMarksAdmin />} />
