@@ -47,12 +47,16 @@ const UpdateQuestion = () => {
     });
   };
 
-  const handleUpdateQuestion = async (e) => {
+ const handleUpdateQuestion = async (e) => {
   e.preventDefault();
 
   const formData = new FormData();
   formData.append('course', editedQuestion.course);
-  formData.append('adminemail', editedQuestion.adminemail);
+  
+  if (editedQuestion.adminemail) {
+    formData.append('adminemail', editedQuestion.adminemail);
+  }
+
   formData.append('existingImages', JSON.stringify(editedQuestion.existingImages));
   for (let i = 0; i < editedQuestion.newImages.length; i++) {
     formData.append('newImages', editedQuestion.newImages[i]);
@@ -74,6 +78,10 @@ const UpdateQuestion = () => {
     console.error('Error:', err);
   }
 };
+
+
+
+
 const handleRemoveImage = (imgToRemove) => {
   setEditedQuestion((prev) => ({
     ...prev,

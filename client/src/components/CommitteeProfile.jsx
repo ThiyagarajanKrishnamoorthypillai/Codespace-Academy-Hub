@@ -51,9 +51,9 @@ const CommitteeProfile = () => {
                     </div>
                   </div>
 
-                  <button className="btn btn-danger" onClick={() => EditProfile(committee.id)}>
+                 {/* <button className="btn btn-danger" onClick={() => EditProfile(committee.id)}>
                     Edit Profile
-                  </button>
+                  </button>*/}
                 </div>
               ))}
             </div>
