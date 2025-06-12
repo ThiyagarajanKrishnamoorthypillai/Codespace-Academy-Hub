@@ -25,22 +25,34 @@ router.post('/', upload.array('images'), async (req, res) => {
   try {
     const cloudinaryUrls = await Promise.all(req.files.map(file => uploadToCloudinary(file.buffer)));
 
-    const question = new Question({
-      adminemail: req.body.adminemail,
+    const data = {
       course: req.body.course,
-      image: cloudinaryUrls, // store Cloudinary URLs
+      image: cloudinaryUrls,
       status: req.body.status || 'pending'
-    });
+    };
 
+    // ✅ Check who is posting
+    if (req.body.adminemail) {
+      data.adminemail = req.body.adminemail;
+      data.dateCreated = Date.now();
+    }
+
+    if (req.body.committeeemail) {
+      data.committeeemail = req.body.committeeemail;
+      data.committedate = Date.now();
+    }
+
+    const question = new Question(data);
     const saved = await question.save();
     if (!saved) return res.status(400).send('Failed to save question');
-
     res.status(200).send(saved);
+
   } catch (err) {
     console.error('Cloudinary upload error:', err);
     res.status(500).send({ message: 'Upload failed', error: err });
   }
 });
+
 
 // GET all
 router.get('/', async (req, res) => {

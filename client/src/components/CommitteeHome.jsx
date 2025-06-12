@@ -67,7 +67,7 @@ const CommitteeHome = () => {
                 <div className="card horizontal-product-card">
                   <div className="card-body d-flex align-items-center">
                     <div className="card-body"><img src={imgCommon} className="img-fluid" style={{ width: 64, height: 64 }} />
-                      <Link className="text-darkblue" to="/post_question">Add Question Papers</Link>
+                      <Link className="text-darkblue" to="/committee_post_question">Add Question Papers</Link>
                     </div>
                   </div>
                 </div>

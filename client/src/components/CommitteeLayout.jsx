@@ -22,12 +22,11 @@ const CommitteeLayout = () => {
   const navItems = [
     { path: '/committee_home', label: 'Committee Home' },
     { path: '/committee_home/start_session', label: 'Duration' },
-    { path: '/committee_home/post_question', label: 'Add Question Papers' },
+    { path: '/committee_home/committee_post_question', label: 'Add Question Papers' },
     { path: '/committee_home/view_question_admin', label: 'View & Update Question Papers' },
     { path: '/committee_home/view_answer_admin', label: "View Student's Answer Sheet" },
-    { path: '/committee_home/view_feedback_admin', label: "View Student's Doubts" },
-    { path: '/committee_home/post_mark_admin', label: 'Add Marks' },
-    { path: '/committee_home/view_marks_admin', label: 'View Marks' },
+    
+    
     { path: '/committee_home/view_user_admin', label: 'View Student Profile' },
     { path: '/committee_home/admin_profile', label: 'My Profile' }
   ];

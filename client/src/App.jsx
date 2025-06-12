@@ -43,6 +43,8 @@ import CommitteeHome from './components/CommitteeHome';
 import TutorHome from './components/TutorHome';
 import CommitteeDashboard from './pages/CommitteeDashboard';
 import TutorDashboard from './pages/TutorDashboard';
+import CommitteePostQuestion from './components/CommitteePostQuestion';
+import ViewQuestionCommittee from './components/ViewQuestionCommittee';
 
 function App() {
   return (
@@ -92,9 +94,9 @@ function App() {
           {/* Committee Routes */}
          <Route path="/committee_home" element={<CommitteeLayout />}>
   <Route index element={<CommitteeDashboard />} />
-  <Route path="post_question" element={<PostQuestion />} />
+  <Route path="commmittee_post_question" element={<CommitteePostQuestion />} />
   <Route path="admin_profile" element={<AdminProfile />} />
-  <Route path="view_question_admin" element={<ViewQuestionAdmin />} />
+  <Route path="view_question_committee" element={<ViewQuestionCommittee />} />
   <Route path="view_answer_admin" element={<ViewAnswerAdmin />} />
   <Route path="view_feedback_admin" element={<ViewFeedbackAdmin />} />
   <Route path="post_mark_admin" element={<PostMarkAdmin />} />
