@@ -23,8 +23,8 @@ const CommitteeLayout = () => {
     { path: '/committee_home', label: 'Committee Home' },
     { path: '/committee_home/start_session', label: 'Duration' },
     { path: '/committee_home/committee_post_question', label: 'Add Question Papers' },
-    { path: '/committee_home/view_question_admin', label: 'View & Update Question Papers' },
-    { path: '/committee_home/view_answer_admin', label: "View Student's Answer Sheet" },
+    { path: '/committee_home/view_question_committee', label: 'View & Update Question Papers' },
+    { path: '/committee_home/view_answer_committee', label: "View Student's Answer Sheet" },
     
     
     { path: '/committee_home/view_user_admin', label: 'View Student Profile' },

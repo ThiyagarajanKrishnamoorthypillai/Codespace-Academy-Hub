@@ -94,7 +94,7 @@ function App() {
           {/* Committee Routes */}
          <Route path="/committee_home" element={<CommitteeLayout />}>
   <Route index element={<CommitteeDashboard />} />
-  <Route path="commmittee_post_question" element={<CommitteePostQuestion />} />
+  <Route path="committee_post_question" element={<CommitteePostQuestion />} />
   <Route path="admin_profile" element={<AdminProfile />} />
   <Route path="view_question_committee" element={<ViewQuestionCommittee />} />
   <Route path="view_answer_admin" element={<ViewAnswerAdmin />} />
