@@ -32,6 +32,7 @@ const PostQuestion = () => {
     
   });
   const [validationErrors, setValidationErrors] = useState({});
+const [loading, setLoading] = useState(false);
 
 
   const postQuestionData = async () => {
@@ -74,6 +75,8 @@ for (let i = 0; i < (formData.pdfFiles?.length || 0); i++) {
     }
   } catch (error) {
     console.error("Error uploading:", error);
+  }finally {
+    setLoading(false);
   }
 };
 
@@ -166,7 +169,10 @@ for (let i = 0; i < (formData.pdfFiles?.length || 0); i++) {
                 
 
         
-                <button className="btn btn-success w-100"  type="submit">Submit</button>
+                <button className="btn btn-success w-100" type="submit" disabled={loading}>
+  {loading ? "Please wait..." : "Submit"}
+</button>
+
               </form>
             </div>
           </div>
