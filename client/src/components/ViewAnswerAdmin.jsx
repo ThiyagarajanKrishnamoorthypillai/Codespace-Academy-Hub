@@ -72,7 +72,7 @@ const handleDownloadZipWithPDFImages = async (answer) => {
   const doc = new jsPDF();
   let y = 10;
 
-  // Text Fields
+  // Add Details to Report PDF
   const fields = [
     ["Name", answer.name],
     ["Student ID", answer.stdid],
@@ -87,79 +87,75 @@ const handleDownloadZipWithPDFImages = async (answer) => {
   ];
 
   doc.setFontSize(14);
-  doc.text("Answer Submission Details", 10, y); y += 10;
+  doc.text("Answer Submission Details", 10, y);
+  y += 10;
 
   fields.forEach(([label, value]) => {
     doc.text(`${label}: ${value}`, 10, y);
     y += 8;
   });
 
-  // Answer Images
-// ✅ Download answer images from the array: answer.image[]
-if (Array.isArray(answer.image) && answer.image.length > 0) {
-  for (let i = 0; i < answer.image.length; i++) {
-    const imgFile = answer.image[i];
-    const imgUrl = `${import.meta.env.VITE_API_URL}/uploads/${imgFile}`;
-    try {
-      const blob = await fetchImageBlob(imgUrl);
-      if (!blob) continue;
-      zip.file(`Answer_Images/${imgFile}`, blob);
-
-      const base64 = await blobToBase64(blob);
-      doc.addPage();
-      doc.text(`Answer Image ${i + 1}`, 10, 10);
-      doc.addImage(base64, 'JPEG', 10, 20, 180, 140);
-    } catch (err) {
-      console.error("❌ Failed to fetch answer image:", imgUrl, err);
+  // ✅ Download Answer Images
+  if (Array.isArray(answer.image) && answer.image.length > 0) {
+    for (let i = 0; i < answer.image.length; i++) {
+      const imgUrl = answer.image[i];
+      try {
+        const blob = await fetchImageBlob(imgUrl);
+        if (!blob) continue;
+        zip.file(`Answer_Images/Image_${i + 1}.jpg`, blob);
+        const base64 = await blobToBase64(blob);
+        doc.addPage();
+        doc.text(`Answer Image ${i + 1}`, 10, 10);
+        doc.addImage(base64, 'JPEG', 10, 20, 180, 140);
+      } catch (err) {
+        console.error("Failed to fetch answer image:", imgUrl, err);
+      }
     }
   }
-}
 
-
-  // Question Images
-for (let i = 0; i < (answer.questionImages || []).length; i++) {
-  const imgFile = answer.questionImages[i];
-  const imgUrl = `${import.meta.env.VITE_API_URL}/uploads/${imgFile}`;
-  try {
-    const blob = await fetchImageBlob(imgUrl);
-    const base64 = await blobToBase64(blob);
-    zip.file(`Question_Images/${imgFile}`, blob);
-    doc.addPage();
-    doc.text(`Question Image ${i + 1}`, 10, 10);
-    doc.addImage(base64, 'JPEG', 10, 20, 180, 140);
-  } catch (err) {
-    console.error("Question image download failed:", imgUrl, err);
-  }
-}
-
-// Question PDFs (only this part is new)
-if (Array.isArray(answer.pdf) && answer.pdf.length > 0) {
-  for (let i = 0; i < answer.pdf.length; i++) {
-    const pdfUrl = answer.pdf[i];
-    try {
-      const response = await fetch(pdfUrl);
-      if (!response.ok) throw new Error('Network response was not ok');
-      const pdfBlob = await response.blob();
-      zip.file(`Question_PDFs/PDF_${i + 1}.pdf`, pdfBlob);
-    } catch (err) {
-      console.error("Question PDF download failed:", pdfUrl, err);
+  // ✅ Download Question Images
+  if (Array.isArray(answer.questionImages) && answer.questionImages.length > 0) {
+    for (let i = 0; i < answer.questionImages.length; i++) {
+      const imgUrl = answer.questionImages[i];
+      try {
+        const blob = await fetchImageBlob(imgUrl);
+        if (!blob) continue;
+        zip.file(`Question_Images/QuestionImage_${i + 1}.jpg`, blob);
+        const base64 = await blobToBase64(blob);
+        doc.addPage();
+        doc.text(`Question Image ${i + 1}`, 10, 10);
+        doc.addImage(base64, 'JPEG', 10, 20, 180, 140);
+      } catch (err) {
+        console.error("Question image download failed:", imgUrl, err);
+      }
     }
   }
-}
 
+  // ✅ Download Question PDFs (new addition)
+  if (Array.isArray(answer.pdf) && answer.pdf.length > 0) {
+    for (let i = 0; i < answer.pdf.length; i++) {
+      const pdfUrl = answer.pdf[i];
+      try {
+        const response = await fetch(pdfUrl);
+        if (!response.ok) throw new Error('Network response was not ok');
+        const pdfBlob = await response.blob();
+        zip.file(`Question_PDFs/PDF_${i + 1}.pdf`, pdfBlob);
+      } catch (err) {
+        console.error("Question PDF download failed:", pdfUrl, err);
+      }
+    }
+  }
 
-
-
-
-  // Add PDF to ZIP
+  // ✅ Add the generated Answer Report PDF
   const pdfBlob = doc.output('blob');
   zip.file("Answer_Report.pdf", pdfBlob);
 
-  // Save ZIP
+  // ✅ Finally Save ZIP
   zip.generateAsync({ type: 'blob' }).then((zipFile) => {
-    saveAs(zipFile, `${answer.name}_Details.zip`);
+    saveAs(zipFile, `${answer.name}_FullDetails.zip`);
   });
 };
+
 
 useEffect(() => {
   fetch('${import.meta.env.VITE_API_URL}/uploads/1748612110292-401063483-paper-surrounded-finance-element.jpg')
