@@ -10,7 +10,7 @@ router.post('/create', async (req, res) => {
     const newSession = new Session({
       course,
       batch,
-      users,
+      users: users, // already array of { name, email }
       fromDate: new Date(fromDate),
       toDate: new Date(toDate),
       durationHours
@@ -39,39 +39,37 @@ router.get('/', async (req, res) => {
 // PATCH: Update session daily progress
 router.patch('/daily-update/:id', async (req, res) => {
   try {
-    const { todayHoursMinutes } = req.body;
+    const { todayHoursMinutes, selectedDate } = req.body;
     const session = await Session.findById(req.params.id);
 
     if (!session) return res.status(404).json({ error: 'Session not found' });
 
-    // calculate total minutes already stored
-    const totalMinutesLogged = session.datewise.reduce((sum, entry) => sum + entry.todayHour, 0);
-    const totalMinutesPlanned = session.durationHours * 60;
-    const remainingMinutes = totalMinutesPlanned - totalMinutesLogged;
+    const totalPlannedMinutes = session.durationHours * 60;
+    const totalLoggedMinutes = session.datewise.reduce((sum, entry) => sum + entry.todayHour, 0);
+    const remainingMinutes = totalPlannedMinutes - totalLoggedMinutes;
 
     if (todayHoursMinutes > remainingMinutes) {
       return res.status(400).json({ error: "Today's minutes exceed remaining minutes." });
     }
 
-    // append new datewise entry
+    // append datewise
     session.datewise.push({
-      date: new Date(),  // store today's date
+      date: new Date(selectedDate),
       todayHour: todayHoursMinutes
     });
 
-    // recalculate after adding today's entry
-    const newTotalLogged = totalMinutesLogged + todayHoursMinutes;
-    const updatedStatus = (newTotalLogged >= totalMinutesPlanned) ? 'Completed' : 'On-Going';
-    session.status = updatedStatus;
+    // recheck after push
+    const newTotalLogged = totalLoggedMinutes + todayHoursMinutes;
+    session.status = (newTotalLogged >= totalPlannedMinutes) ? 'Completed' : 'On-Going';
 
     await session.save();
-
     res.json({ message: 'Session updated successfully', session });
   } catch (error) {
     console.error('Daily update error:', error);
     res.status(500).json({ error: 'Failed to update session' });
   }
 });
+
 
 
 
