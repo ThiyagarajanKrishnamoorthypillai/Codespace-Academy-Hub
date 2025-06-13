@@ -65,7 +65,7 @@ const ViewMarksUser = () => {
                 <div className="card shadow-sm mb-4">
                   <div className="card-body">
 
-                    <h6 className="mb-2 text-primary">Record ID: {mark._id}</h6>
+                    {/*<h6 className="mb-2 text-primary">Record ID: {mark._id}</h6>*/}
                     <p><b>Name:</b> {mark.name}</p>
                     <p><b>Student ID:</b> {mark.stdid}</p>
                     <p><b>Department:</b> {mark.dpt}</p>
@@ -76,12 +76,12 @@ const ViewMarksUser = () => {
                     <p><b>User Email:</b> {mark.useremail}</p>
                     <p><b>Admin Email:</b> {mark.adminemail}</p>
 
-                    <p><b>Status:</b> {mark.status}</p>
+                    {/*<p><b>Status:</b> {mark.status}</p>*/}
                     <p><b>Question Date Created:</b> {formatDate(mark.questionDateCreated)}</p>
                     <p><b>Mark Date:</b> {formatDate(mark.dateMark)}</p>
-                    <p><b>Created At:</b> {formatDate(mark.createdAt?.$date?.$numberLong || mark.createdAt)}</p>
+                    {/*<p><b>Created At:</b> {formatDate(mark.createdAt?.$date?.$numberLong || mark.createdAt)}</p>
                     <p><b>Updated At:</b> {formatDate(mark.updatedAt?.$date?.$numberLong || mark.updatedAt)}</p>
-
+*/}
                     {/* Question Images */}
                     <h6 className="mt-3 text-success">Question Images</h6>
                     <div className="d-flex flex-wrap gap-2 mb-2">

@@ -4,6 +4,7 @@ import Cookies from 'js-cookie';
 
 const ViewMarksTutor = () => {
   const [marks, setMarks] = useState([]);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
     const tutorEmail = Cookies.get('tutoremail');
@@ -14,7 +15,7 @@ const ViewMarksTutor = () => {
 
     axios.get(`${import.meta.env.VITE_API_URL}/mark/`)
       .then(res => {
-        const filtered = res.data.filter(mark => mark.tutoremail === tutorEmail);
+        const filtered = res.data.filter(item => item.tutoremail === tutorEmail);
         setMarks(filtered);
       })
       .catch(err => {
@@ -23,71 +24,89 @@ const ViewMarksTutor = () => {
       });
   }, []);
 
+  const formatDate = (dateString) => {
+    if (!dateString) return "";
+    const dateObj = new Date(dateString);
+    return dateObj.toLocaleString();
+  };
+
   return (
     <div className="container mt-4">
-      <h4 className="mb-4">Submitted Marks (Tutor)</h4>
+      <h4 className="mb-4">Submitted Marks (Tutor Full View)</h4>
 
       {marks.length === 0 ? (
         <p>No data found.</p>
       ) : (
         <div className="row">
-          {marks.map((mark, index) => (
-            <div key={index} className="col-md-12 mb-4">
-              <div className="card shadow-sm p-4">
+          {marks.map((mark) => (
+            <div className="col-md-6 col-lg-4 mb-4" key={mark._id}>
+              <div className="card shadow-sm p-3">
 
-                <div className="mb-2 text-muted">
-                  <small><b>ID:</b> {mark._id}</small>
-                </div>
-
-                {/* Question Section */}
-                <h5 className="text-primary">Question Details</h5>
-                <p><b>Course:</b> {mark.questionCourse}</p>
-                <p><b>Question Date:</b> {new Date(mark.questionDateCreated).toLocaleString()}</p>
-                {mark.questionImages && mark.questionImages.map((img, i) => (
-                  <img key={i} src={img} alt="question" className="img-fluid mb-2 rounded border"
-                    style={{ maxWidth: "300px", maxHeight: "300px", objectFit: "contain" }} />
-                ))}
-                {mark.pdf && mark.pdf.length > 0 && (
-                  <>
-                    <p><b>PDF Files:</b></p>
-                    {mark.pdf.map((pdfUrl, i) => (
-                      <a key={i} href={pdfUrl} target="_blank" rel="noreferrer">View PDF {i + 1}</a>
-                    ))}
-                  </>
-                )}
-
-                <hr />
-
-                {/* Answer Section */}
-                <h5 className="text-success">Answer Details</h5>
+                <h6 className="text-primary">Record ID: {mark._id}</h6>
                 <p><b>Name:</b> {mark.name}</p>
                 <p><b>Student ID:</b> {mark.stdid}</p>
                 <p><b>Department:</b> {mark.dpt}</p>
                 <p><b>College:</b> {mark.college}</p>
                 <p><b>Course:</b> {mark.course}</p>
+                <p><b>Question Course:</b> {mark.questionCourse}</p>
                 <p><b>User Email:</b> {mark.useremail}</p>
-                {mark.answerImages && mark.answerImages.map((img, i) => (
-                  <img key={i} src={img} alt="answer" className="img-fluid mb-2 rounded border"
-                    style={{ maxWidth: "300px", maxHeight: "300px", objectFit: "contain" }} />
-                ))}
-
-                <hr />
-
-                {/* Marks Section */}
-                <h5 className="text-danger">Marks Details</h5>
+                <p><b>Tutor Email:</b> {mark.tutoremail}</p>
                 <p><b>Status:</b> {mark.status}</p>
-                <p><b>Marked By:</b> {mark.tutoremail}</p>
-                <p><b>Mark Date:</b> {new Date(mark.dateMark).toLocaleString()}</p>
-                {mark.imageMark && mark.imageMark.map((img, i) => (
-                  <img key={i} src={img} alt="mark" className="img-fluid mb-2 rounded border"
-                    style={{ maxWidth: "300px", maxHeight: "300px", objectFit: "contain" }} />
-                ))}
+                <p><b>Question Date Created:</b> {formatDate(mark.questionDateCreated)}</p>
+                <p><b>Mark Date:</b> {formatDate(mark.dateMark)}</p>
+                <p><b>Created At:</b> {formatDate(mark.createdAt?.$date?.$numberLong || mark.createdAt)}</p>
+                <p><b>Updated At:</b> {formatDate(mark.updatedAt?.$date?.$numberLong || mark.updatedAt)}</p>
+
+                <h6 className="mt-3 text-success">Question Images</h6>
+                <div className="d-flex flex-wrap gap-2 mb-2">
+                  {mark.questionImages?.map((img, i) => (
+                    <img key={i} src={img} alt={`Question ${i}`} style={{ maxWidth: "100px", maxHeight: "100px", objectFit: "contain", cursor: "pointer" }} onClick={() => setSelectedImage(img)} className="border rounded p-1" />
+                  ))}
+                </div>
+
+                <h6 className="mt-3 text-success">PDF Files</h6>
+                {mark.pdf && mark.pdf.length > 0 ? (
+                  mark.pdf.map((pdfUrl, i) => (
+                    <div key={i}><a href={pdfUrl} target="_blank" rel="noreferrer">View PDF {i + 1}</a></div>
+                  ))
+                ) : (
+                  <p>No PDF uploaded</p>
+                )}
+
+                <h6 className="mt-3 text-primary">Answer Images</h6>
+                <div className="d-flex flex-wrap gap-2 mb-2">
+                  {mark.answerImages?.map((img, i) => (
+                    <img key={i} src={img} alt={`Answer ${i}`} style={{ maxWidth: "100px", maxHeight: "100px", objectFit: "contain", cursor: "pointer" }} onClick={() => setSelectedImage(img)} className="border rounded p-1" />
+                  ))}
+                </div>
+
+                <h6 className="mt-3 text-danger">Marks Images</h6>
+                <div className="d-flex flex-wrap gap-2 mb-2">
+                  {mark.imageMark?.map((img, i) => (
+                    <img key={i} src={img} alt={`Mark ${i}`} style={{ maxWidth: "100px", maxHeight: "100px", objectFit: "contain", cursor: "pointer" }} onClick={() => setSelectedImage(img)} className="border rounded p-1" />
+                  ))}
+                </div>
 
               </div>
             </div>
           ))}
         </div>
       )}
+
+      {/* Image Modal */}
+      {selectedImage && (
+        <div className="modal show d-block" onClick={() => setSelectedImage(null)} style={{ backgroundColor: "rgba(0,0,0,0.8)" }}>
+          <div className="modal-dialog modal-dialog-centered modal-lg">
+            <div className="modal-content">
+              <div className="modal-body text-center">
+                <img src={selectedImage} alt="Full View" className="img-fluid" />
+                <button className="btn btn-danger mt-2" onClick={() => setSelectedImage(null)}>Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 };
