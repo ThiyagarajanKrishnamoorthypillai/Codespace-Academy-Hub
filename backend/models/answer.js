@@ -9,7 +9,6 @@ const answerSchema = mongoose.Schema({
   college: { type: String, required: true },
   course: { type: String, required: true },
   image: { type: [String], required: true },
-pdf: { type: [String], required: true, default: [] },
 
   status: {
     type: String,
@@ -25,6 +24,7 @@ pdf: { type: [String], required: true, default: [] },
   questionCourse: { type: String },
   questionDateCreated: { type: String },
   questionImages: { type: [String] },
+   questionPdfs: { type: [String] },
 });
 
 answerSchema.virtual('id').get(function () {
