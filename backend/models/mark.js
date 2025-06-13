@@ -9,6 +9,7 @@ const markSchema = new mongoose.Schema({
   course: String,
   questionCourse: String,
   questionDateCreated: String,
+  dateCreated:String,
   questionImages: [String],
   answerImages: [String],
   pdf:[String],
@@ -21,7 +22,7 @@ const markSchema = new mongoose.Schema({
   type: [String], // ✅ make it an array of strings
   required: true
 },
- 
+ mark:String,
   // Uploaded image path
   dateMark: {              // Mark posting date
     type: String,

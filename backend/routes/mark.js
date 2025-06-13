@@ -50,10 +50,12 @@ const answer = await Answer.findById(answerId);
       course: answer.course,
       questionCourse: answer.questionCourse,
       questionDateCreated: answer.questionDateCreated,
+      dateCreated:answer.dateCreated,
       questionImages: answer.questionImages,
       answerImages: answer.image,
       pdf: answer.pdf,
       imageMark: imageMarkUrls,
+      mark,
       adminemail
     });
 
@@ -101,10 +103,13 @@ router.post('/post-tutor', upload.array('imageMark'), async (req, res) => {
       course: answer.course,
       questionCourse: answer.questionCourse,
       questionDateCreated: answer.questionDateCreated,
+            dateCreated:answer.dateCreated,
+
       questionImages: answer.questionImages,
       answerImages: answer.image,
       pdf:answer.pdf,
       imageMark: imageMarkUrls,
+      mark,
       tutoremail   // ✅ store tutor email
     });
 
