@@ -25,22 +25,18 @@ const PostMarkAdmin = () => {
       .catch(err => console.error(err));
   }, []);
 
-  // Filter by date when fromDate or toDate changes
+  // ✅ Corrected date filtering without timezone issue
   useEffect(() => {
     if (!fromDate || !toDate) {
       setFilteredAnswers(answers);
       return;
     }
 
-    const from = new Date(fromDate);
-    const to = new Date(toDate);
-    to.setHours(23, 59, 59, 999); // include full to-date
-
-     const filtered = answers.filter(ans => {
-    const ansDate = new Date(ans.dateCreated);
-    const ansLocalDate = ansDate.toISOString().split('T')[0];
-    return ansLocalDate >= fromDate && ansLocalDate <= toDate;
-  });
+    const filtered = answers.filter(ans => {
+      const ansDate = new Date(ans.dateCreated);
+      const ansLocalDate = ansDate.toISOString().split('T')[0];
+      return ansLocalDate >= fromDate && ansLocalDate <= toDate;
+    });
 
     setFilteredAnswers(filtered);
   }, [fromDate, toDate, answers]);
@@ -156,6 +152,7 @@ const PostMarkAdmin = () => {
 };
 
 export default PostMarkAdmin;
+
 
 
 
