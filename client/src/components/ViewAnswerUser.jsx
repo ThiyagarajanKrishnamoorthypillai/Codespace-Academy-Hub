@@ -90,19 +90,7 @@ const ViewAnswerUser = () => {
                               />
                             </div>
                           ))}
-                          {/* Display PDFs */}
-{ans.pdf?.map((pdfUrl, idx) => (
-  <div className="col-4 mb-2" key={`pdf-${idx}`}>
-    <div
-      className="border rounded shadow-sm text-center p-2"
-      style={{ height: '120px', cursor: 'pointer' }}
-      onClick={() => window.open(`https://docs.google.com/gview?url=${encodeURIComponent(pdfUrl)}&embedded=true`, '_blank')}
-    >
-      <i className="fa fa-file-pdf-o text-danger mb-1" style={{ fontSize: '40px' }}></i>
-      <div className="small text-truncate">PDF {idx + 1}</div>
-    </div>
-  </div>
-))}
+                          
                         </div>
                       </div>
 
@@ -122,6 +110,19 @@ const ViewAnswerUser = () => {
                               />
                             </div>
                           ))}
+                          {/* Display PDFs */}
+{ans.pdf?.map((pdfUrl, idx) => (
+  <div className="col-4 mb-2" key={`pdf-${idx}`}>
+    <div
+      className="border rounded shadow-sm text-center p-2"
+      style={{ height: '120px', cursor: 'pointer' }}
+      onClick={() => window.open(`https://docs.google.com/gview?url=${encodeURIComponent(pdfUrl)}&embedded=true`, '_blank')}
+    >
+      <i className="fa fa-file-pdf-o text-danger mb-1" style={{ fontSize: '40px' }}></i>
+      <div className="small text-truncate">PDF {idx + 1}</div>
+    </div>
+  </div>
+))}
                         </div>
                       </div>
                     </div>
