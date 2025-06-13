@@ -58,9 +58,12 @@ const PostMarkTutor = () => {
         <label>Select Student's Answer</label>
         <select className="form-control" value={selectedId} onChange={(e) => setSelectedId(e.target.value)}>
           <option value="">Select</option>
-          {answers.map(ans => (
-            <option key={ans._id} value={ans._id}>{ans.name} - {ans.course}</option>
-          ))}
+         {answers.map(ans => (
+  <option key={ans._id} value={ans._id}>
+    {ans.name} - {ans.course} - {new Date(ans.dateCreated).toLocaleDateString()} - {ans.stdid}
+  </option>
+))}
+
         </select>
       </div>
 
