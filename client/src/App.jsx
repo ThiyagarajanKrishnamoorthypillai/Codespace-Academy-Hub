@@ -52,6 +52,7 @@ import PostMarkTutor from './components/PostMarkTutor';
 import ViewMarksTutor from './components/ViewMarksTutor';
 import ViewAnswerTutor from './components/ViewAnswerTutor';
 import ViewFeedbackTutor from './components/ViewFeedbackTutor';
+import UpdateFeedbackTutor from './components/UpdateFeedbackTutor';
 
 function App() {
   return (
@@ -131,6 +132,7 @@ function App() {
           {/* Update Routes (for updateQuestion, updateFeedback) */}
           <Route path="update_question/:id" element={<UpdateQuestion />} />
           <Route path="update_feedback_admin" element={<UpdateFeedbackAdmin />} />
+          <Route path="update_feedback_tutor" element={<UpdateFeedbackTutor />} />
 
         </Routes>
       </BrowserRouter>
