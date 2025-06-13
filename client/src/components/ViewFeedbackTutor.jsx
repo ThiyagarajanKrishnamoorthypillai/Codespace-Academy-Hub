@@ -47,29 +47,52 @@ const ViewFeedbackTutor = () => {
             <div className="card product-card p-3 shadow-sm">
               <div className="row">
                 <div className="col-sm-6">
-                  <h6 className="text-primary">Question</h6>
-                  <p><b>Course:</b> {fb.course}</p>
-                  <p><b>Question Date:</b> {new Date(fb.dateCreated).toLocaleString()}</p>
-                  <div className="d-flex flex-wrap">
-                    {(Array.isArray(fb.image) ? fb.image : [fb.image]).map((img, i) => (
-                      <img key={i} src={img} alt="feedback" style={{ width: '60px', height: '60px', objectFit: 'cover', marginRight: '5px', borderRadius: '5px' }} />
-                    ))}
-                  </div>
-                  {/* Render PDF links if available */}
-{Array.isArray(fb.pdf) && fb.pdf.length > 0 && (
-  <div className="mt-3">
-    <h6 className="text-danger">Submitted PDFs:</h6>
-    {fb.pdf.map((pdfUrl, index) => (
-      <div key={index} className="mb-2">
-        <a href={pdfUrl} target="_blank" rel="noopener noreferrer" className="btn btn-outline-primary btn-sm">
-          View PDF {index + 1}
-        </a>
-      </div>
+  <h6 className="text-primary">Question</h6>
+  <p><b>Course:</b> {fb.course}</p>
+  <p><b>Question Date:</b> {new Date(fb.dateCreated).toLocaleString()}</p>
+
+  <div className="d-flex flex-wrap mb-3">
+    {(Array.isArray(fb.image) ? fb.image : [fb.image]).map((img, i) => (
+      <img 
+        key={i} 
+        src={img} 
+        alt="feedback" 
+        style={{ width: '60px', height: '60px', objectFit: 'cover', marginRight: '5px', borderRadius: '5px', cursor: 'pointer' }}
+        onClick={() => window.open(img, '_blank')}
+      />
     ))}
   </div>
-)}
 
-                </div>
+  {Array.isArray(fb.pdf) && fb.pdf.length > 0 && (
+    <div className="mt-3">
+      <h6 className="text-danger">Submitted PDFs:</h6>
+      <div className="d-flex flex-wrap">
+        {fb.pdf.map((pdfUrl, index) => (
+          <div key={index} className="me-2 mb-2 text-center">
+            <div 
+              style={{
+                width: '60px',
+                height: '60px',
+                backgroundColor: '#f0f0f0',
+                border: '1px solid #ddd',
+                borderRadius: '5px',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                cursor: 'pointer'
+              }}
+              onClick={() => window.open(pdfUrl, '_blank')}
+            >
+              <i className="fa fa-file-pdf-o text-danger" style={{ fontSize: '24px' }}></i>
+            </div>
+            <small className="text-muted">PDF {index + 1}</small>
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
+</div>
+
 
                 <div className="col-sm-6">
                   <h6 className="text-success">Answer</h6>
