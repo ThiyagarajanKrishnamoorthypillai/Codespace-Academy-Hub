@@ -27,6 +27,7 @@ const SelectCourse = () => {
       }
 
       setCookie('course', selectedCourse, { path: '/', sameSite: 'Strict' });
+      
       const termsAccepted = localStorage.getItem('termsAccepted');
 if (!termsAccepted) {
   navigate('/terms');
