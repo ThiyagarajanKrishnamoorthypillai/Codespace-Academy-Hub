@@ -35,8 +35,14 @@ const Login = () => {
       navigate('/select_course');
     } else {
       setCookie('course', result.user.course, { path: '/', sameSite: 'Strict' });
-      navigate('/user_home');
-    }
+      
+       const termsAccepted = localStorage.getItem('termsAccepted');
+  if (!termsAccepted) {
+    navigate('/terms');
+  } else {
+    navigate('/user_home');
+  }
+}
   } catch (error) {
     alert("Login failed");
   } finally {

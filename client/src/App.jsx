@@ -53,6 +53,7 @@ import ViewMarksTutor from './components/ViewMarksTutor';
 import ViewAnswerTutor from './components/ViewAnswerTutor';
 import ViewFeedbackTutor from './components/ViewFeedbackTutor';
 import UpdateFeedbackTutor from './components/UpdateFeedbackTutor';
+import Terms from './components/Terms';
 
 function App() {
   return (
@@ -70,7 +71,7 @@ function App() {
           <Route path='/reset_password' element={<ResetPassword />} />
           <Route path='/select_course' element={<SelectCourse />} />
           <Route path='/google_auth_provider' element={<GoogleAuthProvider />} />
-
+          <Route path='/terms' element={<Terms />} />
           {/* User Routes */}
           <Route path="/user_home" element={<UserLayout />}>
             <Route index element={<UserDashboard />} />
