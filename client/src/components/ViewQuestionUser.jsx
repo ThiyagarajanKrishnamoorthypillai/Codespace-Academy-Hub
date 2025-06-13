@@ -121,18 +121,20 @@ const ViewQuestionUser = () => {
                         <p><b>Date:</b> {new Date(question.dateCreated).toLocaleDateString()}</p>
              <div className="row mt-3">
   <div className="col-12 text-end">
-    <span
-      className="write-answer-link me-3"
-      onClick={() => navigate('/user_home/post_answer', {
-        state: {
-          date: question.dateCreated,
-          course: question.course,
-          images: question.image
-        }
-      })}
-    >
-      Write Answer
-    </span>
+   <span
+  className="write-answer-link me-3"
+  onClick={() => navigate('/user_home/post_answer', {
+    state: {
+      date: question.dateCreated,
+      course: question.course,
+      images: question.image,
+      pdfs: question.pdf  // ✅ Add this line only
+    }
+  })}
+>
+  Write Answer
+</span>
+
     |
   <span
   className="write-answer-link ms-3"

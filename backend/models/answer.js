@@ -9,6 +9,7 @@ const answerSchema = mongoose.Schema({
   college: { type: String, required: true },
   course: { type: String, required: true },
   image: { type: [String], required: true },
+pdf: { type: [String], required: true, default: [] },
 
   status: {
     type: String,
