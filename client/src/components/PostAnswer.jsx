@@ -7,6 +7,8 @@ import Title from './Title';
 
 const PostAnswer = () => {
   const [cookies] = useCookies(['email', 'course']);
+  const dateIST = new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" });
+  const dateCreated = new Date(dateIST).toISOString();
   const [formData, setFormData] = useState({
     name: '',
     stdid: '',
@@ -49,7 +51,7 @@ const { date, course, images: questionImages, pdf } = location.state || {};
     payload.append('stdid', formData.stdid);
     payload.append('dpt', formData.dpt);
     payload.append('status', formData.status);
-    payload.append('dateCreated', new Date().toISOString());
+payload.append('dateCreated', dateCreated);
     payload.append('questionDateCreated', date);
     payload.append('questionCourse', course);
     payload.append('questionImages', JSON.stringify(questionImages));

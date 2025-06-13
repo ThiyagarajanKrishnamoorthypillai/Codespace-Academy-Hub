@@ -17,9 +17,13 @@ const answerSchema = mongoose.Schema({
   },
 
   dateCreated: {
-    type: String,
-    default: new Date().toISOString()
-  },
+  type: String,
+  default: () => {
+    const dateIST = new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" });
+    return new Date(dateIST).toISOString();
+  }
+},
+
 
   questionCourse: { type: String },
   questionDateCreated: { type: String },
