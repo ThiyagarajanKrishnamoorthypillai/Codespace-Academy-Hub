@@ -54,15 +54,10 @@ const StartSession = () => {
       return;
     }
 
-    const usersToSave = selectedUsers.map(user => ({
-      name: user.name,
-      email: user.email
-    }));
-
     axios.post(`${import.meta.env.VITE_API_URL}/session/create`, {
       course,
       batch,
-      users: usersToSave,
+      users: selectedUsers,
       fromDate,
       toDate,
       durationHours: parseInt(durationHours)
@@ -115,7 +110,65 @@ const StartSession = () => {
     <div className="container mt-4">
       <h4 className="mb-3">Create New Session</h4>
 
-      {/* Form remains same as previous version to select course, batch, users, fromDate, toDate, durationHours */}
+      <div className="mb-3">
+        <label>Select Course</label>
+        <select className="form-control" value={course} onChange={(e) => setCourse(e.target.value)}>
+          <option value="">-- Select Course --</option>
+          {Object.keys(courseDurations).map((c, i) => (
+            <option key={i} value={c}>{c}</option>
+          ))}
+        </select>
+      </div>
+
+      <div className="mb-3">
+        <label>Select Batch</label>
+        <select className="form-control" value={batch} onChange={(e) => setBatch(e.target.value)}>
+          <option value="">-- Select Batch --</option>
+          <option value="Batch 1">Batch 1</option>
+          <option value="Batch 2">Batch 2</option>
+        </select>
+      </div>
+
+      <div className="mb-3">
+        <label>Select Users</label>
+        <div className="border rounded p-2" style={{ maxHeight: '200px', overflowY: 'auto' }}>
+          {filteredUsers.map(user => (
+            <div key={user._id} className="form-check">
+              <input
+                type="checkbox"
+                className="form-check-input"
+                id={user._id}
+                checked={selectedUsers.some(u => u.email === user.email)}
+                onChange={(e) => {
+                  if (e.target.checked) {
+                    setSelectedUsers(prev => [...prev, { name: user.name, email: user.email }]);
+                  } else {
+                    setSelectedUsers(prev => prev.filter(u => u.email !== user.email));
+                  }
+                }}
+              />
+              <label className="form-check-label" htmlFor={user._id}>
+                {user.name} ({user.email})
+              </label>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="mb-3">
+        <label>From Date</label>
+        <input type="date" className="form-control" value={fromDate} onChange={(e) => setFromDate(e.target.value)} />
+      </div>
+
+      <div className="mb-3">
+        <label>To Date</label>
+        <input type="date" className="form-control" value={toDate} onChange={(e) => setToDate(e.target.value)} />
+      </div>
+
+      <div className="mb-3">
+        <label>Duration (hours)</label>
+        <input type="number" className="form-control" value={durationHours} onChange={(e) => setDurationHours(e.target.value)} />
+      </div>
 
       <button className="btn btn-success mb-4" onClick={handleSaveSession}>Save Session</button>
 
