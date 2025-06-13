@@ -43,10 +43,12 @@ const ViewMarksUser = () => {
       <div className="page-content-wrapper">
         <div className="top-products-area py-0">
           <div className="container">
+
             <div className="section-heading d-flex align-items-center justify-content-between">
-              <h6>My Marks</h6>
+              <h5>My Marks</h5>
             </div>
-            <div className="row g-3">
+
+            <div className="row g-3 mb-3">
               <div className="top-search-form">
                 <form>
                   <input className="form-control" type="text" placeholder="Search..." value={searchTerm} onChange={(e) => handleSearch(e.target.value)} />
@@ -54,58 +56,74 @@ const ViewMarksUser = () => {
               </div>
             </div>
 
-            <div className="row mt-3">
+            <div className="row">
               {markData.map((mark) => (
-                <div className="col-12 col-md-6" key={mark._id}>
-                  <div className="card product-card mb-3">
+                <div className="col-12 col-md-6 col-lg-4" key={mark._id}>
+                  <div className="card shadow-sm mb-4">
                     <div className="card-body">
-                      <h6 className="card-title">{mark.name} ({mark.course})</h6>
-                      
-                      <p><b>Date:</b> {new Date(mark.dateMark).toLocaleDateString()}</p>
-                      <p><b>Mark's:</b></p>
-<div className="d-flex flex-wrap gap-2">
-  {mark.imageMark?.map((img, i) => (
-    <img
-      key={i}
-      src={img}
-      alt={`Mark ${i}`}
-      className="img-fluid rounded"
-      style={{ maxWidth: "100px", cursor: "pointer" }}
-      onClick={() => setSelectedImage(img)}
-    />
-  ))}
-</div>
 
-                     
-<p className="mt-2"><b>Answer Images:</b></p>
-<div className="d-flex flex-wrap gap-2">
-  {mark.answerImages?.map((img, i) => (
-    <img
-      key={i}
-      src={img}
-      alt={`Answer ${i}`}
-      width="60"
-      style={{ cursor: "pointer" }}
-      onClick={() => setSelectedImage(img)}
-    />
-  ))}
-</div>
+                      <h6 className="mb-2">{mark.name} ({mark.course})</h6>
+                      <small className="text-muted">Date: {new Date(mark.dateMark).toLocaleDateString()}</small>
 
-<p className="mt-2"><b>Question Images:</b></p>
-<div className="d-flex flex-wrap gap-2">
-  {mark.questionImages?.map((img, i) => (
-    <img
-      key={i}
-      src={img}
-      alt={`Question ${i}`}
-      width="60"
-      style={{ cursor: "pointer" }}
-      onClick={() => setSelectedImage(img)}
-    />
-  ))}
-</div>
+                      <hr />
 
+                      {/* Question Section */}
+                      <h6 className="text-primary">Question</h6>
+                      <div className="d-flex flex-wrap gap-2 mb-2">
+                        {mark.questionImages?.map((img, i) => (
+                          <img
+                            key={i}
+                            src={img}
+                            alt={`Question ${i}`}
+                            style={{ maxWidth: "100px", maxHeight: "100px", objectFit: "contain", cursor: "pointer" }}
+                            onClick={() => setSelectedImage(img)}
+                            className="border rounded p-1"
+                          />
+                        ))}
+                      </div>
 
+                      {mark.pdf && mark.pdf.length > 0 && (
+                        <div className="mb-2">
+                          <b>PDF Files:</b><br />
+                          {mark.pdf.map((pdfUrl, i) => (
+                            <a key={i} href={pdfUrl} target="_blank" rel="noreferrer">View PDF {i + 1}</a>
+                          ))}
+                        </div>
+                      )}
+
+                      <hr />
+
+                      {/* Answer Section */}
+                      <h6 className="text-success">Answer</h6>
+                      <div className="d-flex flex-wrap gap-2 mb-2">
+                        {mark.answerImages?.map((img, i) => (
+                          <img
+                            key={i}
+                            src={img}
+                            alt={`Answer ${i}`}
+                            style={{ maxWidth: "100px", maxHeight: "100px", objectFit: "contain", cursor: "pointer" }}
+                            onClick={() => setSelectedImage(img)}
+                            className="border rounded p-1"
+                          />
+                        ))}
+                      </div>
+
+                      <hr />
+
+                      {/* Marks Section */}
+                      <h6 className="text-danger">Marks</h6>
+                      <div className="d-flex flex-wrap gap-2 mb-2">
+                        {mark.imageMark?.map((img, i) => (
+                          <img
+                            key={i}
+                            src={img}
+                            alt={`Mark ${i}`}
+                            style={{ maxWidth: "100px", maxHeight: "100px", objectFit: "contain", cursor: "pointer" }}
+                            onClick={() => setSelectedImage(img)}
+                            className="border rounded p-1"
+                          />
+                        ))}
+                      </div>
 
                     </div>
                   </div>
@@ -113,7 +131,7 @@ const ViewMarksUser = () => {
               ))}
             </div>
 
-            {/* Image Preview Modal */}
+            {/* Image Modal Preview */}
             {selectedImage && (
               <div className="modal show d-block" onClick={() => setSelectedImage(null)} style={{ backgroundColor: "rgba(0,0,0,0.8)" }}>
                 <div className="modal-dialog modal-dialog-centered modal-lg">
@@ -130,9 +148,7 @@ const ViewMarksUser = () => {
           </div>
         </div>
 
-     <AppFooter/>
-
-
+        <AppFooter />
       </div>
     </div>
   );
