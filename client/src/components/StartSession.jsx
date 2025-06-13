@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { format } from 'date-fns';
 
@@ -7,8 +7,15 @@ const StartSession = () => {
   const [batch, setBatch] = useState('');
   const [allUsers, setAllUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
-  const [selectedUser, setSelectedUser] = useState([]);
-  const [savedSessions, setSavedSessions] = useState([]);
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [fromDate, setFromDate] = useState('');
+  const [toDate, setToDate] = useState('');
+  const [durationHours, setDurationHours] = useState('');
+  const [sessionList, setSessionList] = useState([]);
+
+  // For daily updates
+  const [activeSessionId, setActiveSessionId] = useState(null);
+  const [todayHours, setTodayHours] = useState('');
 
   const courseDurations = {
     C: 30, "C++": 30, "C#": 30, Java: 40, JavaScript: 40,
@@ -21,6 +28,8 @@ const StartSession = () => {
     axios.get(`${import.meta.env.VITE_API_URL}/user/`)
       .then(res => setAllUsers(res.data))
       .catch(err => console.error(err));
+
+    fetchSessions();
   }, []);
 
   useEffect(() => {
@@ -30,57 +39,80 @@ const StartSession = () => {
     } else {
       setFilteredUsers([]);
     }
-    setSelectedUser([]);
+    setSelectedUsers([]);
   }, [course, allUsers]);
 
+  const fetchSessions = () => {
+    axios.get(`${import.meta.env.VITE_API_URL}/session/`)
+      .then(res => setSessionList(res.data))
+      .catch(err => console.error(err));
+  };
+
   const handleSaveSession = () => {
-    if (!course || !batch || selectedUser.length === 0) {
-      alert('Please fill all fields');
+    if (!course || !batch || selectedUsers.length === 0 || !fromDate || !toDate || !durationHours) {
+      alert("Please fill all fields");
       return;
     }
 
-    const newEntry = {
-      id: Date.now(), // temporary ID for UI display
+    axios.post(`${import.meta.env.VITE_API_URL}/session/create`, {
       course,
       batch,
-      selectedUser,
-      durationHours: courseDurations[course] || 30,
-      savedAt: new Date()
-    };
-
-    setSavedSessions([...savedSessions, newEntry]);
-
-    // clear fields after save
-    setCourse('');
-    setBatch('');
-    setSelectedUser([]);
+      users: selectedUsers,
+      fromDate,
+      toDate,
+      durationHours: parseInt(durationHours)
+    }).then(() => {
+      alert("Session saved successfully");
+      fetchSessions();
+      resetForm();
+    }).catch(err => {
+      console.error(err);
+      alert("Failed to save session");
+    });
   };
 
-  const handleStartSession = (entry) => {
-    axios.post(`${import.meta.env.VITE_API_URL}/session/start`, {
-      course: entry.course,
-      batch: entry.batch,
-      user: entry.selectedUser,
-      durationHours: entry.durationHours
-    })
-    .then(res => {
-      alert('Session started successfully!');
-      setSavedSessions(savedSessions.filter(s => s.id !== entry.id)); // remove from local list after start
-    })
-    .catch(err => {
+  const resetForm = () => {
+    setCourse('');
+    setBatch('');
+    setFilteredUsers([]);
+    setSelectedUsers([]);
+    setFromDate('');
+    setToDate('');
+    setDurationHours('');
+  };
+
+  const handleDailySubmit = (session) => {
+    const todayMinutesInt = parseInt(todayHours);
+    const totalPlannedMinutes = session.durationHours * 60;
+    const totalLoggedMinutes = session.datewise.reduce((sum, entry) => sum + entry.todayHour, 0);
+    const remainingMinutes = totalPlannedMinutes - totalLoggedMinutes;
+
+    if (todayMinutesInt > remainingMinutes) {
+      alert("Today's minutes exceed remaining minutes.");
+      return;
+    }
+
+    axios.patch(`${import.meta.env.VITE_API_URL}/session/daily-update/${session._id}`, {
+      todayHoursMinutes: todayMinutesInt
+    }).then(() => {
+      alert("Session updated successfully");
+      fetchSessions();
+      setActiveSessionId(null);
+      setTodayHours('');
+    }).catch(err => {
       console.error(err);
-      alert('Failed to start session');
+      alert("Failed to update session");
     });
   };
 
   return (
     <div className="container mt-4">
-      <h4 className="mb-3">Prepare Session</h4>
+      <h4 className="mb-3">Create New Session</h4>
 
       <div className="mb-3">
         <label>Select Course</label>
         <select className="form-control" value={course} onChange={(e) => setCourse(e.target.value)}>
-          <option value="">-- Select a Course --</option>
+          <option value="">-- Select Course --</option>
           {Object.keys(courseDurations).map((c, i) => (
             <option key={i} value={c}>{c}</option>
           ))}
@@ -97,19 +129,19 @@ const StartSession = () => {
       </div>
 
       <div className="mb-3">
-        <label>Select Users (filtered)</label>
+        <label>Select Users</label>
         <div className="border rounded p-2" style={{ maxHeight: '200px', overflowY: 'auto' }}>
           {filteredUsers.map(user => (
             <div key={user._id} className="form-check">
               <input
-                className="form-check-input"
                 type="checkbox"
+                className="form-check-input"
                 id={user._id}
                 value={user.email}
-                checked={selectedUser.includes(user.email)}
+                checked={selectedUsers.includes(user.email)}
                 onChange={(e) => {
                   const value = e.target.value;
-                  setSelectedUser(prev =>
+                  setSelectedUsers(prev =>
                     e.target.checked ? [...prev, value] : prev.filter(email => email !== value)
                   );
                 }}
@@ -122,28 +154,74 @@ const StartSession = () => {
         </div>
       </div>
 
-      <button className="btn btn-success mb-3" onClick={handleSaveSession}>
-        Save to Session List
-      </button>
+      <div className="mb-3">
+        <label>From Date</label>
+        <input type="date" className="form-control" value={fromDate} onChange={(e) => setFromDate(e.target.value)} />
+      </div>
+
+      <div className="mb-3">
+        <label>To Date</label>
+        <input type="date" className="form-control" value={toDate} onChange={(e) => setToDate(e.target.value)} />
+      </div>
+
+      <div className="mb-3">
+        <label>Duration (hours)</label>
+        <input type="number" className="form-control" value={durationHours} onChange={(e) => setDurationHours(e.target.value)} />
+      </div>
+
+      <button className="btn btn-success mb-4" onClick={handleSaveSession}>Save Session</button>
 
       <hr />
 
-      <h5>Prepared Sessions:</h5>
-      {savedSessions.length === 0 ? (
-        <p>No saved sessions yet</p>
-      ) : (
-        savedSessions.map(entry => (
-          <div key={entry.id} className="border p-2 mb-2">
-            <p><strong>Course:</strong> {entry.course}</p>
-            <p><strong>Batch:</strong> {entry.batch}</p>
-            <p><strong>Users:</strong> {entry.selectedUser.join(", ")}</p>
-            <p><strong>Saved At:</strong> {format(entry.savedAt, 'dd/MM/yyyy hh:mm a')}</p>
+      <h5>All Sessions</h5>
 
-            <button className="btn btn-primary" onClick={() => handleStartSession(entry)}>
-              Start Session
-            </button>
-          </div>
-        ))
+      {sessionList.length === 0 ? (
+        <p>No sessions found.</p>
+      ) : (
+        sessionList.map(session => {
+          const totalPlannedMinutes = session.durationHours * 60;
+          const totalLoggedMinutes = session.datewise.reduce((sum, entry) => sum + entry.todayHour, 0);
+          const remainingMinutes = totalPlannedMinutes - totalLoggedMinutes;
+
+          return (
+            <div key={session._id} className="border p-3 mb-3">
+              <p><b>Course:</b> {session.course}</p>
+              <p><b>Batch:</b> {session.batch}</p>
+              <p><b>Users:</b> {session.users.join(', ')}</p>
+              <p><b>From:</b> {format(new Date(session.fromDate), 'dd/MM/yyyy')}</p>
+              <p><b>To:</b> {format(new Date(session.toDate), 'dd/MM/yyyy')}</p>
+              <p><b>Planned Hours:</b> {session.durationHours} hrs</p>
+              <p><b>Remaining:</b> {Math.floor(remainingMinutes / 60)} hrs {remainingMinutes % 60} min</p>
+              <p><b>Status:</b> {session.status}</p>
+
+              <p><b>Daily Log:</b></p>
+              <ul>
+                {session.datewise.map((entry, i) => (
+                  <li key={i}>{format(new Date(entry.date), 'dd/MM/yyyy')} : {entry.todayHour} min</li>
+                ))}
+              </ul>
+
+              {activeSessionId === session._id ? (
+                <div className="mt-3 border p-3">
+                  <div className="mb-2">
+                    <label>Enter Today's Minutes</label>
+                    <input type="number" className="form-control" value={todayHours}
+                      onChange={(e) => setTodayHours(e.target.value)} />
+                  </div>
+                  <button className="btn btn-primary"
+                    onClick={() => handleDailySubmit(session)}>
+                    Submit Today
+                  </button>
+                </div>
+              ) : (
+                <button className="btn btn-warning"
+                  onClick={() => setActiveSessionId(session._id)}>
+                  Start Session
+                </button>
+              )}
+            </div>
+          );
+        })
       )}
     </div>
   );
