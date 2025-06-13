@@ -117,20 +117,39 @@ if (Array.isArray(answer.image) && answer.image.length > 0) {
 
 
   // Question Images
-  for (let i = 0; i < (answer.questionImages || []).length; i++) {
-    const imgFile = answer.questionImages[i];
-    const imgUrl = `${import.meta.env.VITE_API_URL}/uploads/${imgFile}`;
+for (let i = 0; i < (answer.questionImages || []).length; i++) {
+  const imgFile = answer.questionImages[i];
+  const imgUrl = `${import.meta.env.VITE_API_URL}/uploads/${imgFile}`;
+  try {
+    const blob = await fetchImageBlob(imgUrl);
+    const base64 = await blobToBase64(blob);
+    zip.file(`Question_Images/${imgFile}`, blob);
+    doc.addPage();
+    doc.text(`Question Image ${i + 1}`, 10, 10);
+    doc.addImage(base64, 'JPEG', 10, 20, 180, 140);
+  } catch (err) {
+    console.error("Question image download failed:", imgUrl, err);
+  }
+}
+
+// Question PDFs (only this part is new)
+if (Array.isArray(answer.pdf) && answer.pdf.length > 0) {
+  for (let i = 0; i < answer.pdf.length; i++) {
+    const pdfUrl = answer.pdf[i];
     try {
-      const blob = await fetchImageBlob(imgUrl);
-      const base64 = await blobToBase64(blob);
-      zip.file(`Question_Images/${imgFile}`, blob);
-      doc.addPage();
-      doc.text(`Question Image ${i + 1}`, 10, 10);
-      doc.addImage(base64, 'JPEG', 10, 20, 180, 140);
+      const response = await fetch(pdfUrl);
+      if (!response.ok) throw new Error('Network response was not ok');
+      const pdfBlob = await response.blob();
+      zip.file(`Question_PDFs/PDF_${i + 1}.pdf`, pdfBlob);
     } catch (err) {
-      console.error("Question image download failed:", imgUrl, err);
+      console.error("Question PDF download failed:", pdfUrl, err);
     }
   }
+}
+
+
+
+
 
   // Add PDF to ZIP
   const pdfBlob = doc.output('blob');
