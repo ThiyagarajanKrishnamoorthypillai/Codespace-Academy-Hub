@@ -134,11 +134,12 @@ const ViewQuestionUser = () => {
       Write Answer
     </span>
     |
-   <span
+  <span
   className="write-answer-link ms-3"
   onClick={() => navigate('/user_home/post_feedback', {
     state: {
-      image: question.image[0], // assuming 1st image
+      image: question.image,    // ✅ full image array
+      pdf: question.pdf,        // ✅ full pdf array
       course: question.course,
       dateCreated: question.dateCreated
     }
@@ -146,6 +147,7 @@ const ViewQuestionUser = () => {
 >
   Doubt / Feedback
 </span>
+
   </div>
 </div>
 

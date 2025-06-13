@@ -27,7 +27,7 @@ import Title from './Title.jsx';
 
 const PostFeedback = () => {
   const location = useLocation();
-const { image,pdf, course, dateCreated } = location.state || {};
+const { image, pdf, course, dateCreated } = location.state || {};
 const [cookies] = useCookies(['email']);
 
   //const userEmail = decodeURIComponent(document.cookie.replace(/(?:(?:^|.*;\s*)email\s*=\s*([^;]*).*$)|^.*$/, '$1'));
