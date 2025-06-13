@@ -58,9 +58,30 @@ const CommitteePostQuestion = () => {
 
       <form onSubmit={handleSubmit} className="shadow p-4 rounded bg-light">
         <div className="mb-3">
-          <label>Course</label>
-          <input type="text" name="course" className="form-control"
-            value={formData.course} onChange={handleInputChange} />
+         <select
+  className="form-control"
+  name="course"
+  value={formData.course}
+  onChange={handleInputChange}
+>
+  <option value="">-- Select a Course --</option>
+  <option value="C">C</option>
+  <option value="C++">C++</option>
+  <option value="C#">C#</option>
+  <option value="Java">Java</option>
+  <option value="JavaScript">JavaScript</option>
+  <option value="Python">Python</option>
+  <option value="MERN Full Stack Development">MERN Full Stack Development</option>
+  <option value="MEAN Full Stack Development">MEAN Full Stack Development</option>
+  <option value="Data Structures">Data Structures</option>
+  <option value="Web Development">Web Development</option>
+  <option value="React Native">React Native</option>
+  <option value="AI">Artificial Intelligence</option>
+  <option value="Cloud Computing">Cloud Computing</option>
+  <option value="Data Base">Data Bases</option>
+  <option value="Fundamentals of Web Technology">Fundamentals of Web Technology</option>
+</select>
+
         </div>
 
         <div className="mb-3">
