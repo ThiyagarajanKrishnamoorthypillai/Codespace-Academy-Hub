@@ -20,18 +20,21 @@ const UpdateFeedbackAdmin = () => {
   });
 
   useEffect(() => {
-    if (feedback) {
-      setFormData({
-        _id: feedback._id,
-        name: feedback.name,
-        useremail: feedback.useremail,
-        feedback: feedback.feedback,
-        status: feedback.status,
-        explanation: feedback.explanation || '',
-        adminFeedbackdateCreated: new Date().toISOString(),
-      });
-    }
-  }, [feedback]);
+  if (feedback) {
+    setFormData({
+      _id: feedback._id,
+      name: feedback.name,
+      useremail: feedback.useremail,
+      feedback: feedback.feedback,
+      status: feedback.status,
+      explanation: feedback.explanation || '',
+      adminFeedbackdateCreated: new Date().toISOString(),
+      image: feedback.image || [],
+      pdf: feedback.pdf || [],
+    });
+  }
+}, [feedback]);
+
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });

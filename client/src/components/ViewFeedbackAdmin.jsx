@@ -88,6 +88,22 @@ const ViewFeedbackAdmin = () => {
         />
       ))}
     </div>
+{/* Render PDF links if available */}
+{Array.isArray(fb.pdf) && fb.pdf.length > 0 && (
+  <div className="mt-2">
+    <h6 className="text-danger">Submitted PDFs:</h6>
+    {fb.pdf.map((pdfUrl, index) => (
+      <div key={index}>
+        <a href={pdfUrl} target="_blank" rel="noopener noreferrer" className="btn btn-sm btn-outline-primary my-1">
+          View PDF {index + 1}
+        </a>
+      </div>
+    ))}
+  </div>
+)}
+
+
+
   </div>
 
   {/* RIGHT: Feedback Details */}
