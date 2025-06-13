@@ -11,6 +11,7 @@ const markSchema = new mongoose.Schema({
   questionDateCreated: String,
   questionImages: [String],
   answerImages: [String],
+  pdf:[String],
   status: {
     type: String,
     enum: ['Pending', 'Completed', 'On-Progress'],
@@ -20,10 +21,7 @@ const markSchema = new mongoose.Schema({
   type: [String], // ✅ make it an array of strings
   required: true
 },
-  pdf: {
-  type: [String], // ✅ make it an array of strings
-  required: true
-},
+ 
   // Uploaded image path
   dateMark: {              // Mark posting date
     type: String,

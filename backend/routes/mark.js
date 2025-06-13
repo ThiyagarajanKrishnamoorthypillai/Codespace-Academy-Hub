@@ -52,7 +52,8 @@ const answer = await Answer.findById(answerId);
       questionDateCreated: answer.questionDateCreated,
       questionImages: answer.questionImages,
       answerImages: answer.image,
-pdf: [...(answer.pdf || [])],
+      pdf: answer.pdf,
+      imageMark: imageMarkUrls,
       adminemail
     });
 
@@ -102,7 +103,7 @@ router.post('/post-tutor', upload.array('imageMark'), async (req, res) => {
       questionDateCreated: answer.questionDateCreated,
       questionImages: answer.questionImages,
       answerImages: answer.image,
-pdf: [...(answer.pdf || [])],
+      pdf:answer.pdf,
       imageMark: imageMarkUrls,
       tutoremail   // ✅ store tutor email
     });
