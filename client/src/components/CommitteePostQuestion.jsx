@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from '../utils/axiosInstance';
 import "./css/bootstrap.min.css";
 import "./css/owl.carousel.min.css";
 import "./css/font-awesome.min.css";
@@ -47,27 +48,18 @@ for (let i = 0; i < (formData.pdfFiles?.length || 0); i++) {
 }
 
 
-    try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/question/`, {
-        method: 'POST',
-        headers: {
-          'x-auth-token': token,
-        },
-        body: data,
-      });
-
-      if (response.ok) {
-        alert("Question papers uploaded successfully!");
-        window.location.href = "/committee_home/view_question_committee";
-      } else {
-        alert("Upload failed!");
-      }
-    } catch (error) {
-      console.error("Error uploading:", error);
-    }finally {
+    setLoading(true);
+  try {
+    await axios.post(`/question/`, data);  // ✅ this will use your axiosInstance automatically
+    alert("Question papers uploaded successfully!");
+    window.location.href = "/admin_home/view_question_admin";
+  } catch (error) {
+    console.error("Error uploading:", error);
+    alert("Upload failed!");
+  } finally {
     setLoading(false);
   }
-  };
+};
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
