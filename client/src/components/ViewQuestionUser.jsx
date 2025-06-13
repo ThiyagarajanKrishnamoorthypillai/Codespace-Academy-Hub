@@ -102,22 +102,19 @@ const ViewQuestionUser = () => {
     </div>
   ))}
 
-  {question.pdf?.map((pdfUrl, idx) => (
+ {question.pdf?.map((pdfUrl, idx) => (
   <div className="col-6 col-md-3 mb-3" key={`pdf-${idx}`}>
-    <div className="border rounded shadow-sm text-center p-2" style={{ height: '180px', overflow: 'hidden' }}>
-      <i className="fa fa-file-pdf-o text-danger mb-2" style={{ fontSize: '40px' }}></i>
-      <div className="text-truncate small mb-2">PDF File {idx + 1}</div>
-      <a 
-        href={`https://docs.google.com/gview?url=${encodeURIComponent(pdfUrl)}&embedded=true`}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="btn btn-sm btn-outline-primary"
-      >
-        View PDF
-      </a>
+    <div 
+      className="border rounded shadow-sm text-center p-3"
+      style={{ height: '180px', cursor: 'pointer' }}
+      onClick={() => window.open(`https://docs.google.com/gview?url=${encodeURIComponent(pdfUrl)}&embedded=true`, '_blank')}
+    >
+      <i className="fa fa-file-pdf-o text-danger mb-2" style={{ fontSize: '50px' }}></i>
+      <div className="text-truncate small">PDF File {idx + 1}</div>
     </div>
   </div>
 ))}
+
 
 </div>
 
