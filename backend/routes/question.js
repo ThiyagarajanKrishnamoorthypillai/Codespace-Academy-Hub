@@ -10,15 +10,19 @@ const storage = multer.memoryStorage(); // 👈 use memory for cloudinary
 const upload = multer({ storage: storage });
 
 // Upload to Cloudinary
-const uploadToCloudinary = (fileBuffer) => {
+const uploadToCloudinary = (fileBuffer, fileType = 'auto') => {
   return new Promise((resolve, reject) => {
-    let stream = cloudinary.uploader.upload_stream({ folder: 'questions' }, (error, result) => {
-      if (result) resolve(result.secure_url);
-      else reject(error);
-    });
+    let stream = cloudinary.uploader.upload_stream(
+      { folder: 'questions', resource_type: fileType },
+      (error, result) => {
+        if (result) resolve(result.secure_url);
+        else reject(error);
+      }
+    );
     streamifier.createReadStream(fileBuffer).pipe(stream);
   });
 };
+
 
 // POST question with images
 router.post('/', upload.fields([

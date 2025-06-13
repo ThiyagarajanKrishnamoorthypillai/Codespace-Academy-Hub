@@ -91,10 +91,16 @@ const PostQuestion = () => {
         </div>
 
         <div className="mb-3">
-          <label>Upload PDFs</label>
-          <input type="file" multiple accept="application/pdf" className="form-control"
-            onChange={(e) => setFormData({ ...formData, pdfFiles: e.target.files })} />
-        </div>
+  <label>Upload PDFs</label>
+  <input
+    type="file"
+    multiple
+    accept="application/pdf"
+    className="form-control"
+    onChange={(e) => setFormData({ ...formData, pdfFiles: e.target.files })}
+  />
+</div>
+
 
         <button className="btn btn-success w-100" type="submit">
           Submit
