@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import "./css/bootstrap.min.css";
 import "./css/owl.carousel.min.css";
 import "./css/font-awesome.min.css";
@@ -30,7 +31,17 @@ const UserHome = () => {
   const [sessionInfo, setSessionInfo] = useState(null);
   const [remainingTime, setRemainingTime] = useState('');
 
+  const navigate = useNavigate();
+
   useEffect(() => {
+
+
+const termsAccepted = localStorage.getItem('termsAccepted');
+    if (!termsAccepted) {
+      navigate('/terms');
+    }
+  
+
     if (!userEmail) return;
 
     axios.get(`${import.meta.env.VITE_API_URL}/session`)
