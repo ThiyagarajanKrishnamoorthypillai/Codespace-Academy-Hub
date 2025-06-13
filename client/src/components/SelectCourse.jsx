@@ -27,7 +27,13 @@ const SelectCourse = () => {
       }
 
       setCookie('course', selectedCourse, { path: '/', sameSite: 'Strict' });
-      navigate('/user_home');
+      const termsAccepted = localStorage.getItem('termsAccepted');
+if (!termsAccepted) {
+  navigate('/terms');
+} else {
+  navigate('/user_home');
+}
+
     } catch (error) {
       console.error('Error saving course:', error);
       alert('Failed to save course. Try again.');
