@@ -30,7 +30,7 @@ const Terms = () => {
         lineHeight: '1.7'
       }}>
 
-        <h2 style={{ color: '#0d6efd', borderBottom: '2px solid #eee', paddingBottom: '15px' }}>
+        <h2 style={{ color: '#0d6efd', borderBottom: '2px solid #eee', paddingBottom: '15px' , textAlign:'center'}}>
           Welcome to the Web Wizardry Bootcamp
         </h2>
 
