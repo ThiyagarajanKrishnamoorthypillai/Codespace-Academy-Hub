@@ -52,8 +52,7 @@ const answer = await Answer.findById(answerId);
       questionDateCreated: answer.questionDateCreated,
       questionImages: answer.questionImages,
       answerImages: answer.image,
-      pdf: answer.pdf, // ✅ added
-      status: answer.status,
+      pdf: [...(answer.pdf || [])],  // ✅ final safe assignment      status: answer.status,
       imageMark: imageMarkUrls,
       adminemail
     });
