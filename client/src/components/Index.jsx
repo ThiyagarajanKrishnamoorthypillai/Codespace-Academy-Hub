@@ -35,24 +35,30 @@ const Index = () => {
             }}
           ></div>
 
-          <div className="d-flex flex-column align-items-center justify-content-center px-5" style={{ flex: 1 }}>
+          <div 
+            className="d-flex flex-column align-items-center justify-content-center px-5" 
+            style={{ 
+              flex: 1, 
+              height: "100%", 
+              background: "rgba(240, 240, 240, 0.4)", 
+              borderTopRightRadius: "16px", 
+              borderBottomRightRadius: "16px" 
+            }}
+          >
 
             <div className="d-flex justify-content-center align-items-center" style={{ height: '100px' }}>
               <Link 
                 to="/user_login"
                 className="text-decoration-none"
                 style={{
-                  color: "#0da34b",
+                  color: "#007bff", // changed to nice blue
                   fontWeight: "600",
                   fontSize: "20px",
                   textDecoration: "underline",
-                  transition: "all 0.3s ease",
-                  boxShadow: "0 8px 16px rgba(0, 0, 0, 0.2)",
-                  padding: "10px 20px",
-                  borderRadius: "10px"
+                  transition: "all 0.3s ease"
                 }}
-                onMouseEnter={e => e.target.style.boxShadow = "0 12px 24px rgba(0, 0, 0, 0.3)"}
-                onMouseLeave={e => e.target.style.boxShadow = "0 8px 16px rgba(0, 0, 0, 0.2)"}
+                onMouseEnter={e => e.target.style.color = "#0056b3"}
+                onMouseLeave={e => e.target.style.color = "#007bff"}
               >
                 Student Login &rarr;
               </Link>
