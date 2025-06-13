@@ -178,18 +178,19 @@ const ViewAnswerTutor = () => {
                 ))}
               </div>
 
-              {Array.isArray(ans.pdf) && ans.pdf.length > 0 && (
-                <div className="mt-3">
-                  <h6 className="text-danger">Submitted PDFs</h6>
-                  {ans.pdf.map((pdfUrl, index) => (
-                    <div key={index} className="mb-2">
-                      <a href={pdfUrl} target="_blank" rel="noopener noreferrer" className="btn btn-outline-primary btn-sm">
-                        View PDF {index + 1}
-                      </a>
-                    </div>
-                  ))}
-                </div>
-              )}
+              {Array.isArray(ans.questionPdfs) && ans.questionPdfs.length > 0 && (
+  <div className="mt-3">
+    <h6 className="text-danger">Question PDFs</h6>
+    {ans.questionPdfs.map((pdfUrl, index) => (
+      <div key={index} className="mb-2">
+        <a href={pdfUrl} target="_blank" rel="noopener noreferrer" className="btn btn-outline-success btn-sm">
+          View Question PDF {index + 1}
+        </a>
+      </div>
+    ))}
+  </div>
+)}
+
             </div>
           </div>
 

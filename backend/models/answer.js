@@ -24,7 +24,7 @@ const answerSchema = mongoose.Schema({
   questionCourse: { type: String },
   questionDateCreated: { type: String },
   questionImages: { type: [String] },
-   questionPdfs: { type: [String] },
+   pdf: { type: [String] }
 });
 
 answerSchema.virtual('id').get(function () {

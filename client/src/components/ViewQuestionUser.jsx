@@ -128,7 +128,7 @@ const ViewQuestionUser = () => {
       date: question.dateCreated,
       course: question.course,
       images: question.image,
-      pdfs: question.pdf  // ✅ Add this line only
+      pdf: question.pdf  // ✅ Add this line only
     }
   })}
 >

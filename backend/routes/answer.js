@@ -26,7 +26,7 @@ router.post('/', auth, upload.array('images'), async (req, res) => {
       questionDateCreated,
       questionCourse,
       questionImages,
-      questionPdfs
+      pdf
     } = req.body;
 
     // Upload each image to Cloudinary
@@ -48,7 +48,8 @@ router.post('/', auth, upload.array('images'), async (req, res) => {
 
     // Parse questionImages JSON safely
     const parsedQuestionImages = questionImages ? JSON.parse(questionImages) : [];
-const parsedQuestionPdfs = questionPdfs ? JSON.parse(questionPdfs) : [];
+const parsedPdf = pdf ? JSON.parse(pdf) : [];
+
 
     const answer = new Answer({
       useremail,
@@ -63,7 +64,8 @@ const parsedQuestionPdfs = questionPdfs ? JSON.parse(questionPdfs) : [];
       questionCourse,
       questionImages: parsedQuestionImages,
       image: uploadedImages,
-      pdf: parsedQuestionPdfs  // ✅ add pdf here
+      pdf: parsedPdf
+// ✅ add pdf here
     });
 
     const savedAnswer = await answer.save();
