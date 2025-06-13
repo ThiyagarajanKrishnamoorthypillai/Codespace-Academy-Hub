@@ -141,10 +141,11 @@ const ViewQuestionAdmin = () => {
                   {/* Images Grid */}
                   {/* Images Grid */}
 <div className="row">
+  {/* ✅ Display Images */}
   {question.image.map((img, idx) => (
-    <div className="col-6 col-md-3 mb-3" key={idx}>
+    <div className="col-6 col-md-3 mb-3" key={`image-${idx}`}>
       <img
-        src={img} // ✅ Use Cloudinary URL directly
+        src={img}
         alt={`Image ${idx}`}
         className="img-fluid border rounded shadow-sm"
         style={{
@@ -153,11 +154,24 @@ const ViewQuestionAdmin = () => {
           objectFit: 'cover',
           cursor: 'pointer',
         }}
-        onClick={() => setSelectedImage(img)} // ✅ Full URL already
+        onClick={() => setSelectedImage(img)}
       />
     </div>
   ))}
+
+  {/* ✅ Display PDFs */}
+  {question.pdf?.map((pdfUrl, idx) => (
+    <div className="col-6 col-md-3 mb-3" key={`pdf-${idx}`}>
+      <div className="border rounded shadow-sm d-flex flex-column justify-content-center align-items-center p-3" style={{ height: '180px' }}>
+        <i className="fa fa-file-pdf-o text-danger mb-2" style={{ fontSize: '50px' }}></i>
+        <a href={pdfUrl} target="_blank" rel="noopener noreferrer" className="btn btn-sm btn-outline-primary">
+          View PDF
+        </a>
+      </div>
+    </div>
+  ))}
 </div>
+
 
                   {/* Buttons */}
                   
