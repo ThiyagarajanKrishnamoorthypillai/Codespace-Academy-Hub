@@ -27,17 +27,19 @@ import Title from './Title.jsx';
 
 const PostFeedback = () => {
   const location = useLocation();
-const { image, course, dateCreated } = location.state || {};
+const { image,pdf, course, dateCreated } = location.state || {};
 const [cookies] = useCookies(['email']);
 
   //const userEmail = decodeURIComponent(document.cookie.replace(/(?:(?:^|.*;\s*)email\s*=\s*([^;]*).*$)|^.*$/, '$1'));
 const imageArray = Array.isArray(image) ? image : image ? [image] : [];
+const pdfArray = Array.isArray(pdf) ? pdf : pdf ? [pdf] : [];
 
   const [formData, setFormData] = useState({
   useremail: cookies.email || '',
   name: '',
   feedback: '',
   image: imageArray || '',
+   pdf: pdfArray || [],
   course: course || '',
   dateCreated: dateCreated || '',
   userFeedbackdateCreated: '',
@@ -117,25 +119,25 @@ const handleSubmit = (e) => {
         <div className="profile-wrapper-area py-3">
           <div className="card user-data-card">
             <div className="card-body">
-              <form  onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}>
+  <div className="mb-3">
+    <div className="title mb-2"><span>Name</span></div>
+    <input className="form-control"
+      name="name" id="name"
+      value={formData.name}
+      onChange={handleInputChange} type="text" />
+  </div>
 
-              <div className="mb-3">
-                  <div className="title mb-2"><span>Name</span></div>
-                  <input className="form-control"
-                    name="name" id="name"
-                    value={formData.name}
-                    onChange={handleInputChange}    type="text"  />
-                </div>
-  				
-                <div className="mb-3">
-                  <div className="title mb-2"><span>Feedback | Doubt</span></div>
-                  <input className="form-control" name="feedback" id="feedback"
-                    value={formData.feedback}
-                    onChange={handleInputChange}   type="text"/>
-                </div>          
-              
-                <button className="btn btn-success w-100"  type="submit">Submit</button>
-              </form>
+  <div className="mb-3">
+    <div className="title mb-2"><span>Feedback | Doubt</span></div>
+    <input className="form-control" name="feedback" id="feedback"
+      value={formData.feedback}
+      onChange={handleInputChange} type="text" />
+  </div>          
+
+  <button className="btn btn-success w-100" type="submit">Submit</button>
+</form>
+
             </div>
           </div>
         </div>

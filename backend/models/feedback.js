@@ -21,6 +21,12 @@ const feedbackSchema = mongoose.Schema({
   required: true,
   default: [],
 },
+pdf: {
+  type: [String],
+  required: true,
+  default: [],
+},
+
     course: {
         type: String,
         required: true,    

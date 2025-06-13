@@ -31,6 +31,7 @@ router.post('/',  auth, async (req,res)=>{
   name: req.body.name,
   feedback: req.body.feedback,
   image: Array.isArray(req.body.image) ? req.body.image : [req.body.image], // ✅ ensure it's always an array
+  pdf: Array.isArray(req.body.pdf) ? req.body.pdf : [req.body.pdf], // ✅ handle pdf same way
   course: req.body.course,
   dateCreated: req.body.dateCreated,
   userFeedbackdateCreated: req.body.userFeedbackdateCreated || new Date().toISOString(),
