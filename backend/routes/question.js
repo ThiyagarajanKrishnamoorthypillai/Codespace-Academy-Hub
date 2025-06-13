@@ -30,13 +30,14 @@ router.post('/', upload.fields([
   { name: 'pdfs', maxCount: 10 }
 ]), async (req, res) => {
   try {
-    const imageUrls = req.files['images']
-      ? await Promise.all(req.files['images'].map(file => uploadToCloudinary(file.buffer)))
-      : [];
+   const imageUrls = req.files['images']
+  ? await Promise.all(req.files['images'].map(file => uploadToCloudinary(file.buffer, 'image')))
+  : [];
 
-    const pdfUrls = req.files['pdfs']
-      ? await Promise.all(req.files['pdfs'].map(file => uploadToCloudinary(file.buffer, 'application/pdf')))
-      : [];
+const pdfUrls = req.files['pdfs']
+  ? await Promise.all(req.files['pdfs'].map(file => uploadToCloudinary(file.buffer, 'raw')))
+  : [];
+
 
     const data = {
       course: req.body.course,
