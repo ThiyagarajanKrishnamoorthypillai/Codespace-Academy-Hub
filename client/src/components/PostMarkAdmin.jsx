@@ -31,15 +31,19 @@ const PostMarkAdmin = () => {
       setFilteredAnswers(answers);
       return;
     }
+const filtered = answers.filter(ans => {
+    const ansDate = new Date(ans.dateCreated);
+    
+    // Get local date in yyyy-mm-dd format
+    const ansLocalDate = ansDate.getFullYear() + '-' 
+                       + String(ansDate.getMonth() + 1).padStart(2, '0') + '-' 
+                       + String(ansDate.getDate()).padStart(2, '0');
 
-    const filtered = answers.filter(ans => {
-      const ansDate = new Date(ans.dateCreated);
-      const ansLocalDate = ansDate.toISOString().split('T')[0];
-      return ansLocalDate >= fromDate && ansLocalDate <= toDate;
-    });
+    return ansLocalDate >= fromDate && ansLocalDate <= toDate;
+  });
 
-    setFilteredAnswers(filtered);
-  }, [fromDate, toDate, answers]);
+  setFilteredAnswers(filtered);
+}, [fromDate, toDate, answers]);
 
   const handleImageChange = (e) => {
     setImageMark([...e.target.files]);
