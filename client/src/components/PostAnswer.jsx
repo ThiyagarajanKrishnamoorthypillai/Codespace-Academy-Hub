@@ -4,11 +4,13 @@ import axios from '../utils/axiosInstance';
 import { useCookies } from 'react-cookie';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Title from './Title';
+import { DateTime } from 'luxon';
+
 
 const PostAnswer = () => {
   const [cookies] = useCookies(['email', 'course']);
-  const dateIST = new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" });
-  const dateCreated = new Date(dateIST).toISOString();
+  //const dateIST = new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" });
+const dateCreated = DateTime.now().setZone('Asia/Kolkata').toISO();
   const [formData, setFormData] = useState({
     name: '',
     stdid: '',
