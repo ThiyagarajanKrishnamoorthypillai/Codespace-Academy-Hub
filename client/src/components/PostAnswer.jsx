@@ -19,7 +19,7 @@ const PostAnswer = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { date, course, images: questionImages, pdf: questionPdfs } = location.state || {};
+const { date, course, images: questionImages, pdf } = location.state || {};
 
 
   const handleChange = (e) => {
@@ -53,7 +53,7 @@ const PostAnswer = () => {
     payload.append('questionDateCreated', date);
     payload.append('questionCourse', course);
     payload.append('questionImages', JSON.stringify(questionImages));
-payload.append('pdf', JSON.stringify(questionPdfs));
+payload.append('pdf', JSON.stringify(pdf));
 
 
     images.forEach((img) => payload.append('images', img));
