@@ -36,10 +36,11 @@ const PostMarkAdmin = () => {
     const to = new Date(toDate);
     to.setHours(23, 59, 59, 999); // include full to-date
 
-    const filtered = answers.filter(ans => {
-      const ansDate = new Date(ans.dateCreated);
-      return ansDate >= from && ansDate <= to;
-    });
+     const filtered = answers.filter(ans => {
+    const ansDate = new Date(ans.dateCreated);
+    const ansLocalDate = ansDate.toISOString().split('T')[0];
+    return ansLocalDate >= fromDate && ansLocalDate <= toDate;
+  });
 
     setFilteredAnswers(filtered);
   }, [fromDate, toDate, answers]);
