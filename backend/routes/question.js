@@ -92,18 +92,31 @@ router.get('/course/:course', async (req, res) => {
 });
 
 // PUT (update question images)
-router.put('/:id', upload.array('newImages'), async (req, res) => {
+router.put('/:id', upload.fields([
+  { name: 'newImages', maxCount: 10 },
+  { name: 'newPdfs', maxCount: 10 }
+]), async (req, res) => {
   try {
     const { course, adminemail } = req.body;
+
     const keepImages = JSON.parse(req.body.existingImages || '[]');
-    const newUrls = await Promise.all(req.files.map(file => uploadToCloudinary(file.buffer)));
+    const keepPdfs = JSON.parse(req.body.existingPdfs || '[]');
+
+    const newImageUrls = req.files['newImages'] 
+      ? await Promise.all(req.files['newImages'].map(file => uploadToCloudinary(file.buffer, 'image'))) 
+      : [];
+
+    const newPdfUrls = req.files['newPdfs'] 
+      ? await Promise.all(req.files['newPdfs'].map(file => uploadToCloudinary(file.buffer, 'raw'))) 
+      : [];
 
     const updated = await Question.findByIdAndUpdate(
       req.params.id,
       {
         course,
         adminemail,
-        image: [...keepImages, ...newUrls],
+        image: [...keepImages, ...newImageUrls],
+        pdf: [...keepPdfs, ...newPdfUrls],
       },
       { new: true }
     );

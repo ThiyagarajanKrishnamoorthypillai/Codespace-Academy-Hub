@@ -1,183 +1,151 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import "./css/bootstrap.min.css";
-import "./css/owl.carousel.min.css";
-import "./css/font-awesome.min.css";
-import "./css/animate.css";
-import "./css/font-awesome.min.css";
-import "./css/lineicons.min.css";
-import "./css/magnific-popup.css";
-import "./css/style.css";
-import "./js/jquery.min.js";
-import "./js/bootstrap.bundle.min.js";
-import imgSmall from "./img/core-img/logo-small.png";
-import imgBg from "./img/bg-img/9.png";
-import Logout from './Logout.jsx';
-import Title from './Title.jsx';
+import { useParams } from 'react-router-dom';
+import axios from '../utils/axiosInstance';
 
 const UpdateQuestion = () => {
   const { id } = useParams();
-  const [editedQuestion, setEditedQuestion] = useState({
-  adminemail: '',
-  course: '',
-  existingImages: [],
-  newImages: [],
-});
 
+  const [editedQuestion, setEditedQuestion] = useState({
+    course: '',
+    adminemail: '',
+    existingImages: [],
+    newImages: [],
+    existingPdfs: [],
+    newPdfs: []
+  });
 
   useEffect(() => {
-  fetch(`${import.meta.env.VITE_API_URL}/question/${id}`)
-    .then(res => res.json())
-    .then(data => {
-      setEditedQuestion({
-        adminemail: data.adminemail,
-        course: data.course,
-        existingImages: data.image,
-        newImages: []
-      });
-    });
-}, [id]);
+    const fetchQuestion = async () => {
+      try {
+        const response = await axios.get(`/question/${id}`);
+        const data = response.data;
+        setEditedQuestion({
+          course: data.course || '',
+          adminemail: data.adminemail || '',
+          existingImages: data.image || [],
+          newImages: [],
+          existingPdfs: data.pdf || [],
+          newPdfs: []
+        });
+      } catch (error) {
+        console.error('Error fetching question:', error.message);
+      }
+    };
 
+    fetchQuestion();
+  }, [id]);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setEditedQuestion({
-      ...editedQuestion,
-      [name]: value,
-    });
+  const handleCourseChange = (e) => {
+    setEditedQuestion({ ...editedQuestion, course: e.target.value });
   };
 
- const handleUpdateQuestion = async (e) => {
-  e.preventDefault();
+  const handleImageChange = (e) => {
+    setEditedQuestion({ ...editedQuestion, newImages: [...e.target.files] });
+  };
 
-  const formData = new FormData();
-  formData.append('course', editedQuestion.course);
-  
-  if (editedQuestion.adminemail) {
+  const handlePdfChange = (e) => {
+    setEditedQuestion({ ...editedQuestion, newPdfs: [...e.target.files] });
+  };
+
+  const handleRemoveExistingImage = (index) => {
+    const updatedImages = [...editedQuestion.existingImages];
+    updatedImages.splice(index, 1);
+    setEditedQuestion({ ...editedQuestion, existingImages: updatedImages });
+  };
+
+  const handleRemoveExistingPdf = (index) => {
+    const updatedPdfs = [...editedQuestion.existingPdfs];
+    updatedPdfs.splice(index, 1);
+    setEditedQuestion({ ...editedQuestion, existingPdfs: updatedPdfs });
+  };
+
+  const handleUpdateQuestion = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('course', editedQuestion.course);
     formData.append('adminemail', editedQuestion.adminemail);
-  }
 
-  formData.append('existingImages', JSON.stringify(editedQuestion.existingImages));
-  for (let i = 0; i < editedQuestion.newImages.length; i++) {
-    formData.append('newImages', editedQuestion.newImages[i]);
-  }
+    formData.append('existingImages', JSON.stringify(editedQuestion.existingImages));
+    formData.append('existingPdfs', JSON.stringify(editedQuestion.existingPdfs));
 
-  try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/question/${id}`, {
-      method: 'PUT',
-      body: formData
-    });
-
-    if (response.ok) {
-      alert("Updated successfully !");
-      window.location.href = "/admin_home/view_question_admin";
-    } else {
-      console.error('Update failed');
+    for (let i = 0; i < editedQuestion.newImages.length; i++) {
+      formData.append('newImages', editedQuestion.newImages[i]);
     }
-  } catch (err) {
-    console.error('Error:', err);
-  }
-};
 
+    for (let i = 0; i < editedQuestion.newPdfs.length; i++) {
+      formData.append('newPdfs', editedQuestion.newPdfs[i]);
+    }
 
-
-
-const handleRemoveImage = (imgToRemove) => {
-  setEditedQuestion((prev) => ({
-    ...prev,
-    existingImages: prev.existingImages.filter((img) => img !== imgToRemove),
-  }));
-};
-
-
-  // Function to add point-wise numbering to the description
-  const formatDescription = (description) => {
-    return description.split('\n').map((line, index) => {
-      return <p key={index}>{index + 1}. {line}</p>;
-    });
+    try {
+      await axios.put(`/question/${id}`, formData);
+      alert('Question updated successfully!');
+      window.location.href = '/admin_home/view_question_admin';
+    } catch (err) {
+      console.error('Error:', err);
+      alert('Failed to update question.');
+    }
   };
 
   return (
-    <div>
-   
-   
+    <div className="container py-5">
+      <h4 className="mb-4">Update Question</h4>
+      <form onSubmit={handleUpdateQuestion} className="shadow p-4 rounded bg-light">
 
-      <div className="page-content-wrapper">
-        <div className="top-products-area py-3">
-          <div className="container">
-            <div className="section-heading d-flex align-items-center justify-content-between">
-              <h6>Edit Question details</h6>
-            </div>
+        <div className="mb-3">
+          <label>Course</label>
+          <input
+            type="text"
+            className="form-control"
+            value={editedQuestion.course}
+            onChange={handleCourseChange}
+          />
+        </div>
 
-            <div className="profile-wrapper-area py-3">
-              <div className="card user-data-card">
-                <div className="card-body">
-                  <form onSubmit={handleUpdateQuestion}>
-                    <div className="mb-3">
-  <div className="title mb-2"><span>Course:</span></div>
-  <select
-    className="form-control"
-    name="course"
-    value={editedQuestion.course}
-    onChange={handleInputChange}
-  >
-    <option value="">-- Select a Course --</option>
-    <option value="C">C</option>
-    <option value="C++">C++</option>
-    <option value="C#">C#</option>
-    <option value="Java">Java</option>
-    <option value="JavaScript">JavaScript</option>
-    <option value="Python">Python</option>
-    <option value="MERN Full Stack Development">MERN Full Stack Development</option>
-    <option value="MEAN Full Stack Development">MEAN Full Stack Development</option>
-    <option value="Data Structures">Data Structures</option>
-    <option value="Web Development">Web Development</option>
-    <option value="React Native">React Native</option>
-    <option value="AI">Artificial Intelligence</option>
-    <option value="Cloud Computing">Cloud Computing</option>
-    <option value="Data Base">Data Bases</option>
-    <option value="Fundamentals of Web Technology">Fundamentals of Web Technology</option>
-  </select>
-</div>
-
-<div className="mb-3">
-  <div className="title mb-2"><span>Existing Images:</span></div>
-  <div className="row">
-    {editedQuestion.existingImages.map((img, index) => (
-      <div key={index} className="col-4 position-relative mb-3">
-      <img
-  src={img} // ✅ Now uses full Cloudinary URL
-  alt="existing"
-  className="img-fluid border rounded"
-/>
-
-        <button
-          type="button"
-          className="btn btn-sm btn-danger position-absolute"
-          style={{ top: 5, right: 5 }}
-          onClick={() => handleRemoveImage(img)}
-        >
-          &times;
-        </button>
-      </div>
-    ))}
-  </div>
-</div>
-
-
-                    
-                    
-                    <button className="btn btn-success w-100" type="submit">Update</button>
-                  </form>
-                </div>
+        <div className="mb-3">
+          <label>Existing Images:</label>
+          <div className="d-flex flex-wrap">
+            {editedQuestion.existingImages.map((img, index) => (
+              <div key={index} className="me-3 mb-2 text-center">
+                <img src={img} alt="img" className="img-thumbnail" style={{ width: '100px', height: '100px', objectFit: 'cover' }} />
+                <br />
+                <button type="button" className="btn btn-sm btn-danger mt-1" onClick={() => handleRemoveExistingImage(index)}>Remove</button>
               </div>
-            </div>
+            ))}
           </div>
         </div>
-      </div>
-     
+
+        <div className="mb-3">
+          <label>Upload New Images:</label>
+          <input type="file" multiple accept="image/*" className="form-control" onChange={handleImageChange} />
+        </div>
+
+        <div className="mb-3">
+          <label>Existing PDFs:</label>
+          <div className="d-flex flex-wrap">
+            {editedQuestion.existingPdfs.map((pdf, index) => (
+              <div key={index} className="me-3 mb-2 text-center">
+                <i className="fa fa-file-pdf-o text-danger" style={{ fontSize: '40px' }}></i>
+                <br />
+                <a href={pdf} target="_blank" rel="noopener noreferrer" className="small">View</a>
+                <br />
+                <button type="button" className="btn btn-sm btn-danger mt-1" onClick={() => handleRemoveExistingPdf(index)}>Remove</button>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mb-3">
+          <label>Upload New PDFs:</label>
+          <input type="file" multiple accept="application/pdf" className="form-control" onChange={handlePdfChange} />
+        </div>
+
+        <button type="submit" className="btn btn-primary w-100">
+          Update Question
+        </button>
+      </form>
     </div>
-  )
-}
+  );
+};
 
 export default UpdateQuestion;
