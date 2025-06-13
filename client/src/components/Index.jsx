@@ -51,7 +51,7 @@ const Index = () => {
                 to="/user_login"
                 className="text-decoration-none"
                 style={{
-                  color: "#007bff", // changed to nice blue
+                  color: "purple", // changed to nice blue
                   fontWeight: "600",
                   fontSize: "20px",
                   textDecoration: "underline",

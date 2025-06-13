@@ -63,9 +63,9 @@ const UserDashboard = () => {
     <li><b style={{ color: '#3f51b5' }}>Duration:</b> <span style={{ color: '#673ab7' }}>{sessionInfo.durationHours} hrs</span></li>
     <li>
       <b style={{ color: '#4caf50' }}>Remaining:</b>{' '}
-      <span className={remainingTime === 'Finished' ? 'text-success fw-bold' : 'text-warning fw-bold'}>
+      {/*<span className={remainingTime === 'Finished' ? 'text-success fw-bold' : 'text-warning fw-bold'}>
         {remainingTime}
-      </span>
+      </span>*/}
     </li>
   </ul>
 </div>
