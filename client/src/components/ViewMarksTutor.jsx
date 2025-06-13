@@ -8,7 +8,7 @@ const ViewMarksTutor = () => {
   useEffect(() => {
     const tutorEmail = Cookies.get('tutoremail');
     if (!tutorEmail) {
-      alert('Tutor email not found');
+      alert('Tutor email not found in cookies');
       return;
     }
 
@@ -28,22 +28,54 @@ const ViewMarksTutor = () => {
       <h4 className="mb-4">Submitted Marks (Tutor)</h4>
 
       {marks.length === 0 ? (
-        <p>No marks found.</p>
+        <p>No data found.</p>
       ) : (
         <div className="row">
           {marks.map((mark, index) => (
-            <div key={index} className="col-md-6 mb-4">
+            <div key={index} className="col-md-12 mb-4">
               <div className="card shadow-sm p-3">
-                <h5>{mark.name} ({mark.course})</h5>
-                <p><strong>Std ID:</strong> {mark.stdid}</p>
-                <p><strong>Email:</strong> {mark.useremail}</p>
-                <p><strong>Marked By:</strong> {mark.tutoremail}</p>
-                <p><strong>Date:</strong> {mark.dateMark}</p>
 
-                <p><b>Marks:</b></p>
-                {mark.imageMark.map((img, i) => (
+                {/* Question Section */}
+                <h5>Question Details</h5>
+                <p><strong>Course:</strong> {mark.questionCourse}</p>
+                <p><strong>Question Date:</strong> {new Date(mark.questionDateCreated).toLocaleString()}</p>
+                {mark.questionImages && mark.questionImages.map((img, i) => (
+                  <img key={i} src={img} alt="question" className="img-fluid rounded mb-2" />
+                ))}
+                {mark.pdf && mark.pdf.length > 0 && (
+                  <>
+                    <p><strong>PDF:</strong></p>
+                    {mark.pdf.map((pdfUrl, i) => (
+                      <a key={i} href={pdfUrl} target="_blank" rel="noreferrer">View PDF {i+1}</a>
+                    ))}
+                  </>
+                )}
+
+                <hr />
+
+                {/* Answer Section */}
+                <h5>Answer Details</h5>
+                <p><strong>Name:</strong> {mark.name}</p>
+                <p><strong>Student ID:</strong> {mark.stdid}</p>
+                <p><strong>Department:</strong> {mark.dpt}</p>
+                <p><strong>College:</strong> {mark.college}</p>
+                <p><strong>Course:</strong> {mark.course}</p>
+                <p><strong>User Email:</strong> {mark.useremail}</p>
+                {mark.answerImages && mark.answerImages.map((img, i) => (
+                  <img key={i} src={img} alt="answer" className="img-fluid rounded mb-2" />
+                ))}
+
+                <hr />
+
+                {/* Marks Section */}
+                <h5>Marks Details</h5>
+                <p><strong>Status:</strong> {mark.status}</p>
+                <p><strong>Marked By:</strong> {mark.tutoremail}</p>
+                <p><strong>Mark Date:</strong> {new Date(mark.dateMark).toLocaleString()}</p>
+                {mark.imageMark && mark.imageMark.map((img, i) => (
                   <img key={i} src={img} alt="mark" className="img-fluid rounded mb-2" />
                 ))}
+
               </div>
             </div>
           ))}
