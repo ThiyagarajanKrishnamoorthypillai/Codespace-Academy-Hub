@@ -52,6 +52,7 @@ const ViewMarksTutor = () => {
                 <p><b>User Email:</b> {mark.useremail}</p>
                 <p><b>Tutor Email:</b> {mark.tutoremail}</p>
                 <p><b>Status:</b> {mark.status}</p>
+                <p><b>Mark:</b> {mark.mark}</p>
                 <p><b>Question Date Created:</b> {formatDate(mark.questionDateCreated)}</p>
                 <p><b>Mark Date:</b> {formatDate(mark.dateMark)}</p>
                 <p><b>Created At:</b> {formatDate(mark.createdAt?.$date?.$numberLong || mark.createdAt)}</p>

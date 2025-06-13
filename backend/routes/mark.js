@@ -71,30 +71,35 @@ res.status(200).json(saved);
 
 router.post('/post-tutor', upload.array('imageMark'), async (req, res) => {
   try {
-    const { answerId, tutoremail } = req.body;
-    if (!answerId || !req.files || req.files.length === 0 || !tutoremail) {
+    const { answerId, tutoremail, mark } = req.body;
+
+    if (!answerId || !tutoremail) {
       return res.status(400).json({ message: "Missing fields" });
     }
 
     const answer = await Answer.findById(answerId);
     if (!answer) return res.status(404).json({ message: "Answer not found" });
 
-    const imageMarkUrls = await Promise.all(
-      req.files.map(file => {
-        return new Promise((resolve, reject) => {
-          const stream = cloudinary.uploader.upload_stream(
-            { folder: 'marks' },
-            (error, result) => {
-              if (result) resolve(result.secure_url);
-              else reject(error);
-            }
-          );
-          streamifier.createReadStream(file.buffer).pipe(stream);
-        });
-      })
-    );
+    let imageMarkUrls = [];
 
-    const mark = new Mark({
+    if (req.files && req.files.length > 0) {
+      imageMarkUrls = await Promise.all(
+        req.files.map(file => {
+          return new Promise((resolve, reject) => {
+            const stream = cloudinary.uploader.upload_stream(
+              { folder: 'marks' },
+              (error, result) => {
+                if (result) resolve(result.secure_url);
+                else reject(error);
+              }
+            );
+            streamifier.createReadStream(file.buffer).pipe(stream);
+          });
+        })
+      );
+    }
+
+    const markRecord = new Mark({
       useremail: answer.useremail,
       name: answer.name,
       stdid: answer.stdid,
@@ -103,17 +108,16 @@ router.post('/post-tutor', upload.array('imageMark'), async (req, res) => {
       course: answer.course,
       questionCourse: answer.questionCourse,
       questionDateCreated: answer.questionDateCreated,
-            dateCreated:answer.dateCreated,
-
+      dateCreated: answer.dateCreated,
       questionImages: answer.questionImages,
       answerImages: answer.image,
-      pdf:answer.pdf,
+      pdf: answer.pdf,
       imageMark: imageMarkUrls,
       mark,
-      tutoremail   // ✅ store tutor email
+      tutoremail
     });
 
-    const saved = await mark.save();
+    const saved = await markRecord.save();
     res.status(200).json(saved);
 
   } catch (error) {
@@ -121,6 +125,7 @@ router.post('/post-tutor', upload.array('imageMark'), async (req, res) => {
     res.status(500).json({ message: "Internal server error", error });
   }
 });
+
 
 
 // ✅ GET all marks
