@@ -68,7 +68,7 @@ const UserProfile = () => {
     fetchUserProfile();
   }, []);
 
-  if (!user) return <div className="text-center mt-5">Loading user profile...</div>;
+  if (!user) return <div className="text-center mt-5">Loading student profile...</div>;
 
   // Format time
   const timeOptions = { hour: '2-digit', minute: '2-digit' };
@@ -85,7 +85,7 @@ const UserProfile = () => {
       
         
 <div className="container mt-2">
-      <h2 className="mb-4 text-center">User Profile</h2>
+      <h2 className="mb-4 text-center">Student Profile</h2>
       <div className="card p-4 shadow-lg">
         <div className="mb-3">
           <label className="form-label fw-bold">Name:</label>
@@ -95,7 +95,7 @@ const UserProfile = () => {
               className="form-control"
               name="name"
               value={editableUser.name}
-              onChange={handleChange}
+              onChange={handleChange} disabled
             />
           ) : (
             <div className="text-primary">{user.name}</div>
