@@ -7,16 +7,9 @@ const ViewMarksAdmin = () => {
   const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
-    const adminemail = Cookies.get('adminemail');
-    if (!adminemail) {
-      alert('Admin email not found in cookies');
-      return;
-    }
-
     axios.get(`${import.meta.env.VITE_API_URL}/mark/`, { withCredentials: true })
       .then(res => {
-        const filtered = res.data.filter(item => item.adminemail === adminemail);
-        setMarks(filtered);
+        setMarks(res.data);  // ✅ Directly assign full data (no filtering)
       })
       .catch(err => {
         console.error(err);

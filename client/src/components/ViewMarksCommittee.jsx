@@ -6,17 +6,11 @@ const ViewMarksCommittee = () => {
   const [marks, setMarks] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
 
-  useEffect(() => {
-    const committeeemail = Cookies.get('committeeemail');
-    if (!committeeemail) {
-      alert('Admin email not found in cookies');
-      return;
-    }
 
+  useEffect(() => {
     axios.get(`${import.meta.env.VITE_API_URL}/mark/`, { withCredentials: true })
       .then(res => {
-        const filtered = res.data.filter(item => item.committeeemail === committeeemail);
-        setMarks(filtered);
+        setMarks(res.data);  // ✅ Directly assign full data (no filtering)
       })
       .catch(err => {
         console.error(err);
@@ -32,7 +26,7 @@ const ViewMarksCommittee = () => {
 
   return (
     <div className="container mt-4">
-      <h4 className="mb-4">Submitted Marks (Admin Full View)</h4>
+      <h4 className="mb-4">Submitted Marks (Organizing Committee Full View)</h4>
 
       {marks.length === 0 ? (
         <p>No data found.</p>
