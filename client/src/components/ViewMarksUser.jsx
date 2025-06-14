@@ -66,6 +66,17 @@ const ViewMarksUser = () => {
                   <div className="card-body">
 
                     {/*<h6 className="mb-2 text-primary">Record ID: {mark._id}</h6>*/}
+                     <p>
+  <b>Marks:</b>{' '}
+  <span style={{
+    color: '#ff5722',
+    fontWeight: 'bold',
+    textShadow: '0 0 8px rgba(23, 26, 231, 0.8)'
+  }}>
+    {mark.mark}
+  </span>
+</p>
+
                     <p><b>Name:</b> {mark.name}</p>
                     <p><b>Student ID:</b> {mark.stdid}</p>
                     <p><b>Department:</b> {mark.dpt}</p>
