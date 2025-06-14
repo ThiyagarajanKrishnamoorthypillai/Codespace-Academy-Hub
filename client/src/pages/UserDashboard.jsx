@@ -14,6 +14,8 @@ const UserDashboard = () => {
   const [tutor, setTutor] = useState(null);
   const [marks, setMarks] = useState([]);
   const [pieData, setPieData] = useState([]);
+  const [notifications, setNotifications] = useState([]);
+
 
   // Fetch Tutor Name
   useEffect(() => {
@@ -83,6 +85,16 @@ const UserDashboard = () => {
   }, [userEmail]);
 
   const COLORS = ['#673ab7', '#ffc107', '#ff5722'];
+useEffect(() => {
+  if (!course) return;
+
+  axios.get(`${import.meta.env.VITE_API_URL}/question`)
+    .then(res => {
+      const filtered = res.data.filter(item => item.course === course);
+      setNotifications(filtered);
+    })
+    .catch(err => console.error('Error loading notifications', err));
+}, [course]);
 
   return (
     <div className="container py-4" style={{ background: 'linear-gradient(to right, #f5f8fd, #fdfdfd)', minHeight: 'calc(100vh - 118px)' }}>
@@ -92,27 +104,78 @@ const UserDashboard = () => {
         <div className="col-12 col-md-7 mb-4">
 
           {/* Session Info */}
-          <div className="p-4 shadow rounded bg-white border transition-all"
-            style={{ borderColor: '#ffc107', transition: 'transform 0.3s ease, border-color 0.3s ease', animation: 'fadeIn 1s ease-in-out' }}
-            onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.03)')}
-            onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
-          >
-            <h5 className="fw-bold mb-3" style={{ color: '#673ab7', animation: 'textPop 1s ease-in-out' }}>
-              📘 Current Session
-            </h5>
+          <div className="row">
 
-            {sessionInfo ? (
-              <ul className="list-unstyled" style={{ animation: 'textFade 1.2s ease' }}>
-                <li><b style={{ color: '#e91e63' }}>Course:</b> <span style={{ color: '#3f51b5' }}>{sessionInfo.course}</span></li>
-                <li><b style={{ color: '#009688' }}>Batch:</b> <span style={{ color: '#795548' }}>{sessionInfo.batch}</span></li>
-                <li><b style={{ color: '#ff5722' }}>Status:</b> <span style={{ color: '#0d6efd', fontWeight: 'bold' }}>{sessionInfo.status}</span></li>
-                <li><b style={{ color: '#3f51b5' }}>Duration:</b> <span style={{ color: '#673ab7' }}>{sessionInfo.durationHours} hrs</span></li>
-                <li><b style={{ color: '#4caf50' }}>Remaining:</b> <span className='fw-bold text-warning'>{remainingTime}</span></li>
-              </ul>
-            ) : (
-              <div style={{ color: '#6c757d' }}>No active session found.</div>
-            )}
-          </div>
+  {/* Session Info - Left */}
+  <div className="col-md-6 mb-4">
+    <div className="p-4 shadow rounded bg-white border transition-all"
+      style={{ borderColor: '#ffc107', transition: 'transform 0.3s ease, border-color 0.3s ease', animation: 'fadeIn 1s ease-in-out' }}
+      onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.03)')}
+      onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+    >
+      <h5 className="fw-bold mb-3" style={{ color: '#673ab7', animation: 'textPop 1s ease-in-out' }}>
+        📘 Current Session
+      </h5>
+
+      {sessionInfo && (
+        <ul className="list-unstyled" style={{ animation: 'textFade 1.2s ease' }}>
+          <li><b style={{ color: '#e91e63' }}>Course:</b> <span style={{ color: '#3f51b5' }}>{sessionInfo.course}</span></li>
+          <li><b style={{ color: '#009688' }}>Batch:</b> <span style={{ color: '#795548' }}>{sessionInfo.batch}</span></li>
+          <li><b style={{ color: '#ff5722' }}>Status:</b> <span style={{ color: '#0d6efd', fontWeight: 'bold' }}>{sessionInfo.status}</span></li>
+          <li><b style={{ color: '#3f51b5' }}>Duration:</b> <span style={{ color: '#673ab7' }}>{sessionInfo.durationHours} hrs</span></li>
+          <li><b style={{ color: '#4caf50' }}>Remaining:</b> <span className='fw-bold text-warning'>{remainingTime}</span></li>
+        </ul>
+      )}
+    </div>
+  </div>
+
+  {/* Notifications - Right */}
+  <div className="col-md-6 mb-4">
+    <div className="p-4 shadow rounded bg-white border transition-all"
+      style={{ borderColor: '#17a2b8', transition: 'transform 0.3s ease, border-color 0.3s ease', animation: 'fadeIn 1.2s ease-in-out' }}
+      onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.02)')}
+      onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+    >
+      <h5 className="fw-bold mb-3" style={{ color: '#17a2b8' }}>
+        🔔 Notifications
+      </h5>
+
+      <div className="table-responsive" style={{ maxHeight: '300px', overflowY: 'auto' }}>
+  <table className="table table-sm table-striped small">
+    <thead className="table-info text-center">
+      <tr>
+        <th>Date</th>
+        <th>Course</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {notifications.length === 0 ? (
+        <tr><td colSpan="3" className="text-center">No notifications found.</td></tr>
+      ) : (
+        notifications.map((item, idx) => (
+          <tr key={idx} className="text-center">
+            <td>{format(new Date(item.dateCreated), 'dd/MM/yyyy')}</td>
+            <td>{item.course}</td>
+            <td><span className="badge bg-warning text-dark">{item.status}</span></td>
+          </tr>
+        ))
+      )}
+    </tbody>
+  </table>
+</div>
+
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+
+
 
           {/* Marks Table */}
           <div className="p-4 shadow rounded bg-white border transition-all mt-3"
