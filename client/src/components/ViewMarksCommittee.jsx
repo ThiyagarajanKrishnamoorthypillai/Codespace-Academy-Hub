@@ -2,20 +2,20 @@ import React, { useEffect, useState } from 'react';
 import axios from '../utils/axiosInstance';
 import Cookies from 'js-cookie';
 
-const ViewMarksAdmin = () => {
+const ViewMarksCommittee = () => {
   const [marks, setMarks] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
-    const adminemail = Cookies.get('adminemail');
-    if (!adminemail) {
+    const committeeemail = Cookies.get('committeeemail');
+    if (!committeeemail) {
       alert('Admin email not found in cookies');
       return;
     }
 
     axios.get(`${import.meta.env.VITE_API_URL}/mark/`, { withCredentials: true })
       .then(res => {
-        const filtered = res.data.filter(item => item.adminemail === adminemail);
+        const filtered = res.data.filter(item => item.committeeemail === committeeemail);
         setMarks(filtered);
       })
       .catch(err => {
@@ -112,4 +112,4 @@ const ViewMarksAdmin = () => {
   );
 };
 
-export default ViewMarksAdmin;
+export default ViewMarksCommittee;

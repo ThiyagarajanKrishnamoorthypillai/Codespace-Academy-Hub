@@ -21,12 +21,13 @@ const CommitteeLayout = () => {
 
   const navItems = [
     { path: '/committee_home', label: 'Committee Home' },
-    { path: '/committee_home/start_session', label: 'Duration' },
+    //{ path: '/committee_home/start_session', label: 'Duration' },
     { path: '/committee_home/committee_post_question', label: 'Add Question Papers' },
-    { path: '/committee_home/view_question_committee', label: 'View & Update Question Papers' },
+    { path: '/committee_home/view_question_committee', label: 'View Question Papers' },
     { path: '/committee_home/view_answer_committee', label: "View Student's Answer Sheet" },
-    
-    
+    { path: '/committee_home/view_marks_committee', label: 'View Marks' },
+     { path: '/committee_home/view_feedback_committee', label: "View Student's Doubts" },
+
     { path: '/committee_home/view_user_admin', label: 'View Student Profile' },
     { path: '/committee_home/committee_profile', label: 'My Profile' }
   ];
@@ -72,6 +73,40 @@ const CommitteeLayout = () => {
           <Outlet />
         </div>
       </div>
+      <footer
+        className="d-flex justify-content-between align-items-center px-4 py-2 bg-white border-top shadow-sm"
+        style={{
+          fontFamily: 'Poppins, sans-serif',
+          fontSize: '14px',
+          position: 'fixed',
+          bottom: 0,
+          left: '300px',
+          right: 0,
+          height: '48px',
+          zIndex: 999,
+        }}
+      >
+        <span className="text-muted">© Codespace Solutions | All Rights Reserved</span>
+        <span className="text-muted">
+         {/*<a
+            href="https://www.instagram.com/codespace"
+            className="text-decoration-none text-muted me-3"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Instagram
+          </a>*/}
+          <a
+            href="https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://in.linkedin.com/company/codespace-solutions&ved=2ahUKEwjqpvaZxNeNAxUTh68BHWrCNKEQjjh6BAgdEAE&usg=AOvVaw0IF9suw-kMgOp1NjNq4hR7"
+            className="text-decoration-none text-muted me-3"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            LinkedIn
+          </a>
+          v1.0.0
+        </span>
+      </footer>
     </>
   );
 };

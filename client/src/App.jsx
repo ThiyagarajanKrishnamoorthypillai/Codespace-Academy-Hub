@@ -54,6 +54,8 @@ import ViewAnswerTutor from './components/ViewAnswerTutor';
 import ViewFeedbackTutor from './components/ViewFeedbackTutor';
 import UpdateFeedbackTutor from './components/UpdateFeedbackTutor';
 import Terms from './components/Terms';
+import ViewMarksCommittee from './components/ViewMarksCommittee';
+import ViewFeedbackCommittee from './components/ViewFeedbackCommittee';
 
 function App() {
   return (
@@ -108,6 +110,8 @@ function App() {
   <Route path="view_question_committee" element={<ViewQuestionCommittee />} />
   <Route path="view_answer_committee" element={<ViewAnswerCommittee />} />
   <Route path="edit_committee_profile/:id" element={<EditCommitteeProfile />} />
+  <Route path="view_marks_committee" element={<ViewMarksCommittee />} />
+  <Route path="view_feedback_committee" element={<ViewFeedbackCommittee />} />
 
   <Route path="view_feedback_admin" element={<ViewFeedbackAdmin />} />
   <Route path="post_mark_admin" element={<PostMarkAdmin />} />
