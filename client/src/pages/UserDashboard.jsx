@@ -180,7 +180,7 @@ const UserDashboard = () => {
           </div>
 <br></br>
  {/*  PieChart */}
-<div className="mt-4 pt-3">
+<div className="mt-4 ">
   <h6 className="mb-3" style={{ color: '#673ab7' }}>📊 Session Progress</h6>
 <br></br>
   {pieData.length > 0 ? (
