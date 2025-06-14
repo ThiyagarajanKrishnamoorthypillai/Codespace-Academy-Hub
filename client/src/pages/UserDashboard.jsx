@@ -179,34 +179,50 @@ const UserDashboard = () => {
             </div>
           </div>
 
-          {/* Pie Chart */}
-          <div className="mt-4">
-            <h6 className="mb-3" style={{ color: '#673ab7' }}>📊 Session Progress</h6>
+ {/*  PieChart */}
+         <div className="mt-4">
+  <h6 className="mb-3" style={{ color: '#673ab7' }}>📊 Session Progress</h6>
 
-            {pieData.length > 0 ? (
-              <ResponsiveContainer width="100%" height={250}>
-                <PieChart>
-                  <Pie
-                    data={pieData}
-                    dataKey="value"
-                    nameKey="name"
-                    cx="50%"
-                    cy="50%"
-                    outerRadius={80}
-                    label
-                  >
-                    {pieData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                  <Legend verticalAlign="bottom" height={36} />
-                </PieChart>
-              </ResponsiveContainer>
-            ) : (
-              <div style={{ color: '#6c757d' }}>No session data</div>
-            )}
-          </div>
+  {pieData.length > 0 ? (
+    <ResponsiveContainer width="100%" height={250}>
+      <PieChart>
+        <Pie
+          data={pieData}
+          dataKey="value"
+          nameKey="name"
+          cx="50%"
+          cy="50%"
+          outerRadius={80}
+          label={({ name, value }) => {
+            const hrs = Math.floor(value / 60);
+            const min = value % 60;
+            return `${name}: ${hrs} hr ${min} min`;
+          }}
+        >
+          {pieData.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          ))}
+        </Pie>
+
+        <Tooltip
+          formatter={(value) => {
+            const hrs = Math.floor(value / 60);
+            const min = value % 60;
+            return [`${hrs} hr ${min} min`, ''];
+          }}
+        />
+
+        <Legend />
+      </PieChart>
+    </ResponsiveContainer>
+  ) : (
+    <div style={{ color: '#6c757d' }}>No session data</div>
+  )}
+</div>
+
+
+
+
         </div>
 
       </div>
