@@ -180,9 +180,9 @@ const UserDashboard = () => {
           </div>
 <br></br>
  {/*  PieChart */}
-<div className="mt-4 ">
+<div className="mt-5 pt-3">
   <h6 className="mb-3" style={{ color: '#673ab7' }}>📊 Session Progress</h6>
-<br></br>
+
   {pieData.length > 0 ? (
     <ResponsiveContainer width="100%" height={250}>
       <PieChart>
@@ -193,11 +193,7 @@ const UserDashboard = () => {
           cx="50%"
           cy="50%"
           outerRadius={80}
-          label={({ name, value }) => {
-            const hrs = Math.floor(value / 60);
-            const min = value % 60;
-            return `${name}: ${hrs} hr ${min} min`;
-          }}
+          label={false}  // 🔥 Disable inner labels completely
         >
           {pieData.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
@@ -219,6 +215,7 @@ const UserDashboard = () => {
     <div style={{ color: '#6c757d' }}>No session data</div>
   )}
 </div>
+
 
 
 
