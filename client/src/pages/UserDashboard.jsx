@@ -236,16 +236,20 @@ useEffect(() => {
 
 
 {/* Bottom Full Notifications */}
-<div className="mt-4 p-4 shadow rounded bg-white border transition-all"
-  style={{ borderColor: '#17a2b8', transition: 'transform 0.3s ease, border-color 0.3s ease', animation: 'fadeIn 1.2s ease-in-out' }}
+<div className="p-4 shadow rounded bg-white border mb-4"
+  style={{
+    borderColor: '#007bff',
+    transition: 'transform 0.3s ease',
+    animation: 'fadeIn 1.2s ease-in-out'
+  }}
   onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.02)')}
   onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
 >
-  <h5 className="fw-bold mb-3" style={{ color: '#17a2b8' }}>
+  <h5 className="fw-bold mb-3 text-primary">
     🔔 All Notifications
   </h5>
 
-  <div className="table-responsive" style={{ maxHeight: '400px', overflowY: 'auto' }}>
+  <div className="table-responsive" style={{ maxHeight: '300px', overflowY: 'auto' }}>
     <table className="table table-striped table-bordered small">
       <thead className="table-info text-center">
         <tr>
@@ -270,6 +274,7 @@ useEffect(() => {
     </table>
   </div>
 </div>
+
 
 
       </div>
