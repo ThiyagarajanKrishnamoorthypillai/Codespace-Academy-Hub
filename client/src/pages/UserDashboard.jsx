@@ -232,10 +232,45 @@ useEffect(() => {
 </div>
 
 
-
-
-
         </div>
+
+
+{/* Bottom Full Notifications */}
+<div className="mt-4 p-4 shadow rounded bg-white border transition-all"
+  style={{ borderColor: '#17a2b8', transition: 'transform 0.3s ease, border-color 0.3s ease', animation: 'fadeIn 1.2s ease-in-out' }}
+  onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.02)')}
+  onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+>
+  <h5 className="fw-bold mb-3" style={{ color: '#17a2b8' }}>
+    🔔 All Notifications
+  </h5>
+
+  <div className="table-responsive" style={{ maxHeight: '400px', overflowY: 'auto' }}>
+    <table className="table table-striped table-bordered small">
+      <thead className="table-info text-center">
+        <tr>
+          <th>Date</th>
+          <th>Course</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {notifications.length === 0 ? (
+          <tr><td colSpan="3" className="text-center">No notifications found.</td></tr>
+        ) : (
+          notifications.map((item, idx) => (
+            <tr key={idx} className="text-center">
+              <td>{format(new Date(item.dateCreated), 'dd/MM/yyyy')}</td>
+              <td>{item.course}</td>
+              <td><span className="badge bg-warning text-dark">{item.status}</span></td>
+            </tr>
+          ))
+        )}
+      </tbody>
+    </table>
+  </div>
+</div>
+
 
       </div>
     </div>
