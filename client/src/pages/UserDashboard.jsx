@@ -231,10 +231,6 @@ useEffect(() => {
   )}
 </div>
 
-
-        </div>
-
-
 {/* Bottom Full Notifications */}
 <div className="p-4 shadow rounded bg-white border mb-4"
   style={{
@@ -274,6 +270,10 @@ useEffect(() => {
     </table>
   </div>
 </div>
+
+        </div>
+
+
 
 
 
