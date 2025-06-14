@@ -14,7 +14,6 @@ const UserDashboard = () => {
   const [tutor, setTutor] = useState(null);
   const [marks, setMarks] = useState([]);
   const [pieData, setPieData] = useState([]);
-  const COLORS = ['#673ab7', '#ffc107', '#ff5722'];
 
   // Fetch Tutor Name
   useEffect(() => {
@@ -34,18 +33,23 @@ const UserDashboard = () => {
     axios.get(`${import.meta.env.VITE_API_URL}/session`)
       .then(res => {
         const sessions = res.data;
-
-        // ✅ Filter by email only from users array inside Session collection
         const matched = sessions.find(s => 
           s.users.some(u => u.email === userEmail)
         );
 
         if (matched) {
+          setSessionInfo(matched);
+
           const totalPlannedMinutes = matched.durationHours * 60;
           const totalLoggedMinutes = matched.datewise.reduce((sum, entry) => sum + entry.todayHour, 0);
           const remainingMinutes = totalPlannedMinutes - totalLoggedMinutes;
 
-          // ✅ Today's hour calculation:
+          const remainingStr = remainingMinutes > 0
+            ? `${Math.floor(remainingMinutes / 60)} hrs ${remainingMinutes % 60} min`
+            : 'Finished';
+          setRemainingTime(remainingStr);
+
+          // Calculate today's minutes
           const todayDate = new Date().setHours(0, 0, 0, 0);
           const todayEntry = matched.datewise.find(entry => {
             const entryDate = new Date(Number(entry.date)).setHours(0, 0, 0, 0);
@@ -59,6 +63,8 @@ const UserDashboard = () => {
             { name: "Today's Class Hours", value: todayMinutes }
           ]);
         } else {
+          setSessionInfo(null);
+          setRemainingTime('');
           setPieData([]);
         }
       })
@@ -76,6 +82,7 @@ const UserDashboard = () => {
       .catch(err => console.error('Error fetching marks', err));
   }, [userEmail]);
 
+  const COLORS = ['#673ab7', '#ffc107', '#ff5722'];
 
   return (
     <div className="container py-4" style={{ background: 'linear-gradient(to right, #f5f8fd, #fdfdfd)', minHeight: 'calc(100vh - 118px)' }}>
@@ -173,26 +180,33 @@ const UserDashboard = () => {
           </div>
 
           {/* Pie Chart */}
-         <div className="container mt-5">
-      <h5 className="mb-3" style={{ color: '#673ab7' }}>📊 Session Progress</h5>
+          <div className="mt-4">
+            <h6 className="mb-3" style={{ color: '#673ab7' }}>📊 Session Progress</h6>
 
-      {pieData.length > 0 ? (
-        <ResponsiveContainer width="100%" height={250}>
-          <PieChart>
-            <Pie data={pieData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={80} label>
-              {pieData.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-              ))}
-            </Pie>
-            <Tooltip />
-            <Legend verticalAlign="bottom" height={36} />
-          </PieChart>
-        </ResponsiveContainer>
-      ) : (
-        <div className="text-center text-muted">No session data available</div>
-      )}
-    </div>
-  
+            {pieData.length > 0 ? (
+              <ResponsiveContainer width="100%" height={250}>
+                <PieChart>
+                  <Pie
+                    data={pieData}
+                    dataKey="value"
+                    nameKey="name"
+                    cx="50%"
+                    cy="50%"
+                    outerRadius={80}
+                    label
+                  >
+                    {pieData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                  <Legend verticalAlign="bottom" height={36} />
+                </PieChart>
+              </ResponsiveContainer>
+            ) : (
+              <div style={{ color: '#6c757d' }}>No session data</div>
+            )}
+          </div>
         </div>
 
       </div>
