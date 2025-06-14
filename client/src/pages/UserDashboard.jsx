@@ -58,7 +58,7 @@ const UserDashboard = () => {
           const todayMinutes = todayEntry ? todayEntry.todayHour : 0;
 
           setPieData([
-            { name: 'Total Duration', value: totalPlannedMinutes },
+            { name: '', value: totalPlannedMinutes },
             { name: 'Remaining', value: remainingMinutes },
             { name: "Today's Class Hours", value: todayMinutes }
           ]);
@@ -181,7 +181,7 @@ const UserDashboard = () => {
 <br></br>
  {/*  PieChart */}
 <div className="mt-4 ">
- 
+  <h6 className="mb-3" style={{ color: '#673ab7' }}>📊 Session Progress</h6>
   {pieData.length > 0 ? (
     <ResponsiveContainer width="100%" height={250}>
       <PieChart>
