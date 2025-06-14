@@ -56,6 +56,7 @@ import UpdateFeedbackTutor from './components/UpdateFeedbackTutor';
 import Terms from './components/Terms';
 import ViewMarksCommittee from './components/ViewMarksCommittee';
 import ViewFeedbackCommittee from './components/ViewFeedbackCommittee';
+import TutorProfile from './components/TutorProfile';
 
 function App() {
   return (
@@ -74,6 +75,9 @@ function App() {
           <Route path='/select_course' element={<SelectCourse />} />
           <Route path='/google_auth_provider' element={<GoogleAuthProvider />} />
           <Route path='/terms' element={<Terms />} />
+
+
+
           {/* User Routes */}
           <Route path="/user_home" element={<UserLayout />}>
             <Route index element={<UserDashboard />} />
@@ -130,6 +134,8 @@ function App() {
             <Route path="view_marks_tutor" element={<ViewMarksTutor />} />
             <Route path="view_answer_tutor" element={<ViewAnswerTutor />} />
             <Route path="view_feedback_tutor" element={<ViewFeedbackTutor />} />
+            <Route path="start_session" element={<StartSession />} />
+            <Route path="tutor_profile" element={<TutorProfile/>} />
 
 
           </Route>

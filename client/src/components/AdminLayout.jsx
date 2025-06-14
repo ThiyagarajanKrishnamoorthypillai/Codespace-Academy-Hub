@@ -30,7 +30,7 @@ const [cookies, setCookie, removeCookie] = useCookies();
 
   const navItems = [
     { path: '/admin_home', label: 'Admin Home' },
-    { path: '/admin_home/start_session', label: 'Duration' },
+    { path: '/admin_home/start_session', label: 'Course Duration...' },
     { path: '/admin_home/post_question', label: 'Add Question Papers' },
     { path: '/admin_home/view_question_admin', label: 'View & Update Question Papers' },
     { path: '/admin_home/view_answer_admin', label: "View Student's Answer Sheet" },
