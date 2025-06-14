@@ -242,8 +242,8 @@ useEffect(() => {
   onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
 >
   <h5 className="fw-bold mb-3" style={{ color: '#673ab7', animation: 'textPop 1s ease-in-out' }}>
-              📘 Current Session
-            </h5>
+    🔔 All Notifications
+  </h5>
 
   <div className="table-responsive" style={{ maxHeight: '300px', overflowY: 'auto' }}>
     <table className="table table-striped table-bordered small">
