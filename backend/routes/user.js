@@ -116,17 +116,24 @@ router.put('/:id', async (req, res) => {
 router.put('/update-by-email/:email', async (req, res) => {
   try {
     const { email } = req.params;
+    const updateData = { ...req.body };
+
+    // ✅ Prevent dateCreated from being overwritten
+    delete updateData.dateCreated;
+
     const updatedUser = await User.findOneAndUpdate(
       { email },
-      { $set: req.body },
+      { $set: updateData },
       { new: true }
     );
+
     res.status(200).json({ user: updatedUser });
   } catch (error) {
     console.error("Error updating user:", error.message);
     res.status(500).json({ message: "Failed to update user" });
   }
 });
+
 
 
 // DELETE: Remove user by ID

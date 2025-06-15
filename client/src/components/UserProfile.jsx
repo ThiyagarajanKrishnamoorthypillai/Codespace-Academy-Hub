@@ -136,6 +136,10 @@ const UserProfile = () => {
             <div className="text-primary">{user.course || "Not selected"}</div>
           )}
         </div>
+<div className="mb-3">
+  <label className="form-label fw-bold">Joined on:</label>
+  <div>{new Date(user.dateCreated).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}</div>
+</div>
 
         <div className="mb-3">
           <label className="form-label fw-bold">Admin:</label>
