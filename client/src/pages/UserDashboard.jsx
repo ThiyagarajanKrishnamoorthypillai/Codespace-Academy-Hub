@@ -186,6 +186,7 @@ useEffect(() => {
               <span style={{ fontSize: '0.9rem', color: '#343a40' }}>
                 Welcome, <span style={{ color: '#673ab7', fontWeight: 500 }}>{userName}</span><br />
                 <small>Course: <span style={{ color: '#673ab7', fontWeight: 500 }}>{course}</span></small><br />
+                <small>Date of Joining: <span style={{ color: '#673ab7', fontWeight: 500 }}>{user ? user.dateCreated : ''}</span></small>
                 <small>Tutor Name: <span style={{ color: '#673ab7', fontWeight: 500 }}>{tutor ? tutor.name : ''}</span></small>
               </span>
             </div>
