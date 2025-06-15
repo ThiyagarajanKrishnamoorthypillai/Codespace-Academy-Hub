@@ -11,7 +11,8 @@ const UserDashboard = () => {
   const userName = cookies.name || 'User';
   const userEmail = cookies.email || '';
   const course = cookies.course || 'User';
-  const [tutor, setTutor] = useState(null);
+  const name = cookies.name || 'User';
+  const [tutor, user, setTutor, setUser] = useState(null);
   const [marks, setMarks] = useState([]);
   const [pieData, setPieData] = useState([]);
   const [notifications, setNotifications] = useState([]);
@@ -27,6 +28,17 @@ const UserDashboard = () => {
       })
       .catch(err => console.error('Error fetching tutors', err));
   }, [course]);
+
+// Fetch User-dateCreated
+  useEffect(() => {
+    if (!name) return;
+    axios.get(`${import.meta.env.VITE_API_URL}/user/`)
+      .then(res => {
+        const matchedUser = res.data.find(t => t.name === name);
+        setUser(matchedUser || null);
+      })
+      .catch(err => console.error('Error fetching users', err));
+  }, [name]);
 
   // Fetch Session Info
   useEffect(() => {
