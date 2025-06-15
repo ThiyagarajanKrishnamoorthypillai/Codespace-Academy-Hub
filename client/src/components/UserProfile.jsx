@@ -95,7 +95,7 @@ const UserProfile = () => {
               className="form-control"
               name="name"
               value={editableUser.name}
-              onChange={handleChange} disabled
+              onChange={handleChange} 
             />
           ) : (
             <div className="text-primary">{user.name}</div>
