@@ -205,7 +205,7 @@ useEffect(() => {
                 <small>Course: <span style={{ color: '#673ab7', fontWeight: 500 }}>{course}</span></small><br />
                 <small>Date of Joining: <span style={{ color: '#673ab7', fontWeight: 500 }}>
   {user && user.dateCreated ? format(new Date(user.dateCreated), 'dd/MM/yyyy') : ''}
-</span></small>
+</span></small>{' '}
                 <small>Tutor Name: <span style={{ color: '#673ab7', fontWeight: 500 }}>{tutor ? tutor.name : ''}</span></small>
               </span>
             </div>
