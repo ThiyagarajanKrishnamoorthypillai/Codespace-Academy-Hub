@@ -198,7 +198,10 @@ useEffect(() => {
             />
             <div className="text-md-end text-center">
               <span style={{ fontSize: '0.9rem', color: '#343a40' }}>
-                Welcome, <span style={{ color: '#673ab7', fontWeight: 500 }}>{userName}</span><br />
+               Welcome, <span style={{ color: '#673ab7', fontWeight: 500 }}>
+  {user && user.name ? user.name : 'User'}
+</span><br />
+
                 <small>Course: <span style={{ color: '#673ab7', fontWeight: 500 }}>{course}</span></small><br />
                 <small>Date of Joining: <span style={{ color: '#673ab7', fontWeight: 500 }}>
   {user && user.dateCreated ? format(new Date(user.dateCreated), 'dd/MM/yyyy') : ''}
