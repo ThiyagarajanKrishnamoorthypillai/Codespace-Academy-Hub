@@ -11,8 +11,8 @@ const UserDashboard = () => {
   const userName = cookies.name || 'User';
   const userEmail = cookies.email || '';
   const course = cookies.course || 'User';
-  const name = cookies.name || 'User';
-  const [tutor, user, setTutor, setUser] = useState(null);
+  const [tutor, setTutor] = useState(null);
+  const [user, setUser] = useState(null);
   const [marks, setMarks] = useState([]);
   const [pieData, setPieData] = useState([]);
   const [notifications, setNotifications] = useState([]);
@@ -29,16 +29,18 @@ const UserDashboard = () => {
       .catch(err => console.error('Error fetching tutors', err));
   }, [course]);
 
-// Fetch User-dateCreated
-  useEffect(() => {
-    if (!name) return;
-    axios.get(`${import.meta.env.VITE_API_URL}/user/`)
-      .then(res => {
-        const matchedUser = res.data.find(t => t.name === name);
-        setUser(matchedUser || null);
-      })
-      .catch(err => console.error('Error fetching users', err));
-  }, [name]);
+
+useEffect(() => {
+  if (!userEmail) return;
+
+  axios.get(`${import.meta.env.VITE_API_URL}/user`)
+    .then(res => {
+      const matchedUser = res.data.find(u => u.email === userEmail);
+      setUser(matchedUser || null);
+    })
+    .catch(err => console.error('Error fetching user data', err));
+}, [userEmail]);
+
 
   // Fetch Session Info
   useEffect(() => {
@@ -198,7 +200,9 @@ useEffect(() => {
               <span style={{ fontSize: '0.9rem', color: '#343a40' }}>
                 Welcome, <span style={{ color: '#673ab7', fontWeight: 500 }}>{userName}</span><br />
                 <small>Course: <span style={{ color: '#673ab7', fontWeight: 500 }}>{course}</span></small><br />
-                <small>Date of Joining: <span style={{ color: '#673ab7', fontWeight: 500 }}>{user ? user.dateCreated : ''}</span></small>
+                <small>Date of Joining: <span style={{ color: '#673ab7', fontWeight: 500 }}>
+  {user && user.dateCreated ? format(new Date(user.dateCreated), 'dd/MM/yyyy') : ''}
+</span></small>
                 <small>Tutor Name: <span style={{ color: '#673ab7', fontWeight: 500 }}>{tutor ? tutor.name : ''}</span></small>
               </span>
             </div>
