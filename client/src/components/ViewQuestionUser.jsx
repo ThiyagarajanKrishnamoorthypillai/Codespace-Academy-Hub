@@ -28,9 +28,24 @@ const ViewQuestionUser = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [fromDate, setFromDate] = useState('');
   const [toDate, setToDate] = useState('');
+  const [answers, setAnswers] = useState([]);
+
   const navigate = useNavigate();
 
   const course = cookies.course;
+
+useEffect(() => {
+  const fetchAnswers = async () => {
+    try {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/answer`);
+      if (res.status === 200) setAnswers(res.data);
+    } catch (err) {
+      console.error('Error fetching answers:', err.message);
+    }
+  };
+  fetchAnswers();
+}, []);
+
 
   useEffect(() => {
     const fetchQuestionData = async () => {
@@ -57,6 +72,16 @@ const ViewQuestionUser = () => {
       Object.values(q).some((field) => field.toString().toLowerCase().includes(searchTerm.toLowerCase()))
     );
   });
+
+const findAnswerStatus = (question) => {
+  for (const ans of answers) {
+    const pdfMatch = question.pdf.some(qpdf => ans.pdf.includes(qpdf));
+    const imageMatch = question.image.some(qimg => ans.questionImages.includes(qimg));
+    if (pdfMatch || imageMatch) return ans.status;
+  }
+  return 'Pending'; // Default fallback
+};
+
 
   return (
     <div>
@@ -88,6 +113,10 @@ const ViewQuestionUser = () => {
                   <div key={question._id} className="col-12 mb-4">
                     <div className="card product-card">
                       <div className="card-body">
+<div className="text-end">
+    <span className="badge bg-info text-dark">Status: {findAnswerStatus(question)}</span>
+  </div>
+
                         <p className="mb-2"><b>Course:</b> <span className="text-primary">{question.course}</span></p>
                         <div className="row">
   {question.image.map((img, idx) => (
