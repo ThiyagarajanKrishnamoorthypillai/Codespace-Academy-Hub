@@ -111,11 +111,13 @@ const findAnswerStatus = (question) => {
               <div className="row justify-content-center mt-3">
                 {filteredData.map((question) => (
                   <div key={question._id} className="col-12 mb-4">
-                    <div className="card product-card">
-                      <div className="card-body">
-<div className="text-end">
+                   <div className="card product-card position-relative">
+  <div className="position-absolute top-0 end-0 m-2">
     <span className="badge bg-info text-dark">Status: {findAnswerStatus(question)}</span>
   </div>
+
+                      <div className="card-body">
+
 
                         <p className="mb-2"><b>Course:</b> <span className="text-primary">{question.course}</span></p>
                         <div className="row">
