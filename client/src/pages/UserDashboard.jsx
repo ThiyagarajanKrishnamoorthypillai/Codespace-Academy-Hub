@@ -285,14 +285,17 @@ useEffect(() => {
             <td colSpan="3" className="text-center">No notifications found.</td>
           </tr>
         ) : (
-          questionData.map((question, idx) => {
-            const matchingAnswer = answers.find((ans) => {
-              const pdfMatch = question.pdf?.some(qpdf => ans.pdf?.includes(qpdf));
-              const imageMatch = question.image?.some(qimg => ans.questionImages?.includes(qimg));
-              const dateMatch = ans.questionDateCreated === question.dateCreated;
-              const emailMatch = ans.useremail === cookies.email;
-              return (pdfMatch || imageMatch) && dateMatch && emailMatch;
-            });
+         notifications.map((question, idx) => {
+  const matchingAnswer = answers.find((ans) => {
+    const pdfMatch = question.pdf?.some(qpdf => ans.pdf?.includes(qpdf));
+    const imageMatch = question.image?.some(qimg => ans.questionImages?.includes(qimg));
+    const dateMatch = ans.questionDateCreated === question.dateCreated;
+    const emailMatch = ans.useremail === cookies.email;
+    return (pdfMatch || imageMatch) && dateMatch && emailMatch;
+  });
+
+
+
 
             const status = matchingAnswer?.status || 'Pending';
             let statusClass = 'bg-secondary text-white';
