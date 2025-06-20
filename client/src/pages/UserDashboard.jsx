@@ -279,40 +279,46 @@ useEffect(() => {
         </tr>
       </thead>
       <tbody>
-        {notifications.length === 0 ? (
+        {questionData.length === 0 ? (
           <tr>
-            <td colSpan="3" className="text-center">
-              No notifications found.
-            </td>
+            <td colSpan="3" className="text-center">No notifications found.</td>
           </tr>
         ) : (
-          notifications.map((item, idx) => {
-  const status = item.status || 'Pending';
-  let statusClass = 'bg-secondary text-white';
+          questionData.map((question, idx) => {
+            const matchingAnswer = answers.find((ans) => {
+              const pdfMatch = question.pdf?.some(qpdf => ans.pdf?.includes(qpdf));
+              const imageMatch = question.image?.some(qimg => ans.questionImages?.includes(qimg));
+              const dateMatch = ans.questionDateCreated === question.dateCreated;
+              const emailMatch = ans.useremail === cookies.email;
+              return (pdfMatch || imageMatch) && dateMatch && emailMatch;
+            });
 
-  if (status === 'Submitted') statusClass = 'bg-success';
-  else if (status === 'Pending') statusClass = 'bg-warning text-dark';
-  else if (status === 'Completed') statusClass = 'bg-primary';
-  else if (status === 'On-Progress') statusClass = 'bg-info text-dark';
+            const status = matchingAnswer?.status || 'Pending';
+            let statusClass = 'bg-secondary text-white';
 
-  return (
-    <tr key={idx} className="text-center">
-      <td>{format(new Date(item.dateCreated), 'dd/MM/yyyy')}</td>
-      <td>{item.course}</td>
-      <td>
-        <span className={`badge ${statusClass}`}>
-          {status}
-        </span>
-      </td>
-    </tr>
-  );
-})
+            if (status === 'Submitted') statusClass = 'bg-success';
+            else if (status === 'Pending') statusClass = 'bg-warning text-dark';
+            else if (status === 'Completed') statusClass = 'bg-primary';
+            else if (status === 'On-Progress') statusClass = 'bg-info text-dark';
 
+            return (
+              <tr key={idx} className="text-center">
+                <td>{format(new Date(question.dateCreated), 'dd/MM/yyyy')}</td>
+                <td>{question.course}</td>
+                <td>
+                  <span className={`badge ${statusClass}`}>
+                    {status}
+                  </span>
+                </td>
+              </tr>
+            );
+          })
         )}
       </tbody>
     </table>
   </div>
 </div>
+
 
 
         </div>
