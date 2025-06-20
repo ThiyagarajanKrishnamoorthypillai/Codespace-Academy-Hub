@@ -17,7 +17,7 @@ const UserDashboard = () => {
   const [pieData, setPieData] = useState([]);
   const [notifications, setNotifications] = useState([]);
 const [questionData, setQuestionData] = useState([]);
-
+const [answers, setAnswers] = useState([]);
 
   // Fetch Tutor Name
   useEffect(() => {
@@ -285,14 +285,26 @@ useEffect(() => {
             <td colSpan="3" className="text-center">No notifications found.</td>
           </tr>
         ) : (
-         notifications.map((question, idx) => {
+   questionData.map((question, idx) => {
   const matchingAnswer = answers.find((ans) => {
     const pdfMatch = question.pdf?.some(qpdf => ans.pdf?.includes(qpdf));
     const imageMatch = question.image?.some(qimg => ans.questionImages?.includes(qimg));
     const dateMatch = ans.questionDateCreated === question.dateCreated;
     const emailMatch = ans.useremail === cookies.email;
-    return (pdfMatch || imageMatch) && dateMatch && emailMatch;
+
+    const matched = (pdfMatch || imageMatch) && dateMatch && emailMatch;
+    if (matched) {
+      console.log("✅ MATCH FOUND:", {
+        questionId: question._id,
+        user: ans.useremail,
+        status: ans.status,
+      });
+    }
+
+    return matched;
   });
+
+
 
 
 
