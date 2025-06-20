@@ -75,150 +75,193 @@ useEffect(() => {
 
 const findAnswerStatus = (question) => {
   for (const ans of answers) {
-    const pdfMatch = question.pdf.some(qpdf => ans.pdf.includes(qpdf));
-    const imageMatch = question.image.some(qimg => ans.questionImages.includes(qimg));
-    if (pdfMatch || imageMatch) return ans.status;
-     console.log('✅ Match found for:', question._id, '→', ans.status);
+    const pdfMatch = question.pdf?.some(qpdf => ans.pdf?.includes(qpdf));
+    const imageMatch = question.image?.some(qimg => ans.questionImages?.includes(qimg));
+    const emailMatch = ans.useremail === cookies.email;
+
+    if ((pdfMatch || imageMatch) && emailMatch) {
+      return ans.status;
+    }
   }
-  return 'Pending'; // Default fallback
+  return 'Pending';
 };
 
 
+
   return (
-    <div>
-     
+  <div>
+    <div className="page-content-wrapper">
+      <div className="top-products-area py-3">
+        <div className="container">
+          <div className="section-heading d-flex align-items-center justify-content-between">
+            <h6>Question Papers for <span className="text-success">{course}</span></h6>
+          </div>
 
-      <div className="page-content-wrapper">
-        <div className="top-products-area py-3">
-          <div className="container">
-            <div className="section-heading d-flex align-items-center justify-content-between">
-              <h6>Question Papers for <span className="text-success">{course}</span></h6>
+          {/* Search & Filter */}
+          <div className="row mb-3">
+            <div className="col-md-4 mb-2">
+              <input type="text" className="form-control" placeholder="Search..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
             </div>
-
-            {/* Search & Filter */}
-            <div className="row mb-3">
-              <div className="col-md-4 mb-2">
-                <input type="text" className="form-control" placeholder="Search..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
-              </div>
-              <div className="col-md-4 mb-2">
-                <input type="date" className="form-control" value={fromDate} onChange={(e) => setFromDate(e.target.value)} />
-              </div>
-              <div className="col-md-4 mb-2">
-                <input type="date" className="form-control" value={toDate} onChange={(e) => setToDate(e.target.value)} />
-              </div>
+            <div className="col-md-4 mb-2">
+              <input type="date" className="form-control" value={fromDate} onChange={(e) => setFromDate(e.target.value)} />
             </div>
+            <div className="col-md-4 mb-2">
+              <input type="date" className="form-control" value={toDate} onChange={(e) => setToDate(e.target.value)} />
+            </div>
+          </div>
 
-            {filteredData.length > 0 ? (
-              <div className="row justify-content-center mt-3">
-                {filteredData.map((question) => (
+          {filteredData.length > 0 ? (
+            <div className="row justify-content-center mt-3">
+              {filteredData.map((question) => {
+                // Determine if this user already submitted
+                const matchingAnswer = answers.find((ans) => {
+                  const pdfMatch = question.pdf?.some(qpdf => ans.pdf?.includes(qpdf));
+                  const imageMatch = question.image?.some(qimg => ans.questionImages?.includes(qimg));
+                  return (pdfMatch || imageMatch) && ans.useremail === cookies.email;
+                });
+
+                const status = matchingAnswer?.status || 'Pending';
+                const isSubmittedByUser = matchingAnswer?.status === 'Submitted';
+
+                return (
                   <div key={question._id} className="col-12 mb-4">
-        <div className="card product-card">
-  <div className="card-body">
-    <p >
-      Status: {findAnswerStatus(question)}
-    </p>
-                             <p className="mb-2"><b>Course:</b> <span className="text-primary">{question.course}</span></p>
+                    <div className="card product-card">
+                      <div className="card-body">
+                        <p>Status: {status}</p>
+
+                        <p className="mb-2"><b>Course:</b> <span className="text-primary">{question.course}</span></p>
+
                         <div className="row">
-  {question.image.map((img, idx) => (
-    <div className="col-6 col-md-3 mb-3" key={`image-${idx}`}>
-      <img
-        src={img}
-        alt={`Question ${idx}`}
-        className="img-fluid rounded shadow-sm"
-        style={{ cursor: 'pointer', width: '100%', height: 'auto', objectFit: 'cover' }}
-        onClick={() => setSelectedImage(img)}
-      />
-    </div>
-  ))}
+                          {question.image.map((img, idx) => (
+                            <div className="col-6 col-md-3 mb-3" key={`image-${idx}`}>
+                              <img
+                                src={img}
+                                alt={`Question ${idx}`}
+                                className="img-fluid rounded shadow-sm"
+                                style={{ cursor: 'pointer', width: '100%', height: 'auto', objectFit: 'cover' }}
+                                onClick={() => setSelectedImage(img)}
+                              />
+                            </div>
+                          ))}
 
- {question.pdf?.map((pdfUrl, idx) => (
-  <div className="col-6 col-md-3 mb-3" key={`pdf-${idx}`}>
-    <div 
-      className="border rounded shadow-sm text-center p-3"
-      style={{ height: '180px', cursor: 'pointer' }}
-      onClick={() => window.open(`https://docs.google.com/gview?url=${encodeURIComponent(pdfUrl)}&embedded=true`, '_blank')}
-    >
-      <i className="fa fa-file-pdf-o text-danger mb-2" style={{ fontSize: '50px' }}></i>
-      <div className="text-truncate small">PDF File {idx + 1}</div>
-    </div>
-  </div>
-))}
+                          {question.pdf?.map((pdfUrl, idx) => (
+                            <div className="col-6 col-md-3 mb-3" key={`pdf-${idx}`}>
+                              <div
+                                className="border rounded shadow-sm text-center p-3"
+                                style={{ height: '180px', cursor: 'pointer' }}
+                                onClick={() => window.open(`https://docs.google.com/gview?url=${encodeURIComponent(pdfUrl)}&embedded=true`, '_blank')}
+                              >
+                                <i className="fa fa-file-pdf-o text-danger mb-2" style={{ fontSize: '50px' }}></i>
+                                <div className="text-truncate small">PDF File {idx + 1}</div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
 
+                        <p><b>Date:</b> {new Date(question.dateCreated).toLocaleDateString()}</p>
 
-</div>
-       <p><b>Date:</b> {new Date(question.dateCreated).toLocaleDateString()}</p>
+                        <div className="row mt-3">
+                          <div className="col-12 text-end">
+                            {!isSubmittedByUser && (
+                              <>
+                                <span
+                                  className="write-answer-link me-3"
+                                  onClick={() => navigate('/user_home/post_answer', {
+                                    state: {
+                                      date: question.dateCreated,
+                                      course: question.course,
+                                      images: question.image,
+                                      pdf: question.pdf
+                                    }
+                                  })}
+                                >
+                                  Write Answer
+                                </span>
 
-             <div className="row mt-3">
-  <div className="col-12 text-end">
-    <span
-      className={`write-answer-link me-3 ${findAnswerStatus(question) === 'Submitted' ? 'disabled text-muted' : ''}`}
-      style={{ cursor: findAnswerStatus(question) === 'Submitted' ? 'not-allowed' : 'pointer' }}
-      onClick={() => {
-        if (findAnswerStatus(question) !== 'Submitted') {
-          navigate('/user_home/post_answer', {
-            state: {
-              date: question.dateCreated,
-              course: question.course,
-              images: question.image,
-              pdf: question.pdf
-            }
-          });
-        }
-      }}
-    >
-      Write Answer
-    </span>
+                                |
 
-    |
-    
-    <span
-      className={`write-answer-link ms-3 ${findAnswerStatus(question) === 'Submitted' ? 'disabled text-muted' : ''}`}
-      style={{ cursor: findAnswerStatus(question) === 'Submitted' ? 'not-allowed' : 'pointer' }}
-      onClick={() => {
-        if (findAnswerStatus(question) !== 'Submitted') {
-          navigate('/user_home/post_feedback', {
-            state: {
-              image: question.image,
-              pdf: question.pdf,
-              course: question.course,
-              dateCreated: question.dateCreated
-            }
-          });
-        }
-      }}
-    >
-      Doubt / Feedback
-    </span>
-  </div>
-</div>
-
-
+                                <span
+                                  className="write-answer-link ms-3"
+                                  onClick={() => navigate('/user_home/post_feedback', {
+                                    state: {
+                                      image: question.image,
+                                      pdf: question.pdf,
+                                      course: question.course,
+                                      dateCreated: question.dateCreated
+                                    }
+                                  })}
+                                >
+                                  Doubt / Feedback
+                                </span>
+                              </>
+                            )}
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                ))}
-              </div>
-            ) : (
-              <p className="text-danger mt-3">No question details found for course: {course}</p>
-            )}
-          </div>
+                );
+              })}
+            </div>
+          ) : (
+            <p className="text-danger mt-3">No question details found for course: {course}</p>
+          )}
         </div>
       </div>
-
-      <Modal isOpen={!!selectedImage} onRequestClose={() => setSelectedImage(null)}
-        style={{ content: { background: 'rgba(0, 0, 0, 0.85)', border: 'none', inset: '0', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: 0, zIndex: 9999 }, overlay: { backgroundColor: 'rgba(0, 0, 0, 0.85)', zIndex: 9998 } }}>
-        <div style={{ position: 'relative', maxWidth: '90vw', maxHeight: '90vh' }}>
-          <button onClick={() => setSelectedImage(null)} style={{ position: 'absolute', top: '-10px', right: '-10px', backgroundColor: '#fff', border: 'none', borderRadius: '50%', width: '30px', height: '30px', fontSize: '18px', fontWeight: 'bold', cursor: 'pointer', zIndex: 10000 }}>×</button>
-          <img src={selectedImage} alt="Full View" style={{ maxWidth: '100%', maxHeight: '100%', borderRadius: '10px', boxShadow: '0 0 20px rgba(255, 255, 255, 0.3)' }} />
-        </div>
-      </Modal>
-
-      
-
-
-
     </div>
-  );
+
+    <Modal isOpen={!!selectedImage} onRequestClose={() => setSelectedImage(null)}
+      style={{
+        content: {
+          background: 'rgba(0, 0, 0, 0.85)',
+          border: 'none',
+          inset: '0',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: 0,
+          zIndex: 9999
+        },
+        overlay: {
+          backgroundColor: 'rgba(0, 0, 0, 0.85)',
+          zIndex: 9998
+        }
+      }}>
+      <div style={{ position: 'relative', maxWidth: '90vw', maxHeight: '90vh' }}>
+        <button
+          onClick={() => setSelectedImage(null)}
+          style={{
+            position: 'absolute',
+            top: '-10px',
+            right: '-10px',
+            backgroundColor: '#fff',
+            border: 'none',
+            borderRadius: '50%',
+            width: '30px',
+            height: '30px',
+            fontSize: '18px',
+            fontWeight: 'bold',
+            cursor: 'pointer',
+            zIndex: 10000
+          }}
+        >
+          ×
+        </button>
+        <img
+          src={selectedImage}
+          alt="Full View"
+          style={{
+            maxWidth: '100%',
+            maxHeight: '100%',
+            borderRadius: '10px',
+            boxShadow: '0 0 20px rgba(255, 255, 255, 0.3)'
+          }}
+        />
+      </div>
+    </Modal>
+  </div>
+);
+
 };
 
 export default ViewQuestionUser;
