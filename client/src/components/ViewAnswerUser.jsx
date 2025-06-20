@@ -77,8 +77,9 @@ const ViewAnswerUser = () => {
                         <p><b>Department:</b> {ans.dpt}</p>
                         <p><b>College:</b> {ans.college}</p>
                         <p><b>Course:</b> {ans.course}</p>
-                        <p><b>Email:</b> {ans.useremail}</p>
-                        <p><b>Submitted:</b> {new Date(ans.dateCreated).toLocaleString()}</p>
+                        <p><b>Student Email:</b> {ans.useremail}</p>
+                        <p><b>Submitted on:</b> {new Date(ans.dateCreated).toLocaleString()}</p>
+                        <p><b>Status:</b> {ans.status}</p>
                         <div className="row">
                           {ans.image.map((img, i) => (
                             <div className="col-4 mb-2" key={i}>
