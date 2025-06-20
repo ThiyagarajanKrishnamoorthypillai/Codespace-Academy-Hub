@@ -252,7 +252,8 @@ useEffect(() => {
 </div>
 
 {/* Bottom Full Notifications */}
-<div className="p-4 shadow rounded bg-white border mb-4"
+<div
+  className="p-4 shadow rounded bg-white border mb-4"
   style={{
     borderColor: '#007bff',
     transition: 'transform 0.3s ease',
@@ -261,7 +262,10 @@ useEffect(() => {
   onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.02)')}
   onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
 >
-  <h5 className="fw-bold mb-3" style={{ color: '#673ab7', animation: 'textPop 1s ease-in-out' }}>
+  <h5
+    className="fw-bold mb-3"
+    style={{ color: '#673ab7', animation: 'textPop 1s ease-in-out' }}
+  >
     🔔 All Notifications
   </h5>
 
@@ -276,20 +280,34 @@ useEffect(() => {
       </thead>
       <tbody>
         {notifications.length === 0 ? (
-          <tr><td colSpan="3" className="text-center">No notifications found.</td></tr>
+          <tr>
+            <td colSpan="3" className="text-center">
+              No notifications found.
+            </td>
+          </tr>
         ) : (
-          notifications.map((item, idx) => (
-            <tr key={idx} className="text-center">
-              <td>{format(new Date(item.dateCreated), 'dd/MM/yyyy')}</td>
-              <td>{item.course}</td>
-              <td><span className="badge bg-warning text-dark">{item.status}</span></td>
-            </tr>
-          ))
+          notifications.map((item, idx) => {
+            const status = item.status === 'Submitted' ? 'Submitted' : 'Pending';
+            const statusClass = status === 'Submitted' ? 'bg-success' : 'bg-warning text-dark';
+
+            return (
+              <tr key={idx} className="text-center">
+                <td>{format(new Date(item.dateCreated), 'dd/MM/yyyy')}</td>
+                <td>{item.course}</td>
+                <td>
+                  <span className={`badge ${statusClass}`}>
+                    {status}
+                  </span>
+                </td>
+              </tr>
+            );
+          })
         )}
       </tbody>
     </table>
   </div>
 </div>
+
 
         </div>
 
