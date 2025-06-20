@@ -114,6 +114,9 @@ const findAnswerStatus = (question) => {
                   <div key={question._id} className="col-12 mb-4">
         <div className="card product-card">
   <div className="card-body">
+    <p >
+      Status: {findAnswerStatus(question)}
+    </p>
                              <p className="mb-2"><b>Course:</b> <span className="text-primary">{question.course}</span></p>
                         <div className="row">
   {question.image.map((img, idx) => (
@@ -148,9 +151,7 @@ const findAnswerStatus = (question) => {
              <div className="row mt-3">
               
   <div className="col-12 text-end">
-    <p className="badge bg-info text-dark me-3">
-      Status: {findAnswerStatus(question)}
-    </p>
+    
    <span
   className="write-answer-link me-3"
   onClick={() => navigate('/user_home/post_answer', {
