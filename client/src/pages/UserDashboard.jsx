@@ -287,10 +287,13 @@ useEffect(() => {
         ) : (
    questionData.map((question, idx) => {
   const matchingAnswer = answers.find((ans) => {
-    const pdfMatch = question.pdf?.some(qpdf => ans.pdf?.includes(qpdf));
-    const imageMatch = question.image?.some(qimg => ans.questionImages?.includes(qimg));
-    const dateMatch = ans.questionDateCreated === question.dateCreated;
-    const emailMatch = ans.useremail === cookies.email;
+  const pdfMatch = question.pdf?.some(qpdf => ans.pdf?.includes(qpdf));
+  const imageMatch = question.image?.some(qimg => ans.questionImages?.includes(qimg));
+  const dateMatch = new Date(ans.questionDateCreated).toDateString() === new Date(question.dateCreated).toDateString();
+  const emailMatch = ans.useremail === cookies.email;
+
+ 
+
 
     const matched = (pdfMatch || imageMatch) && dateMatch && emailMatch;
     if (matched) {
@@ -301,13 +304,8 @@ useEffect(() => {
       });
     }
 
-    return matched;
-  });
-
-
-
-
-
+    return (pdfMatch || imageMatch) && dateMatch && emailMatch;
+});
 
             const status = matchingAnswer?.status || 'Pending';
             let statusClass = 'bg-secondary text-white';
