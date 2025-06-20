@@ -148,9 +148,9 @@ const findAnswerStatus = (question) => {
              <div className="row mt-3">
               
   <div className="col-12 text-end">
-    <span className="badge bg-info text-dark me-3">
+    <p className="badge bg-info text-dark me-3">
       Status: {findAnswerStatus(question)}
-    </span>
+    </p>
    <span
   className="write-answer-link me-3"
   onClick={() => navigate('/user_home/post_answer', {
