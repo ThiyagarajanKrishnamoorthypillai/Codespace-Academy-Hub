@@ -113,13 +113,13 @@ const findAnswerStatus = (question) => {
                 {filteredData.map((question) => (
                   <div key={question._id} className="col-12 mb-4">
         <div className="card product-card">
-  <div className="card-body">
+  
     <div className="d-flex justify-content-end mb-2">
       <span className="badge bg-info text-dark">
         Status: {findAnswerStatus(question)}
       </span>
     </div>
-
+<div className="card-body">
                         <p className="mb-2"><b>Course:</b> <span className="text-primary">{question.course}</span></p>
                         <div className="row">
   {question.image.map((img, idx) => (
