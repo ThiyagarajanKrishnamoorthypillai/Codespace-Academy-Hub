@@ -120,10 +120,6 @@ const findAnswerStatus = (question) => {
       </span>
     </div>
 
-    <p className="mb-2"><b>Course:</b> <span className="text-primary">{question.course}</span></p>
-    ...
-
-
                         <p className="mb-2"><b>Course:</b> <span className="text-primary">{question.course}</span></p>
                         <div className="row">
   {question.image.map((img, idx) => (
