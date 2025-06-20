@@ -78,6 +78,7 @@ const findAnswerStatus = (question) => {
     const pdfMatch = question.pdf.some(qpdf => ans.pdf.includes(qpdf));
     const imageMatch = question.image.some(qimg => ans.questionImages.includes(qimg));
     if (pdfMatch || imageMatch) return ans.status;
+     console.log('✅ Match found for:', question._id, '→', ans.status);
   }
   return 'Pending'; // Default fallback
 };
@@ -111,11 +112,16 @@ const findAnswerStatus = (question) => {
               <div className="row justify-content-center mt-3">
                 {filteredData.map((question) => (
                   <div key={question._id} className="col-12 mb-4">
-                  <div className="card product-card position-relative overflow-hidden">
-  <div className="card-body pt-4">
-    <div className="d-flex justify-content-end position-absolute" style={{ top: '0.5rem', right: '0.5rem', zIndex: 1 }}>
-      <span className="badge bg-info text-dark">Status: {findAnswerStatus(question)}</span>
+        <div className="card product-card">
+  <div className="card-body">
+    <div className="d-flex justify-content-end mb-2">
+      <span className="badge bg-info text-dark">
+        Status: {findAnswerStatus(question)}
+      </span>
     </div>
+
+    <p className="mb-2"><b>Course:</b> <span className="text-primary">{question.course}</span></p>
+    ...
 
 
                         <p className="mb-2"><b>Course:</b> <span className="text-primary">{question.course}</span></p>
