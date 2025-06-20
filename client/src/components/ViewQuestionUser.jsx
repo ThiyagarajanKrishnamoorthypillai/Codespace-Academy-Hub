@@ -143,12 +143,14 @@ const findAnswerStatus = (question) => {
 
 
 </div>
-<span className="badge bg-info text-dark me-3">
-      Status: {findAnswerStatus(question)}
-    </span>
+
                         <p><b>Date:</b> {new Date(question.dateCreated).toLocaleDateString()}</p>
              <div className="row mt-3">
+              
   <div className="col-12 text-end">
+    <span className="badge bg-info text-dark me-3">
+      Status: {findAnswerStatus(question)}
+    </span>
    <span
   className="write-answer-link me-3"
   onClick={() => navigate('/user_home/post_answer', {
