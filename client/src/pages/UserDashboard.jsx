@@ -3,6 +3,7 @@ import axios from '../utils/axiosInstance';
 import { useCookies } from 'react-cookie';
 import { format } from 'date-fns';
 import { PieChart, Pie, Cell, Legend, Tooltip, ResponsiveContainer } from 'recharts';
+import { getUserNotifications } from '../utils/getUserNotifications';
 
 const UserDashboard = () => {
   const [sessionInfo, setSessionInfo] = useState(null);
@@ -16,8 +17,9 @@ const UserDashboard = () => {
   const [marks, setMarks] = useState([]);
   const [pieData, setPieData] = useState([]);
   const [notifications, setNotifications] = useState([]);
-const [questionData, setQuestionData] = useState([]);
+const [questions, setQuestions] = useState([]);
 const [answers, setAnswers] = useState([]);
+
 
   // Fetch Tutor Name
   useEffect(() => {
@@ -100,6 +102,8 @@ useEffect(() => {
   }, [userEmail]);
 
   const COLORS = ['#673ab7', '#ffc107', '#ff5722'];
+
+
 useEffect(() => {
   if (!course) return;
 
@@ -110,6 +114,32 @@ useEffect(() => {
     })
     .catch(err => console.error('Error loading notifications', err));
 }, [course]);
+
+
+
+useEffect(() => {
+  const fetchAll = async () => {
+    try {
+      const [qRes, aRes] = await Promise.all([
+        axios.get(`${import.meta.env.VITE_API_URL}/question`),
+        axios.get(`${import.meta.env.VITE_API_URL}/answer`)
+      ]);
+
+      const questions = qRes.data || [];
+      const answers = aRes.data || [];
+
+      setQuestions(questions);
+      setAnswers(answers);
+
+      const filtered = getUserNotifications(questions, answers, cookies.email);
+      setNotifications(filtered);
+    } catch (err) {
+      console.error('Error loading dashboard data:', err.message);
+    }
+  };
+
+  fetchAll();
+}, []);
 
   return (
     <div className="container py-4" style={{ background: 'linear-gradient(to right, #f5f8fd, #fdfdfd)', minHeight: 'calc(100vh - 118px)' }}>
@@ -280,48 +310,24 @@ useEffect(() => {
         </tr>
       </thead>
       <tbody>
-        {questionData.length === 0 ? (
-          <tr>
-            <td colSpan="3" className="text-center">No notifications found.</td>
-          </tr>
+        {notifications.length === 0 ? (
+          <tr><td colSpan="3" className="text-center">No notifications found.</td></tr>
         ) : (
-   questionData.map((question, idx) => {
-  const matchingAnswer = answers.find((ans) => {
-  const pdfMatch = question.pdf?.some(qpdf => ans.pdf?.includes(qpdf));
-  const imageMatch = question.image?.some(qimg => ans.questionImages?.includes(qimg));
-  const dateMatch = new Date(ans.questionDateCreated).toDateString() === new Date(question.dateCreated).toDateString();
-  const emailMatch = ans.useremail === cookies.email;
-
- 
-
-
-    const matched = (pdfMatch || imageMatch) && dateMatch && emailMatch;
-    if (matched) {
-      console.log("✅ MATCH FOUND:", {
-        questionId: question._id,
-        user: ans.useremail,
-        status: ans.status,
-      });
-    }
-
-    return (pdfMatch || imageMatch) && dateMatch && emailMatch;
-});
-
-            const status = matchingAnswer?.status || 'Pending';
-            let statusClass = 'bg-secondary text-white';
-
-            if (status === 'Submitted') statusClass = 'bg-success';
-            else if (status === 'Pending') statusClass = 'bg-warning text-dark';
-            else if (status === 'Completed') statusClass = 'bg-primary';
-            else if (status === 'On-Progress') statusClass = 'bg-info text-dark';
+          notifications.map((item, idx) => {
+            const statusClass =
+              item.status === 'Submitted'
+                ? 'bg-success'
+                : item.status === 'Pending'
+                ? 'bg-warning text-dark'
+                : 'bg-secondary';
 
             return (
               <tr key={idx} className="text-center">
-                <td>{format(new Date(question.dateCreated), 'dd/MM/yyyy')}</td>
-                <td>{question.course}</td>
+                <td>{format(new Date(item.date), 'dd/MM/yyyy')}</td>
+                <td>{item.course}</td>
                 <td>
                   <span className={`badge ${statusClass}`}>
-                    {status}
+                    {item.status}
                   </span>
                 </td>
               </tr>
@@ -332,6 +338,7 @@ useEffect(() => {
     </table>
   </div>
 </div>
+
 
 
 
