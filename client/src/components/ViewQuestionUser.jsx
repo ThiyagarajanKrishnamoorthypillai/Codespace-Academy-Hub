@@ -114,14 +114,7 @@ const findAnswerStatus = (question) => {
                   <div key={question._id} className="col-12 mb-4">
         <div className="card product-card">
   <div className="card-body">
-    
-
-                        <p className="mb-2"><b>Course:</b> <span className="text-primary">{question.course}</span></p><br></br>
-                        <div className="d-flex justify-content-end mb-2">
-      <span className="badge bg-info text-dark">
-        Status: {findAnswerStatus(question)}
-      </span>
-    </div>
+                             <p className="mb-2"><b>Course:</b> <span className="text-primary">{question.course}</span></p>
                         <div className="row">
   {question.image.map((img, idx) => (
     <div className="col-6 col-md-3 mb-3" key={`image-${idx}`}>
@@ -167,7 +160,10 @@ const findAnswerStatus = (question) => {
 >
   Write Answer
 </span>
-
+    |
+<span className="badge bg-info text-dark me-3">
+      Status: {findAnswerStatus(question)}
+    </span>
     |
   <span
   className="write-answer-link ms-3"
