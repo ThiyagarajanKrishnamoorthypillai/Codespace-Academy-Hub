@@ -10,11 +10,11 @@ const answerSchema = mongoose.Schema({
   course: { type: String, required: true },
   image: { type: [String], required: true },
 
-  status: {
-    type: String,
-    enum: ['Pending', 'Completed', 'On-Progress'],
-    default: 'Pending'
-  },
+ status: {
+  type: String,
+  enum: ['Pending', 'Completed', 'On-Progress', 'Submitted'],
+  default: 'Pending'
+},
 
   dateCreated: {
   type: String,

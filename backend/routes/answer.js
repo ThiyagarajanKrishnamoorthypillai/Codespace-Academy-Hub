@@ -21,13 +21,14 @@ router.post('/', auth, upload.array('images'), async (req, res) => {
       dpt,
       college,
       course,
-      status = 'Pending',
+      //status = 'Pending',
       dateCreated,
       questionDateCreated,
       questionCourse,
       questionImages,
       pdf
     } = req.body;
+const status = 'Submitted';
 
     // Upload each image to Cloudinary
  const uploadedImages = await Promise.all(
