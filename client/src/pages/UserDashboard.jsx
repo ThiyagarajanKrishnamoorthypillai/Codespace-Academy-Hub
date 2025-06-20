@@ -287,21 +287,27 @@ useEffect(() => {
           </tr>
         ) : (
           notifications.map((item, idx) => {
-            const status = item.status === 'Submitted' ? 'Submitted' : 'Pending';
-            const statusClass = status === 'Submitted' ? 'bg-success' : 'bg-warning text-dark';
+  const status = item.status || 'Pending';
+  let statusClass = 'bg-secondary text-white';
 
-            return (
-              <tr key={idx} className="text-center">
-                <td>{format(new Date(item.dateCreated), 'dd/MM/yyyy')}</td>
-                <td>{item.course}</td>
-                <td>
-                  <span className={`badge ${statusClass}`}>
-                    {status}
-                  </span>
-                </td>
-              </tr>
-            );
-          })
+  if (status === 'Submitted') statusClass = 'bg-success';
+  else if (status === 'Pending') statusClass = 'bg-warning text-dark';
+  else if (status === 'Completed') statusClass = 'bg-primary';
+  else if (status === 'On-Progress') statusClass = 'bg-info text-dark';
+
+  return (
+    <tr key={idx} className="text-center">
+      <td>{format(new Date(item.dateCreated), 'dd/MM/yyyy')}</td>
+      <td>{item.course}</td>
+      <td>
+        <span className={`badge ${statusClass}`}>
+          {status}
+        </span>
+      </td>
+    </tr>
+  );
+})
+
         )}
       </tbody>
     </table>
