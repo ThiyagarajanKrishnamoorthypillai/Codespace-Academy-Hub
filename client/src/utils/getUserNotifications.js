@@ -8,10 +8,10 @@ export const getUserNotifications = (questions, answers, userEmail) => {
       return (pdfMatch || imageMatch) && emailMatch;
     });
 
-    return {
-      date: question.dateCreated,
-      course: question.course,
-      status: matchingAnswer?.status || 'Pending'
-    };
+   return {
+  date: question.dateCreated || null,
+  course: question.course || '',
+  status: matchingAnswer?.status || 'Pending'
+};
   });
 };

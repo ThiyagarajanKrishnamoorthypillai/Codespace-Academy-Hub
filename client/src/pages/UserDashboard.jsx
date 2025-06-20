@@ -320,10 +320,13 @@ useEffect(() => {
                 : item.status === 'Pending'
                 ? 'bg-warning text-dark'
                 : 'bg-secondary';
+if (!item.date || isNaN(new Date(item.date))) {
+  console.warn('⚠️ Invalid date in notification:', item);
+}
 
             return (
               <tr key={idx} className="text-center">
-                <td>{format(new Date(item.date), 'dd/MM/yyyy')}</td>
+                <td>{item.date ? format(new Date(item.date), 'dd/MM/yyyy') : '—'}</td>
                 <td>{item.course}</td>
                 <td>
                   <span className={`badge ${statusClass}`}>
