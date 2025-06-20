@@ -16,6 +16,7 @@ const UserDashboard = () => {
   const [marks, setMarks] = useState([]);
   const [pieData, setPieData] = useState([]);
   const [notifications, setNotifications] = useState([]);
+const [questionData, setQuestionData] = useState([]);
 
 
   // Fetch Tutor Name
