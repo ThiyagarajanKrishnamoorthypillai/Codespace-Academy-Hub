@@ -150,40 +150,47 @@ const findAnswerStatus = (question) => {
 
              <div className="row mt-3">
   <div className="col-12 text-end">
-    {findAnswerStatus(question) !== 'Submitted' && (
-      <>
-        <span
-          className="write-answer-link me-3"
-          onClick={() => navigate('/user_home/post_answer', {
+    <span
+      className={`write-answer-link me-3 ${findAnswerStatus(question) === 'Submitted' ? 'disabled text-muted' : ''}`}
+      style={{ cursor: findAnswerStatus(question) === 'Submitted' ? 'not-allowed' : 'pointer' }}
+      onClick={() => {
+        if (findAnswerStatus(question) !== 'Submitted') {
+          navigate('/user_home/post_answer', {
             state: {
               date: question.dateCreated,
               course: question.course,
               images: question.image,
               pdf: question.pdf
             }
-          })}
-        >
-          Write Answer
-        </span>
-        |
-        <span
-          className="write-answer-link ms-3"
-          onClick={() => navigate('/user_home/post_feedback', {
+          });
+        }
+      }}
+    >
+      Write Answer
+    </span>
+
+    |
+    
+    <span
+      className={`write-answer-link ms-3 ${findAnswerStatus(question) === 'Submitted' ? 'disabled text-muted' : ''}`}
+      style={{ cursor: findAnswerStatus(question) === 'Submitted' ? 'not-allowed' : 'pointer' }}
+      onClick={() => {
+        if (findAnswerStatus(question) !== 'Submitted') {
+          navigate('/user_home/post_feedback', {
             state: {
               image: question.image,
               pdf: question.pdf,
               course: question.course,
               dateCreated: question.dateCreated
             }
-          })}
-        >
-          Doubt / Feedback
-        </span>
-      </>
-    )}
+          });
+        }
+      }}
+    >
+      Doubt / Feedback
+    </span>
   </div>
 </div>
-
 
 
                       </div>
