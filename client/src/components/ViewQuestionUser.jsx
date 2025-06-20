@@ -146,42 +146,44 @@ const findAnswerStatus = (question) => {
 
 
 </div>
+       <p><b>Date:</b> {new Date(question.dateCreated).toLocaleDateString()}</p>
 
-                        <p><b>Date:</b> {new Date(question.dateCreated).toLocaleDateString()}</p>
              <div className="row mt-3">
-              
   <div className="col-12 text-end">
-    
-   <span
-  className="write-answer-link me-3"
-  onClick={() => navigate('/user_home/post_answer', {
-    state: {
-      date: question.dateCreated,
-      course: question.course,
-      images: question.image,
-      pdf: question.pdf  // ✅ Add this line only
-    }
-  })}
->
-  Write Answer
-</span>
-    |
-  <span
-  className="write-answer-link ms-3"
-  onClick={() => navigate('/user_home/post_feedback', {
-    state: {
-      image: question.image,    // ✅ full image array
-      pdf: question.pdf,        // ✅ full pdf array
-      course: question.course,
-      dateCreated: question.dateCreated
-    }
-  })}
->
-  Doubt / Feedback
-</span>
-
+    {findAnswerStatus(question) !== 'Submitted' && (
+      <>
+        <span
+          className="write-answer-link me-3"
+          onClick={() => navigate('/user_home/post_answer', {
+            state: {
+              date: question.dateCreated,
+              course: question.course,
+              images: question.image,
+              pdf: question.pdf
+            }
+          })}
+        >
+          Write Answer
+        </span>
+        |
+        <span
+          className="write-answer-link ms-3"
+          onClick={() => navigate('/user_home/post_feedback', {
+            state: {
+              image: question.image,
+              pdf: question.pdf,
+              course: question.course,
+              dateCreated: question.dateCreated
+            }
+          })}
+        >
+          Doubt / Feedback
+        </span>
+      </>
+    )}
   </div>
 </div>
+
 
 
                       </div>
