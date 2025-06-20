@@ -116,7 +116,7 @@ const findAnswerStatus = (question) => {
   <div className="card-body">
     
 
-                        <p className="mb-2"><b>Course:</b> <span className="text-primary">{question.course}</span></p>
+                        <p className="mb-2"><b>Course:</b> <span className="text-primary">{question.course}</span></p><br></br>
                         <div className="d-flex justify-content-end mb-2">
       <span className="badge bg-info text-dark">
         Status: {findAnswerStatus(question)}
